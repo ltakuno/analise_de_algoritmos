@@ -1,0 +1,570 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% talk: prototype
+%%% 2002/10/16
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%
+%%% Erstellen eines Vortrags in PDF-Format wie folgt:
+%%%
+%%% 1) Uebersetzen der Datei mit 
+%%%    pdflatex asz
+%%% 2) Wenn Features von ppower4 gewuenscht werden, dann die eben
+%%%    entstandene Datei asz.pdf weiterverarbeiten mit
+%%%    ./ppower4 asz.pdf vortrag.pdf
+%%% 3) Die Datei vortrag.pdf kann nun mit dem Acrobat Reader angesehen
+%%%    werden
+%%%
+%%% Fuer Testzwecke ist auch ein "normales" Uebersetzen mit LaTeX
+%%% moeglich:
+%%% 1) latex asz
+%%% 2) dvips asz.dvi -o asz.ps -t a4 -t landscape
+%%% 3) Anschauen mit ghostview
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ifx\pdfoutput\undefined \documentclass[clock,landscape]{slides} \else
+\documentclass[clock,landscape]{slides} \fi
+%\documentclass[clock,pdftex,landscape]{slides} \fi
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Escrevendo em português:
+\usepackage[brazil]{babel}
+\usepackage[latin1]{inputenc} % isso é quase redundante
+\usepackage{textcomp}
+\usepackage[T1]{fontenc}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{epstopdf}
+\usepackage{psfrag}
+
+\usepackage{multicol}
+
+\usepackage{clrscode}
+%----------------------------
+\usepackage{tabularx}
+%%% Die Datei mit dem ASZ-Layout
+
+\usepackage{shi}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath,amssymb,amsthm} \usepackage{amsfonts}
+\usepackage[colorlinks,backref]{hyperref}
+%\usepackage{background}
+
+%\usepackage{picinpar}
+
+\hypersetup{pdftitle={Análise e projeto de algoritmos},
+  pdfsubject={Análise de algoritmos}, 
+  pdfauthor={Leonardo Takuno, Centro Universitário SENAC, 
+  <leonardo.takuno@gmail.com>},
+  pdfkeywords={acrobat, ppower4},
+%  pdfpagemode={FullScreen},
+  colorlinks={false},
+  linkcolor={red}
+}
+
+\usepackage{color}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Pauseneffekte mit ppower4 werden moeglich
+
+\usepackage{pause}
+\newcommand\plone{\pause\pauselevel{=1}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newtheoremstyle{mythm}% name
+  {40pt}%      Space above
+  {-15pt}%      Space below
+  {\sf\itshape\blue}%      Body font
+  {}%         Indent amount (empty = no indent, \parindent = para indent)
+  {\sf\bfseries\green}% Thm head \vspacefont
+  {.}%        Punctuation after thm head
+  { }%     Space after thm head: " " = normal interword space;
+        %       \newline = linebreak
+  {}%         Thm head spec (can be left empty, meaning `normal')
+
+\theoremstyle{mythm}
+\newtheorem{theorem}             {Theorem}       
+\newtheorem{claim}     [theorem] {Claim}         
+\newtheorem{lemma}     [theorem] {Lemma}         
+\newtheorem{corollary} [theorem] {Corollary}     
+\newtheorem{fact}      [theorem] {Fact}          
+\newtheorem{conjecture}[theorem] {Conjecture}    
+
+\newtheorem{problem}   [theorem] {Problema}       
+\newtheorem{propriedade}  [theorem] {Propriedade}       
+\newtheorem{corolario}  [theorem] {Corolário}       
+\newtheorem{definition}   [theorem] {Definição}       
+
+%%% Symbole
+
+\newcommand{\NN}{\mathbb{N}} \newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}} \newcommand{\1}{{{\mathchoice {\rm
+        1\mskip-4mu l} {\rm 1\mskip-4mu l} {\rm 1\mskip-4.5mu l} {\rm
+        1\mskip-5mu l}}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\let\phi\varphi
+\let\epsilon\varepsilon
+\let\rho\varrho
+\let\tilde\widetilde
+\let\approx\thickapprox
+\let\sim\thicksim
+
+\def\({\left(}
+\def\){\right)}
+\def\[{\left[}
+\def\]{\right]}
+\def\<{\langle}
+\def\>{\rangle}
+\let\:\colon
+\def\llfloor{\left\lfloor}
+\def\rrfloor{\right\rfloor}
+\def\llceil{\left\lceil}
+\def\rrceil{\right\rceil}
+
+%%% Textmakros
+\def\ex{\mathop{\text{\rm ex}}\nolimits} 
+\def\cB{{\mathcal B}} 
+\def\cG{{\mathcal G}}
+\def\cS{{\mathcal S}} 
+\def\cW{{\mathcal W}} 
+\def\cQ{{\mathcal Q}} 
+\def\PP{{\mathbb P}}
+\def\EE{{\mathbb E}} 
+\def\GG{{\mathbb G}} 
+\def\e{{\rm e}}
+\def\epsilon{{\varepsilon}} 
+\def\DISC{\mathop{\textrm{\rm DISC}}\nolimits} 
+\def\EIG{\mathop{\textrm{\rm EIG}}\nolimits}
+\def\CIRCUIT{\mathop{\textrm{\rm CIRCUIT}}\nolimits}
+\def\CYCLE{\mathop{\textrm{\rm CYCLE}}\nolimits}
+\def\SUB{\mathop{\textrm{\rm SUB}}\nolimits}
+\def\NSUB{\mathop{\textrm{\rm NSUB}}\nolimits}
+\def\PAIR{\mathop{\textrm{\rm PAIR}}\nolimits}
+\def\TFNSUB{\mathop{\textrm{\rm TFNSUB}}\nolimits}
+\def\BDD{\mathop{\textrm{\rm BDD}}\nolimits}
+\def\eps{\varepsilon}
+
+\def\rmd{\text{\rm d}}
+\def\wtc{\widetilde{c}\,}
+\def\whc{\widehat{c}}
+\def\bfb{{\bf b}}
+\def\bff{{\bf f}}
+\def\bft{{\bf t}}
+\def\bfx{{\bf x}}
+\def\bfz{{\bf z}}
+\def\cB{{\mathcal B}}
+\def\cD{{\mathcal D}}
+\def\cG{{\mathcal G}}
+\def\cM{{\mathcal M}}
+\def\cN{{\mathcal N}}
+\def\cR{{\mathcal R}}
+\def\cS{{\mathcal S}}
+\def\cW{{\mathcal W}}
+\def\PP{{\mathbb P}}
+\def\EE{{\mathbb E}}
+\def\FF{{\mathbb F}}
+\def\NN{{\mathbb N}}
+\def\RR{{\mathbb R}}
+\def\ZZ{{\mathbb Z}}
+\def\e{{\rm e}}
+\def\card{\mathop{\text{\rm card}}\nolimits}
+\def\rank{\mathop{\text{\rm rank}}\nolimits}
+\def\trace{\mathop{\text{\rm trace}}\nolimits}
+\def\Ave{\mathop{\text{\rm Ave}}\nolimits}
+\def\Bi{\mathop{\text{\rm Bi}}\nolimits}
+\def\im{\mathop{\text{\rm im}}\nolimits}
+\def\ind{\mathop{\text{\rm ind}}\nolimits}
+\def\dist{\mathop{\text{\rm dist}}\nolimits}
+\def\nDist{\mathop{\text{\rm \#Dist}}\nolimits}
+\let\Dist\nDist
+\def\De{D_{\rm e}}
+\def\sumL{\sum\nolimits_1}
+\def\sumS{\sum\nolimits_2}
+\def\GF{\mathop{\text{\rm GF}}\nolimits}
+\let\FF\GF
+\def\Bip{\mathop{\text{\rm Bip}}\nolimits}
+\def\adj{\mathop{\text{\rm adj}}\nolimits}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\nx}{{\hfill\vspace*{-2cm}\tiny +}}
+
+%\newcommand{\red}[1]{\textcolor{red}{#1}}
+%\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+%\newcommand{\yellow}[1]{\textcolor{yellow}{#1}}
+%\newcommand{\green}[1]{\textcolor{green}{#1}}
+%\newcommand{\darkgreen}[1]{\textcolor{darkgreen}{#1}}
+\def\red{\color[rgb]{0.7,0,0}}
+\def\green{\color[rgb]{0,.8,0}}
+\def\darkgreen{\color[rgb]{0.1,0.4,0.0}}
+\let\dgreen\darkgreen
+\def\blue{\color[rgb]{0,0,.8}}
+\def\yellow{\color[rgb]{1,1,0}}
+\def\black{\color[rgb]{0,0,0}}
+
+\def\pink{\color[rgb]{1,0,1}}
+\def\brown{\color[rgb]{.5,.1,.3}}
+\def\lilaz{\color[rgb]{.5,0,.5}}
+\def\hmmm{\color[rgb]{.3,.1,.5}}
+\def\magenta{\color[rgb]{.6,.05,.05}}
+
+\newcommand{\uc}[1]{\centerline{\underline{#1}}}
+\newcommand{\pic}[1]{\fbox{picture:{#1}}}
+%\renewcommand{\bf}{\mbox{}}
+\newcommand{\cP}{{\cal P}} \newcommand{\cT}{{\cal T}}
+\newcommand{\add}{\mbox{\rm add}} \newcommand{\pr}{\mbox{\rm Pr}}
+
+\def\stitle#1{\slidetitle{\red #1}\vspace{-0pt}}
+
+\def\itemtrig{$\vartriangleright$}
+\def\itemcirc{$\circ$}
+\def\itemT{\item[\itemtrig]}
+\def\itemC{\item[$\circ$]}
+
+\everymath={\blue}
+\everydisplay={\blue}
+
+\renewcommand{\For}{\textbf{\blue para} }
+\renewcommand{\To}{\textbf{\blue até} }
+\renewcommand{\Do}{\>\>\textbf{\blue faça}\hspace*{-0.7em}\'\addtocounter{indent}{1}}
+\renewcommand{\While}{\textbf{\blue enquanto} }
+\renewcommand{\If}{\textbf{\blue se} }
+\renewcommand{\Then}{\>\textbf{\blue então}\>\hspace*{0.5em}\addtocounter{indent}{1}}
+\renewcommand{\Else}{\kill\addtocounter{indent}{-1}\liprint\>\textbf{\blue senão}\>\hspace*{0.5em}\addtocounter{indent}{1}}
+\renewcommand{\ElseIf}{\kill\addtocounter{indent}{-1}\liprint\textbf{\blue senão se} }
+\renewcommand{\ElseNoIf}{\kill\addtocounter{indent}{-1}\liprint\textbf{\blue senão} \addtocounter{indent}{1}}
+\renewcommand{\Return}{\textbf{\blue retorne} }
+
+
+\newcommand{\TITLE}[1]{\item[#1]}
+
+% ugly hack for for/while
+\newbox\fixbox
+
+% end of hack
+\newcommand{\algcost}[2]{\strut\hfill\makebox[3.5cm][l]{#1}\makebox[4cm][l]{#2}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%%Anuschs Extras
+%
+%\def\enddiscard{}
+%\long\def\discard#1\enddiscard{}
+%
+%%%\vpagecolor{bgblue}
+%\hypersetup{pdfpagetransition=Dissolve}
+%\hypersetup{pdfpagetransition=R}
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Farben kann man hier definieren
+
+\definecolor{bgblue}{rgb}{0.04,0.39,0.53}
+
+\definecolor{darkyellow}{rgb}{0.94,0.820,0.058}
+\definecolor{orange}{rgb}{0.95,0.47,0.14}
+\definecolor{darkgreen}{rgb}{0.0,0.5,0.0}
+
+\definecolor{blue2}{rgb}{0.1,0.39,0.53}
+\definecolor{yellow1}{rgb}{1,1,0} \definecolor{pink}{rgb}{1,0,1}
+
+\definecolor{lightred}{rgb}{1,0.5,0.5}
+\definecolor{lightred2}{rgb}{1,0.7,0.7}
+\definecolor{lightred3}{rgb}{1,0.3,0.3}
+\definecolor{black}{rgb}{0,0,0} \definecolor{gray1}{rgb}{0.9,0.9,0.9}
+\definecolor{red1}{rgb}{1,1,0.9}
+
+\title{Análise e projeto de algoritmos} 
+\author{{\blue L.~Takuno} (SENAC)}
+\date{{\dgreen 1o. Semestre 2019}} 
+
+%%% Hier beginnt die Praesentation
+
+\begin{document}\def\proofname{{\bf\green Prova.}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Deckblatt
+%%%%%%%%%%%%%%%%%%%\usepackage{clrscode3e}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\maketitle
+
+%\slidesubhead{}  %% Teilvortrags-Titel (hier noch nicht)
+                 %% Dieser erscheint spaeter oben links unter
+                 %% dem ASZ Gesamt-Titel
+
+%%%%%%%%%%%%%%%%%%%%%%% TOC %%%%%%%%%%%%%%%%%%
+
+%\slidesubhead{Outline!!!}
+
+\begin{slide}
+  \stitle{Fontes principais}
+  \begin{enumerate}\makeatletter\itemsep\z@\makeatother
+  \item Cormem T. H.; Leiserson C. E.; Rivest R.: Stein C.. \textit{Introduction to Algorithms}, $3^a$ edição, MIT Press, 2009
+  \item Análise de algoritmo - IME/USP (prof. Paulo Feofiloff)
+    \verb|http://www.ime.usp.br/~pf/analise_de_algoritmos| 
+	
+  \end{enumerate}
+  \end{slide}
+ 
+ 
+\begin{slide}
+  \stitle{Problema de ordenação}  
+\end{slide}
+ 
+\begin{slide}
+  \stitle{Problema de ordenação}  
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\multicolumn{1}{|c|}{Algoritmo}      & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}pior\\ caso\end{tabular}} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}melhor\\ caso\end{tabular}} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}caso\\ médio\end{tabular}} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}complexidade\\ de espaço\end{tabular}} \\ \hline
+Insertion-sort         & $\Theta(n^2)$      & $\Theta(n)$        & $\Theta(n^2)$      & $\Theta(n)$\\ 
+Merge-sort             & $\Theta(n \log n)$ & $\Theta(n \log n)$ & $\Theta(n \log n)$ & $\Theta(n)$\\ 
+Selection-sort         & $\Theta(n^2)$      & $\Theta(n^2)$      & $\Theta(n^2)$      & $\Theta(n)$\\ \hline
+Heap-sort              & \multirow{2}{*}{?}  &    \multirow{2}{*}{?} &  \multirow{2}{*}{?}  & $\Theta(n)$\\ 
+Quick-sort             &                    &                    &                    & $\Theta(n)$\\ \hline
+Counting-sort              & \multirow{3}{*}{?}  &    \multirow{3}{*}{?} &  \multirow{3}{*}{?}  & \multirow{3}{*}{?} \\ 
+Radix-sort             &                    &                    &                    &  \\ 
+Bucket-sort             &                    &                    &                    & \\ \hline
+\end{tabular}
+\end{slide}
+
+
+
+\begin{slide}
+  \stitle{Insertion-sort recursivo}
+\end{slide}
+
+\begin{slide}
+  \stitle{Insertion-sort recursivo}
+\begin{codebox}
+\Procname{$\proc{Insertion-Sort}(A, n)$}
+\li \If $n \geq 2$
+\li \Then $\proc{Insertion-Sort}(A, n-1)$
+\li     $chave = A[i]$
+\li     $j = n-1$
+\li     \While $(j > 0)$ $e$  $(A[j] > chave)$
+\li  \Do $A[j+1] = A[j]$
+\li      $j = j - 1$
+\End
+\li   $A[j+1] = chave$
+\End
+\end{codebox}
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Análise do Insertion-sort recursivo}
+  Quantas comparações e quantas trocas o algoritmo executa no pior caso?
+  
+\end{slide}
+
+\begin{slide}
+  \stitle{Análise do Insertion-sort recursivo}
+  Tanto o número de comparações quanto o de trocas é dado pela recorrência:
+  
+  $T(n)= \left\{  \begin{array}{ll} 
+                0 & \textrm{, se } n=1 \\
+                T(n-1) + n & \textrm{, se } n>1
+                \end{array} \right. $
+ 
+ $\Theta(n^2)$ comparações e trocas são executadas no pior caso.
+  
+\end{slide}
+
+\begin{slide}
+  \stitle{Algoritmo Selection-Sort \\ Iterativo}
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Algoritmo Selection-Sort}
+\vspace{1.0cm}
+$\proc{Selection-Sort}(A, n)$
+\vspace{-2.0cm}
+\begin{tabbing}
+~~~~ \= ~~~~\= ~~~~\= ~~~~\= ~~~~~~~\= \hspace*{12cm}                               \= custo \\
+1  \> \For $i = 1$ \To  $n-1$  \textbf{\blue faça}\> \>  \>  \\
+2  \> \>  $\id{min} = i$ \>   \>   \\
+3  \> \> \For $j = 	i + 1$ \To $n$ \textbf{\blue faça} \>   \>   \\
+4  \> \> \> \If $A[j] < A[min]$ \textbf{\blue então} \> \> \\
+5  \> \> \> \> $\id{min} = j$                            \>   \>   \\
+6  \> \> \> $A[i] \leftrightarrow A[min]$  \> \\
+\end{tabbing}  
+\end{slide}
+
+\begin{slide}
+  \stitle{Algoritmo Selection-Sort}
+\vspace{1.0cm}
+$\proc{Selection-Sort}(A, n)$
+\vspace{-2.0cm}
+\begin{tabbing}
+~~~~ \= ~~~~\= ~~~~\=  ~~~~\= \hspace*{12cm} \= custo \\ 
+1  \> \For $i = 1$ \To  $n-1$  \textbf{\blue faça} \>   \> \> \> $\Theta(n)$      \\
+2  \> \>  $\id{min} = i$                                \> \> \> $\Theta(n)$      \\
+3  \> \> \For $j = 	i + 1$ \To $n$ \textbf{\blue faça}  \> \> \> $\Theta(n^2)$    \\
+4  \> \> \> \If $A[j] < A[min]$ \textbf{\blue então}    \> \>    $\Theta(n^2)$    \\
+5  \> \> \> \> $\id{min} = j$                           \>       $\Theta(n^2)$    \\
+6  \> \> $A[i] \leftrightarrow A[min]$               \> \>    $\Theta(n^2)$    \\
+   \> \> \> \> \> Total: $\Theta(n^2)$                  
+\end{tabbing}  
+  Portanto, a complexidade do algoritmo é $\Theta(n^2)$
+\end{slide}
+
+\begin{slide}
+  \stitle{Análise do algoritmo Selection-Sort (iterativo)}
+
+\itemtrig\ Complexidade de pior caso (elementos em ordem decrescente): $\Theta(n^2)$, com $\Theta(n^2)$ comparações e $\Theta(n)$ trocas.
+
+\itemtrig\ Complexidade de melhor caso (elementos em ordem crescente): $\Theta(n^2)$ 
+
+\itemtrig\ Complexidade de caso médio (vetor aleatório): $\Theta(n^2)$
+\end{slide}
+
+\begin{slide}
+  \stitle{Análise do algoritmo Selection-Sort (iterativo)}
+
+\itemtrig\ Complexidade de espaço: $\Theta(n)$, pois comparações e trocas são efetuadas diretamente no vetor.
+
+Note que o Selection-Sort realiza mais comparações que o Insertion-Sort, mas menos trocas.    
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Análise do algoritmo Selection-Sort (iterativo)}
+
+  
+\textbf{Invariante:}
+
+O vetor $A[1 \cdots i-1]$ está ordenado e $A[1 \cdots i-1] < A[i \cdots n]$
+
+A partir desta informação valiosa demonstre a corretude do algoritmo Selection-Sort
+\end{slide}
+
+\begin{slide}
+  \stitle{Análise do algoritmo Selection-Sort (recursivo)}
+\end{slide}
+
+\begin{slide}
+  \stitle{Análise do algoritmo Selection-Sort (recursivo)}
+\vspace{1.0cm}
+$\proc{Selection-Sort}(A, i, n)$
+\vspace{-2.0cm}
+\begin{tabbing}
+~~~~ \= ~~~~\= ~~~~\=  ~~~~\= \hspace*{12cm} \=  \\ 
+1  \> \If $i < n$ \textbf{\blue então}  \\
+2  \> \>  $\id{min} = i$                                \> \> \>     \\
+3  \> \> \For $j = 	i + 1$ \To $n$ \textbf{\blue faça}  \> \> \>     \\
+4  \> \> \> \If $A[j] < A[min]$ \textbf{\blue então} $\id{min} = j$   \> \>        \\
+5  \> \> $t = A[min]$               \> \> \>        \\
+6  \> \> $A[min] = A[i]$            \> \> \>        \\
+7  \> \> $A[i] = t$            \> \> \>        \\
+8  \> \> $\proc{Selection-Sort}(A, i + 1, n)$                
+\end{tabbing}  
+  
+\end{slide}
+
+\begin{slide}
+  \stitle{Análise do algoritmo Selection-Sort (recursivo)}
+  Quantas comparações e quantas trocas o algoritmo executa no pior caso?
+  
+  O número de comparações é dado pela recorrência:
+
+  $T(n)= \left\{  \begin{array}{ll} 
+                0 & \textrm{, se } n=1 \\
+                T(n-1) + \Theta(n) & \textrm{, se } n>1
+                \end{array} \right. $
+   
+   $\Theta(n^2)$ comparações são executadas no pior caso.
+\end{slide}
+
+\begin{slide}
+  \stitle{Análise do algoritmo Selection-Sort (recursivo)}
+  O número de trocas é dado pela recorrência:
+
+  $T(n)= \left\{  \begin{array}{ll} 
+                0 & \textrm{, se } n=1 \\
+                T(n-1) + \Theta(1) & \textrm{, se } n>1
+                \end{array} \right. $
+  
+   $\Theta(n)$ trocas são executadas no pior caso.
+   
+   
+  $\proc{Insertion-Sort}$ e $\proc{Selection-Sort}$ têm a mesma complexidade assintótica, porém em situações em que a operação de troca é muito custosa, é preferível utilizar $\proc{Selection-Sort}$.
+   
+    
+\end{slide}
+
+\begin{slide}
+  \stitle{Ordenação por intercalação}
+\end{slide}
+
+\begin{slide}
+  \stitle{Ordenação por intercalação}
+
+\vspace{1.0cm}
+$\proc{Merge-Sort}(A, p, r)$
+\vspace{-2.0cm}
+\begin{tabbing}
+~~~~ \= ~~~~\= ~~~~~~~\= \hspace*{12cm}                                           \=  \\
+1  \> \If $\id{p} < id{r}$ \> \>                                                  \>  \\
+2  \> \> {\blue \textbf{então}}  $\id{q} \gets \lfloor \frac{p+r}{2} \rfloor$\>   \>   \\
+3  \> \> \>$\proc{Merge-Sort}(A, p, q)$                                           \>  \\
+4  \> \> \> $\proc{Merge-Sort}(A, q+1, r)$                                        \> \\
+5  \> \> \> $\proc{Merge}(A, p, q, r)$                                            \>  \\
+\end{tabbing}  
+
+Já analisamos a complexidade deste algoritmo, lembra?
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Algoritmo Tim-Sort}
+\end{slide}
+
+\begin{slide}
+  \stitle{Algoritmo Tim-Sort}
+  Desenvolvido por Tim Peters em 2002 para a linguagem Python
+  
+  É um algoritmo de ordenação híbrido de Merge Sort e Insertion-Sort
+  
+  \itemtrig\ Complexidade de pior caso: $\Theta(n \log n)$
+
+  \vspace{-1cm} \itemtrig\ Complexidade de melhor caso: $\Theta(n)$
+  
+  \vspace{-1cm} \itemtrig\ Complexidade de caso médio: $\Theta(n \log n)$
+  
+\end{slide}
+
+\begin{slide}
+  \stitle{Algoritmo Bogo-Sort}
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Algoritmo Bogo-Sort}
+  
+  É um algoritmo de ordenação perversamente ineficiente
+  
+  É um algoritmo probabilístico por natureza
+  
+  Para ordenar os $n$ elementos distintos a complexidade esperada é $O(n \cdot n!)$
+  
+  Não é utilizada na prática, mas útil em disciplinas de análise de algoritmos
+\end{slide}
+
+
+
+\begin{slide}
+  \stitle{Obrigado}
+\end{slide}
+
+\end{document}
+
+% Local Variables: 
+% mode: latex
+% eval: (Portug-mode)
+% TeX-master: t
+% End: 

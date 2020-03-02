@@ -1,0 +1,564 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% talk: prototype
+%%% 2002/10/16
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%
+%%% Erstellen eines Vortrags in PDF-Format wie folgt:
+%%%
+%%% 1) Uebersetzen der Datei mit 
+%%%    pdflatex asz
+%%% 2) Wenn Features von ppower4 gewuenscht werden, dann die eben
+%%%    entstandene Datei asz.pdf weiterverarbeiten mit
+%%%    ./ppower4 asz.pdf vortrag.pdf
+%%% 3) Die Datei vortrag.pdf kann nun mit dem Acrobat Reader angesehen
+%%%    werden
+%%%
+%%% Fuer Testzwecke ist auch ein "normales" Uebersetzen mit LaTeX
+%%% moeglich:
+%%% 1) latex asz
+%%% 2) dvips asz.dvi -o asz.ps -t a4 -t landscape
+%%% 3) Anschauen mit ghostview
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ifx\pdfoutput\undefined \documentclass[clock,landscape]{slides} \else
+\documentclass[clock,landscape]{slides} \fi
+%\documentclass[clock,pdftex,landscape]{slides} \fi
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Escrevendo em português:
+\usepackage[brazil]{babel}
+\usepackage[latin1]{inputenc} % isso é quase redundante
+\usepackage{textcomp}
+\usepackage[T1]{fontenc}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{epstopdf}
+\usepackage{psfrag}
+ 
+
+\usepackage{multicol}
+
+\usepackage{clrscode}
+%----------------------------
+\usepackage{tabularx}
+%%% Die Datei mit dem ASZ-Layout
+
+\usepackage{shi}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath,amssymb,amsthm} \usepackage{amsfonts}
+\usepackage[colorlinks,backref]{hyperref}
+%\usepackage{background}
+
+%\usepackage{picinpar}
+
+\hypersetup{pdftitle={Análise e projeto de algoritmos},
+  pdfsubject={Análise de algoritmos}, 
+  pdfauthor={Leonardo Takuno, Centro Universitário SENAC, 
+  <leonardo.takuno@gmail.com>},
+  pdfkeywords={acrobat, ppower4},
+%  pdfpagemode={FullScreen},
+  colorlinks={false},
+  linkcolor={red}
+}
+
+\usepackage{color}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Pauseneffekte mit ppower4 werden moeglich
+
+\usepackage{pause}
+\newcommand\plone{\pause\pauselevel{=1}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newtheoremstyle{mythm}% name
+  {40pt}%      Space above
+  {-15pt}%      Space below
+  {\sf\itshape\blue}%      Body font
+  {}%         Indent amount (empty = no indent, \parindent = para indent)
+  {\sf\bfseries\green}% Thm head \vspacefont
+  {.}%        Punctuation after thm head
+  { }%     Space after thm head: " " = normal interword space;
+        %       \newline = linebreak
+  {}%         Thm head spec (can be left empty, meaning `normal')
+
+\theoremstyle{mythm}
+\newtheorem{theorem}             {Theorem}       
+\newtheorem{claim}     [theorem] {Claim}         
+\newtheorem{lemma}     [theorem] {Lemma}         
+\newtheorem{corollary} [theorem] {Corollary}     
+\newtheorem{fact}      [theorem] {Fact}          
+\newtheorem{conjecture}[theorem] {Conjecture}    
+
+\newtheorem{problem}   [theorem] {Problema}       
+\newtheorem{propriedade}  [theorem] {Propriedade}       
+\newtheorem{corolario}  [theorem] {Corolário}       
+\newtheorem{definition}   [theorem] {Definição}       
+
+%%% Symbole
+
+\newcommand{\NN}{\mathbb{N}} \newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}} \newcommand{\1}{{{\mathchoice {\rm
+        1\mskip-4mu l} {\rm 1\mskip-4mu l} {\rm 1\mskip-4.5mu l} {\rm
+        1\mskip-5mu l}}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\let\phi\varphi
+\let\epsilon\varepsilon
+\let\rho\varrho
+\let\tilde\widetilde
+\let\approx\thickapprox
+\let\sim\thicksim
+
+\def\({\left(}
+\def\){\right)}
+\def\[{\left[}
+\def\]{\right]}
+\def\<{\langle}
+\def\>{\rangle}
+\let\:\colon
+\def\llfloor{\left\lfloor}
+\def\rrfloor{\right\rfloor}
+\def\llceil{\left\lceil}
+\def\rrceil{\right\rceil}
+
+%%% Textmakros
+\def\ex{\mathop{\text{\rm ex}}\nolimits} 
+\def\cB{{\mathcal B}} 
+\def\cG{{\mathcal G}}
+\def\cS{{\mathcal S}} 
+\def\cW{{\mathcal W}} 
+\def\cQ{{\mathcal Q}} 
+\def\PP{{\mathbb P}}
+\def\EE{{\mathbb E}} 
+\def\GG{{\mathbb G}} 
+\def\e{{\rm e}}
+\def\epsilon{{\varepsilon}} 
+\def\DISC{\mathop{\textrm{\rm DISC}}\nolimits} 
+\def\EIG{\mathop{\textrm{\rm EIG}}\nolimits}
+\def\CIRCUIT{\mathop{\textrm{\rm CIRCUIT}}\nolimits}
+\def\CYCLE{\mathop{\textrm{\rm CYCLE}}\nolimits}
+\def\SUB{\mathop{\textrm{\rm SUB}}\nolimits}
+\def\NSUB{\mathop{\textrm{\rm NSUB}}\nolimits}
+\def\PAIR{\mathop{\textrm{\rm PAIR}}\nolimits}
+\def\TFNSUB{\mathop{\textrm{\rm TFNSUB}}\nolimits}
+\def\BDD{\mathop{\textrm{\rm BDD}}\nolimits}
+\def\eps{\varepsilon}
+
+\def\rmd{\text{\rm d}}
+\def\wtc{\widetilde{c}\,}
+\def\whc{\widehat{c}}
+\def\bfb{{\bf b}}
+\def\bff{{\bf f}}
+\def\bft{{\bf t}}
+\def\bfx{{\bf x}}
+\def\bfz{{\bf z}}
+\def\cB{{\mathcal B}}
+\def\cD{{\mathcal D}}
+\def\cG{{\mathcal G}}
+\def\cM{{\mathcal M}}
+\def\cN{{\mathcal N}}
+\def\cR{{\mathcal R}}
+\def\cS{{\mathcal S}}
+\def\cW{{\mathcal W}}
+\def\PP{{\mathbb P}}
+\def\EE{{\mathbb E}}
+\def\FF{{\mathbb F}}
+\def\NN{{\mathbb N}}
+\def\RR{{\mathbb R}}
+\def\ZZ{{\mathbb Z}}
+\def\e{{\rm e}}
+\def\card{\mathop{\text{\rm card}}\nolimits}
+\def\rank{\mathop{\text{\rm rank}}\nolimits}
+\def\trace{\mathop{\text{\rm trace}}\nolimits}
+\def\Ave{\mathop{\text{\rm Ave}}\nolimits}
+\def\Bi{\mathop{\text{\rm Bi}}\nolimits}
+\def\im{\mathop{\text{\rm im}}\nolimits}
+\def\ind{\mathop{\text{\rm ind}}\nolimits}
+\def\dist{\mathop{\text{\rm dist}}\nolimits}
+\def\nDist{\mathop{\text{\rm \#Dist}}\nolimits}
+\let\Dist\nDist
+\def\De{D_{\rm e}}
+\def\sumL{\sum\nolimits_1}
+\def\sumS{\sum\nolimits_2}
+\def\GF{\mathop{\text{\rm GF}}\nolimits}
+\let\FF\GF
+\def\Bip{\mathop{\text{\rm Bip}}\nolimits}
+\def\adj{\mathop{\text{\rm adj}}\nolimits}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\nx}{{\hfill\vspace*{-2cm}\tiny +}}
+
+%\newcommand{\red}[1]{\textcolor{red}{#1}}
+%\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+%\newcommand{\yellow}[1]{\textcolor{yellow}{#1}}
+%\newcommand{\green}[1]{\textcolor{green}{#1}}
+%\newcommand{\darkgreen}[1]{\textcolor{darkgreen}{#1}}
+\def\red{\color[rgb]{0.7,0,0}}
+\def\green{\color[rgb]{0,.8,0}}
+\def\darkgreen{\color[rgb]{0.1,0.4,0.0}}
+\let\dgreen\darkgreen
+\def\blue{\color[rgb]{0,0,.8}}
+\def\yellow{\color[rgb]{1,1,0}}
+\def\black{\color[rgb]{0,0,0}}
+
+\def\pink{\color[rgb]{1,0,1}}
+\def\brown{\color[rgb]{.5,.1,.3}}
+\def\lilaz{\color[rgb]{.5,0,.5}}
+\def\hmmm{\color[rgb]{.3,.1,.5}}
+\def\magenta{\color[rgb]{.6,.05,.05}}
+
+\newcommand{\uc}[1]{\centerline{\underline{#1}}}
+\newcommand{\pic}[1]{\fbox{picture:{#1}}}
+%\renewcommand{\bf}{\mbox{}}
+\newcommand{\cP}{{\cal P}} \newcommand{\cT}{{\cal T}}
+\newcommand{\add}{\mbox{\rm add}} \newcommand{\pr}{\mbox{\rm Pr}}
+
+\def\stitle#1{\slidetitle{\red #1}\vspace{-0pt}}
+
+\def\itemtrig{$\vartriangleright$}
+\def\itemcirc{$\circ$}
+\def\itemT{\item[\itemtrig]}
+\def\itemC{\item[$\circ$]}
+
+\everymath={\blue}
+\everydisplay={\blue}
+
+\renewcommand{\For}{\textbf{\blue para} }
+\renewcommand{\To}{\textbf{\blue até} }
+\renewcommand{\Do}{\>\>\textbf{\blue faça}\hspace*{-0.7em}\'\addtocounter{indent}{1}}
+\renewcommand{\While}{\textbf{\blue enquanto} }
+\renewcommand{\If}{\textbf{\blue se} }
+\renewcommand{\Then}{\>\textbf{\blue então}\>\hspace*{0.5em}\addtocounter{indent}{1}}
+\renewcommand{\Else}{\kill\addtocounter{indent}{-1}\liprint\>\textbf{\blue senão}\>\hspace*{0.5em}\addtocounter{indent}{1}}
+\renewcommand{\ElseIf}{\kill\addtocounter{indent}{-1}\liprint\textbf{\blue senão se} }
+\renewcommand{\ElseNoIf}{\kill\addtocounter{indent}{-1}\liprint\textbf{\blue senão} \addtocounter{indent}{1}}
+\renewcommand{\Return}{\textbf{\blue retorne} }
+
+
+\newcommand{\TITLE}[1]{\item[#1]}
+
+% ugly hack for for/while
+\newbox\fixbox
+
+% end of hack
+\newcommand{\algcost}[2]{\strut\hfill\makebox[3.5cm][l]{#1}\makebox[4cm][l]{#2}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%%Anuschs Extras
+%
+%\def\enddiscard{}
+%\long\def\discard#1\enddiscard{}
+%
+%%%\vpagecolor{bgblue}
+%\hypersetup{pdfpagetransition=Dissolve}
+%\hypersetup{pdfpagetransition=R}
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Farben kann man hier definieren
+
+\definecolor{bgblue}{rgb}{0.04,0.39,0.53}
+
+\definecolor{darkyellow}{rgb}{0.94,0.820,0.058}
+\definecolor{orange}{rgb}{0.95,0.47,0.14}
+\definecolor{darkgreen}{rgb}{0.0,0.5,0.0}
+
+\definecolor{blue2}{rgb}{0.1,0.39,0.53}
+\definecolor{yellow1}{rgb}{1,1,0} \definecolor{pink}{rgb}{1,0,1}
+
+\definecolor{lightred}{rgb}{1,0.5,0.5}
+\definecolor{lightred2}{rgb}{1,0.7,0.7}
+\definecolor{lightred3}{rgb}{1,0.3,0.3}
+\definecolor{black}{rgb}{0,0,0} \definecolor{gray1}{rgb}{0.9,0.9,0.9}
+\definecolor{red1}{rgb}{1,1,0.9}
+
+\title{Análise e projeto de algoritmos} 
+\author{{\blue L.~Takuno} (SENAC)}
+\date{{\dgreen 1o. Semestre 2019}} 
+
+%%% Hier beginnt die Praesentation
+
+\begin{document}\def\proofname{{\bf\green Prova.}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Deckblatt
+%%%%%%%%%%%%%%%%%%%\usepackage{clrscode3e}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\maketitle
+
+%\slidesubhead{}  %% Teilvortrags-Titel (hier noch nicht)
+                 %% Dieser erscheint spaeter oben links unter
+                 %% dem ASZ Gesamt-Titel
+
+%%%%%%%%%%%%%%%%%%%%%%% TOC %%%%%%%%%%%%%%%%%%
+
+%\slidesubhead{Outline!!!}
+
+\begin{slide}
+  \stitle{Fontes principais}
+  \begin{enumerate}\makeatletter\itemsep\z@\makeatother
+  \item Cormem T. H.; Leiserson C. E.; Rivest R.: Stein C.. \textit{Introduction to Algorithms}, $3^a$ edição, MIT Press, 2009
+  \item Análise de algoritmo - IME/USP (prof. Paulo Feofiloff)
+    \verb|http://www.ime.usp.br/~pf/analise_de_algoritmos| 
+	
+  \end{enumerate}
+  \end{slide}
+ 
+ 
+\begin{slide}
+  \stitle{Projeto de algoritmos por indução}  
+\end{slide}
+
+\begin{slide}
+  \stitle{Projeto de algoritmos por indução}  
+  
+  Usaremos indução para projetar algoritmos que resolvem certos problemas
+  
+  A formulação do algoritmo será análoga a uma demonstração por indução
+\end{slide}
+ 
+\begin{slide}
+  \stitle{Projeto de algoritmos por indução}  
+  
+  
+  Assim para resolver um problema P:
+  
+\begin{itemize}
+\itemC  mostramos como resolver instâncias pequenas de P (base) e 
+\itemC mostramos como obter uma solução de uma instância P a partir das soluções de instâncias menores de P
+\end{itemize} 
+\end{slide}
+ 
+\begin{slide}
+  \stitle{Projeto de algoritmos por indução}  
+O processo indutivo resulta em algoritmos recursivos tais que:
+\begin{itemize}
+\itemC  a base da indução corresponde à solução de casos base de recursão
+\itemC  a aplicação da hipótese de indução corresponde a uma ou mais chamadas recursivas
+\itemC  o passo da indução corresponde ao processo de obtenção da resposta para o problema original a partir das respostas devolvidas pelas chamadas recursivas
+\end{itemize} 
+\end{slide}
+ 
+\begin{slide}
+  \stitle{Projeto de algoritmos por indução} 
+\begin{itemize}
+\itemC um benefício imediato é que o uso (correto) da técnica dá uma prova de corretude do algoritmo
+
+\itemC a complexidade do algoritmo é expressa por uma recorrência 
+
+\itemC muitas vezes é imediato a conversão do algoritmo recursivo em um iterativo
+
+\itemC frequentemente o algoritmo é eficiente, embora existam exemplos simples em que isso não acontece
+\end{itemize}  
+\end{slide}
+ 
+\begin{slide}
+  \stitle{Exemplo: cálculo do polinômio} 
+  
+\textbf{Problema:}
+  
+  \hspace{1cm} \textbf{Entrada:} sequência de números reais $a_n, a_{n-1}, \cdots, a_1, a_0$ e $x \in \mathbb{R}$
+  
+    \hspace{1cm} \textbf{Saída:} $P(x) = a_nx^n + a_{n-1}x^{n-1} + \cdots + a_1x + a_0 $
+    
+    
+    Estamos interessados em projetar um algoritmo que efetue o menor número de operações aritméticas
+\end{slide}
+ 
+\begin{slide}
+  \stitle{Exemplo: cálculo do polinômio} 
+  
+Solução 1:  
+  
+\textbf{Hipótese de indução: (1a. tentativa)}
+
+\hspace{1cm} Dada uma sequência de números reais $a_{n-1}, a_{n-2}, \cdots, a_1, a_0$    e $x \in \mathbb{R}$, sabemos calcular $P_{n-1}(x) = a_{n-1}x^{n-1} + \cdots + a_1x + a_0 $
+
+\textbf{Base:} Para $n=0$ a solução é $a_0$
+
+\textbf{Passo:} Para calcular $P_n(x)$, basta calcular $x^n$, multiplicar o resultado por $a_n$ e somar com $P_{n-1}(x)$
+    
+\end{slide} 
+
+
+\begin{slide}
+    \stitle{Solução 1}  
+\begin{codebox}
+\Procname{$\proc{Calculo-Polinomio}(A, n, x)$}
+\li  \If $n=0$   
+\li  \Then   $P = a_0$
+\li  \Else
+\li   $A' = a_{n-1}, \cdots, a_1, a_0$
+\li   $P' = \proc{Calculo-Polinomio}(A', n-1, x)$  
+\li   $x_n = x$
+\li  \For $i=0$ \To $n$ 
+\li  \Do $x_n = x_n * x$
+\li  $P = P' + a_n * x_n$ 
+\End
+\End
+\li  \Return $P$
+\End
+\end{codebox}  
+    
+\end{slide} 
+
+
+\begin{slide}
+    \stitle{Solução 1}
+    Seja $T(n)$ o número de operações aritméticas realizadas pelo algoritmo
+    
+        $T(n)= \left\{  \begin{array}{ll} 
+                0 & \textrm{, se } n=0 \\
+                T(n-1) + n \textrm{ multiplicações } + 1 \textrm{ adição } & \textrm{, se } n>0 
+                \end{array} \right. $
+                
+\end{slide} 
+
+
+\begin{slide}
+    \stitle{Solução 1}                
+Não é difícil perceber que:
+$T(n) = \displaystyle \sum_{i=1}^n (i$ multiplicações $ + 1 $ adição $) =$
+
+$= \displaystyle \frac{n(n+1)}{2} $ multiplicações $ + 1 $ adição $ = O(n^2)$
+
+Note que a solução desperdiça tempo recalculando $x^n$.
+
+\end{slide} 
+
+
+\begin{slide}
+    \stitle{Solução 2}
+ \textbf{Ideia:}   Eliminar a computação reduntante movendo o cálculo de $x^{n-1}$ para dentro da hipótese de indução.
+ 
+ \textbf{Hipótese de indução:} (2a tentativa)
+ 
+ Sabemos calcular $P_{n-1} = a_{n-1}x^{n-1} + \cdots + a_1 x + a_0$ e também o $x^{n-1}$
+ 
+ \textbf{Base:} Para $n=0$ a solução é $(a_0, 1)$
+
+ \textbf{Passo:} Primeiro calculamos $x^n$ multiplicando $x$ por $x^{n-1}$, depois calculamos $P_n(x)$ multiplicando $x^n$ por $a_n$ e somando o valor obtido com $P_{n-1}(x)$
+ \end{slide} 
+
+
+\begin{slide}
+    \stitle{Solução 2}
+
+\begin{codebox}
+\Procname{$\proc{Calculo-Polinomio}(A, n, x)$}
+\li  \If $n=0$   
+\li  \Then   $P = a_0$
+\li          $x_n = 1$
+\li  \Else
+\li   $A' = a_{n-1}, \cdots, a_1, a_0$
+\li   $(P', x') = \proc{Calculo-Polinomio}(A', n-1, x)$  
+\li   $x_n = x * x'$
+\li   $P = P' + a_n * x_n$ 
+\End
+\li  \Return $(P, x_n)$
+\End
+\end{codebox}  
+ \end{slide} 
+
+
+\begin{slide}
+    \stitle{Solução 2}
+$T(n):$ número de operações aritméticas
+
+        $T(n)= \left\{  \begin{array}{ll} 
+                0 & \textrm{, se } n=0 \\
+                T(n-1) + 2 \textrm{ multiplicações } + 1 \textrm{ adição } & \textrm{, se } n>0 
+                \end{array} \right. $
+ \end{slide} 
+
+
+\begin{slide}
+    \stitle{Solução 2}
+    
+    A solução da recorrência é:
+    
+                    
+   $T(n)= \displaystyle \sum_{i=1}^n (2 $ multiplicações $ + 1 $ adição $)=$       
+   
+   $ = 2n $ multiplicações $+$ $n$ adições $= O(n)$
+\end{slide} 
+
+
+\begin{slide}
+    \stitle{Solução 3}
+Considerar o polinômio $P_{n-1}(x)$ na hipótese de indução não é a única escolha possível.
+
+A hipótese de indução ainda pode ser reforçada para termos ganho de complexidade.
+\end{slide} 
+
+
+\begin{slide}
+    \stitle{Solução 3}
+
+\textbf{Hipótese de indução:} (3a. tentativa)
+Sabemos calcular o polinômio $P'_{n-1}(x) = a_{n}x^{n-1} + a_{n-1}x^{n-2} + \cdots a_2 x + a_1$.       
+
+\textbf{Note que:} $P_n = P'_{n-1}(x) * x + a_0$, ou seja, com apenas 1 multiplicação e 1 adição calculamos $P_n(x)$ a partir de $P'_{n-1}(x)$.
+\end{slide} 
+
+
+\begin{slide}
+    \stitle{Solução 3}
+
+\begin{codebox}
+\Procname{$\proc{Calculo-Polinomio}(A, n, x)$}
+\li  \If $n=0$   
+\li  \Then   $P = a_0$
+\li  \Else
+\li   $A' = a_{n}, a_{n-1} \cdots, a_1$
+\li   $P' = \proc{Calculo-Polinomio}(A', n-1, x)$  
+\li   $P = x * P' +  a_0$ 
+\End
+\li  \Return $P$
+\End
+\end{codebox}
+Note que a base de indução é trivial, pois para $n=0$ a solução é $a_0$.    
+\end{slide}
+
+\begin{slide}
+    \stitle{Solução 3}
+$T(n):$ número de operações aritméticas
+
+        $T(n)= \left\{  \begin{array}{ll} 
+                0 & \textrm{, se } n=0 \\
+                T(n-1) + 1 \textrm{ multiplicação } + 1 \textrm{ adição } & \textrm{, se } n>0 
+                \end{array} \right. $
+ \end{slide} 
+
+\begin{slide}
+    \stitle{Solução 3}
+    
+    A solução da recorrência é:
+    
+                    
+   $T(n)= \displaystyle \sum_{i=1}^n (1 $ multiplicação $ + 1 $ adição $)=$       
+   
+   $ = n $ multiplicações $+$ $n$ adições $= O(n)$
+   
+Esta última maneira de calcular $P_n(x)$ é chamada de \textbf{regra de Horner}.   
+\end{slide} 
+ 
+
+\begin{slide}
+  \stitle{Obrigado}
+\end{slide}
+
+\end{document}
+
+% Local Variables: 
+% mode: latex
+% eval: (Portug-mode)
+% TeX-master: t
+% End: 

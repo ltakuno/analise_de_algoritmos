@@ -1,0 +1,1364 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% talk: prototype
+%%% 2002/10/16
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%
+%%% Erstellen eines Vortrags in PDF-Format wie folgt:
+%%%
+%%% 1) Uebersetzen der Datei mit 
+%%%    pdflatex asz
+%%% 2) Wenn Features von ppower4 gewuenscht werden, dann die eben
+%%%    entstandene Datei asz.pdf weiterverarbeiten mit
+%%%    ./ppower4 asz.pdf vortrag.pdf
+%%% 3) Die Datei vortrag.pdf kann nun mit dem Acrobat Reader angesehen
+%%%    werden
+%%%
+%%% Fuer Testzwecke ist auch ein "normales" Uebersetzen mit LaTeX
+%%% moeglich:
+%%% 1) latex asz
+%%% 2) dvips asz.dvi -o asz.ps -t a4 -t landscape
+%%% 3) Anschauen mit ghostview
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ifx\pdfoutput\undefined \documentclass[clock,landscape]{slides} \else
+\documentclass[clock,landscape]{slides} \fi
+%\documentclass[clock,pdftex,landscape]{slides} \fi
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Escrevendo em português:
+\usepackage[brazil]{babel}
+\usepackage[latin1]{inputenc} % isso é quase redundante
+\usepackage{textcomp}
+\usepackage[T1]{fontenc}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{epstopdf}
+\usepackage{psfrag}
+
+\usepackage{multicol}
+
+\usepackage{clrscode}
+%----------------------------
+\usepackage{tabularx}
+%%% Die Datei mit dem ASZ-Layout
+
+\usepackage{shi}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath,amssymb,amsthm} \usepackage{amsfonts}
+\usepackage[colorlinks,backref]{hyperref}
+%\usepackage{background}
+
+%\usepackage{picinpar}
+
+\hypersetup{pdftitle={Análise e projeto de algoritmos},
+  pdfsubject={Análise de algoritmos}, 
+  pdfauthor={Leonardo Takuno, Centro Universitário SENAC, 
+  <leonardo.takuno@gmail.com>},
+  pdfkeywords={acrobat, ppower4},
+%  pdfpagemode={FullScreen},
+  colorlinks={false},
+  linkcolor={red}
+}
+
+\usepackage{color}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Pauseneffekte mit ppower4 werden moeglich
+
+\usepackage{pause}
+\newcommand\plone{\pause\pauselevel{=1}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newtheoremstyle{mythm}% name
+  {40pt}%      Space above
+  {-15pt}%      Space below
+  {\sf\itshape\blue}%      Body font
+  {}%         Indent amount (empty = no indent, \parindent = para indent)
+  {\sf\bfseries\green}% Thm head \vspacefont
+  {.}%        Punctuation after thm head
+  { }%     Space after thm head: " " = normal interword space;
+        %       \newline = linebreak
+  {}%         Thm head spec (can be left empty, meaning `normal')
+
+\theoremstyle{mythm}
+\newtheorem{theorem}             {Theorem}       
+\newtheorem{claim}     [theorem] {Claim}         
+\newtheorem{lemma}     [theorem] {Lemma}         
+\newtheorem{corollary} [theorem] {Corollary}     
+\newtheorem{fact}      [theorem] {Fact}          
+\newtheorem{conjecture}[theorem] {Conjecture}    
+
+\newtheorem{problem}   [theorem] {Problema}       
+\newtheorem{propriedade}  [theorem] {Propriedade}       
+\newtheorem{corolario}  [theorem] {Corolário}       
+\newtheorem{definition}   [theorem] {Definição}       
+
+%%% Symbole
+
+\newcommand{\NN}{\mathbb{N}} \newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}} \newcommand{\1}{{{\mathchoice {\rm
+        1\mskip-4mu l} {\rm 1\mskip-4mu l} {\rm 1\mskip-4.5mu l} {\rm
+        1\mskip-5mu l}}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\let\phi\varphi
+\let\epsilon\varepsilon
+\let\rho\varrho
+\let\tilde\widetilde
+\let\approx\thickapprox
+\let\sim\thicksim
+
+\def\({\left(}
+\def\){\right)}
+\def\[{\left[}
+\def\]{\right]}
+\def\<{\langle}
+\def\>{\rangle}
+\let\:\colon
+\def\llfloor{\left\lfloor}
+\def\rrfloor{\right\rfloor}
+\def\llceil{\left\lceil}
+\def\rrceil{\right\rceil}
+
+%%% Textmakros
+\def\ex{\mathop{\text{\rm ex}}\nolimits} 
+\def\cB{{\mathcal B}} 
+\def\cG{{\mathcal G}}
+\def\cS{{\mathcal S}} 
+\def\cW{{\mathcal W}} 
+\def\cQ{{\mathcal Q}} 
+\def\PP{{\mathbb P}}
+\def\EE{{\mathbb E}} 
+\def\GG{{\mathbb G}} 
+\def\e{{\rm e}}
+\def\epsilon{{\varepsilon}} 
+\def\DISC{\mathop{\textrm{\rm DISC}}\nolimits} 
+\def\EIG{\mathop{\textrm{\rm EIG}}\nolimits}
+\def\CIRCUIT{\mathop{\textrm{\rm CIRCUIT}}\nolimits}
+\def\CYCLE{\mathop{\textrm{\rm CYCLE}}\nolimits}
+\def\SUB{\mathop{\textrm{\rm SUB}}\nolimits}
+\def\NSUB{\mathop{\textrm{\rm NSUB}}\nolimits}
+\def\PAIR{\mathop{\textrm{\rm PAIR}}\nolimits}
+\def\TFNSUB{\mathop{\textrm{\rm TFNSUB}}\nolimits}
+\def\BDD{\mathop{\textrm{\rm BDD}}\nolimits}
+\def\eps{\varepsilon}
+
+\def\rmd{\text{\rm d}}
+\def\wtc{\widetilde{c}\,}
+\def\whc{\widehat{c}}
+\def\bfb{{\bf b}}
+\def\bff{{\bf f}}
+\def\bft{{\bf t}}
+\def\bfx{{\bf x}}
+\def\bfz{{\bf z}}
+\def\cB{{\mathcal B}}
+\def\cD{{\mathcal D}}
+\def\cG{{\mathcal G}}
+\def\cM{{\mathcal M}}
+\def\cN{{\mathcal N}}
+\def\cR{{\mathcal R}}
+\def\cS{{\mathcal S}}
+\def\cW{{\mathcal W}}
+\def\PP{{\mathbb P}}
+\def\EE{{\mathbb E}}
+\def\FF{{\mathbb F}}
+\def\NN{{\mathbb N}}
+\def\RR{{\mathbb R}}
+\def\ZZ{{\mathbb Z}}
+\def\e{{\rm e}}
+\def\card{\mathop{\text{\rm card}}\nolimits}
+\def\rank{\mathop{\text{\rm rank}}\nolimits}
+\def\trace{\mathop{\text{\rm trace}}\nolimits}
+\def\Ave{\mathop{\text{\rm Ave}}\nolimits}
+\def\Bi{\mathop{\text{\rm Bi}}\nolimits}
+\def\im{\mathop{\text{\rm im}}\nolimits}
+\def\ind{\mathop{\text{\rm ind}}\nolimits}
+\def\dist{\mathop{\text{\rm dist}}\nolimits}
+\def\nDist{\mathop{\text{\rm \#Dist}}\nolimits}
+\let\Dist\nDist
+\def\De{D_{\rm e}}
+\def\sumL{\sum\nolimits_1}
+\def\sumS{\sum\nolimits_2}
+\def\GF{\mathop{\text{\rm GF}}\nolimits}
+\let\FF\GF
+\def\Bip{\mathop{\text{\rm Bip}}\nolimits}
+\def\adj{\mathop{\text{\rm adj}}\nolimits}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\nx}{{\hfill\vspace*{-2cm}\tiny +}}
+
+%\newcommand{\red}[1]{\textcolor{red}{#1}}
+%\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+%\newcommand{\yellow}[1]{\textcolor{yellow}{#1}}
+%\newcommand{\green}[1]{\textcolor{green}{#1}}
+%\newcommand{\darkgreen}[1]{\textcolor{darkgreen}{#1}}
+\def\red{\color[rgb]{0.7,0,0}}
+\def\green{\color[rgb]{0,.8,0}}
+\def\darkgreen{\color[rgb]{0.1,0.4,0.0}}
+\let\dgreen\darkgreen
+\def\blue{\color[rgb]{0,0,.8}}
+\def\yellow{\color[rgb]{1,1,0}}
+\def\black{\color[rgb]{0,0,0}}
+
+\def\pink{\color[rgb]{1,0,1}}
+\def\brown{\color[rgb]{.5,.1,.3}}
+\def\lilaz{\color[rgb]{.5,0,.5}}
+\def\hmmm{\color[rgb]{.3,.1,.5}}
+\def\magenta{\color[rgb]{.6,.05,.05}}
+
+\newcommand{\uc}[1]{\centerline{\underline{#1}}}
+\newcommand{\pic}[1]{\fbox{picture:{#1}}}
+%\renewcommand{\bf}{\mbox{}}
+\newcommand{\cP}{{\cal P}} \newcommand{\cT}{{\cal T}}
+\newcommand{\add}{\mbox{\rm add}} \newcommand{\pr}{\mbox{\rm Pr}}
+
+\def\stitle#1{\slidetitle{\red #1}\vspace{-0pt}}
+
+\def\itemtrig{$\vartriangleright$}
+\def\itemcirc{$\circ$}
+\def\itemT{\item[\itemtrig]}
+\def\itemC{\item[$\circ$]}
+
+\everymath={\blue}
+\everydisplay={\blue}
+
+\renewcommand{\For}{\textbf{\blue para} }
+\renewcommand{\To}{\textbf{\blue até} }
+\renewcommand{\Do}{\>\>\textbf{\blue faça}\hspace*{-0.7em}\'\addtocounter{indent}{1}}
+\renewcommand{\While}{\textbf{\blue enquanto} }
+\renewcommand{\If}{\textbf{\blue se} }
+\renewcommand{\Then}{\>\textbf{\blue então}\>\hspace*{0.5em}\addtocounter{indent}{1}}
+\renewcommand{\Else}{\kill\addtocounter{indent}{-1}\liprint\>\textbf{\blue senão}\>\hspace*{0.5em}\addtocounter{indent}{1}}
+\renewcommand{\ElseIf}{\kill\addtocounter{indent}{-1}\liprint\textbf{\blue senão se} }
+\renewcommand{\ElseNoIf}{\kill\addtocounter{indent}{-1}\liprint\textbf{\blue senão} \addtocounter{indent}{1}}
+\renewcommand{\Return}{\textbf{\blue retorne} }
+
+
+\newcommand{\TITLE}[1]{\item[#1]}
+
+% ugly hack for for/while
+\newbox\fixbox
+
+% end of hack
+\newcommand{\algcost}[2]{\strut\hfill\makebox[3.5cm][l]{#1}\makebox[4cm][l]{#2}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%%Anuschs Extras
+%
+%\def\enddiscard{}
+%\long\def\discard#1\enddiscard{}
+%
+%%%\vpagecolor{bgblue}
+%\hypersetup{pdfpagetransition=Dissolve}
+%\hypersetup{pdfpagetransition=R}
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Farben kann man hier definieren
+
+\definecolor{bgblue}{rgb}{0.04,0.39,0.53}
+
+\definecolor{darkyellow}{rgb}{0.94,0.820,0.058}
+\definecolor{orange}{rgb}{0.95,0.47,0.14}
+\definecolor{darkgreen}{rgb}{0.0,0.5,0.0}
+
+\definecolor{blue2}{rgb}{0.1,0.39,0.53}
+\definecolor{yellow1}{rgb}{1,1,0} \definecolor{pink}{rgb}{1,0,1}
+
+\definecolor{lightred}{rgb}{1,0.5,0.5}
+\definecolor{lightred2}{rgb}{1,0.7,0.7}
+\definecolor{lightred3}{rgb}{1,0.3,0.3}
+\definecolor{black}{rgb}{0,0,0} \definecolor{gray1}{rgb}{0.9,0.9,0.9}
+\definecolor{red1}{rgb}{1,1,0.9}
+
+\title{Análise e projeto de algoritmos} 
+\author{{\blue L.~Takuno} (SENAC)}
+\date{{\dgreen 1o. Semestre 2019}} 
+
+%%% Hier beginnt die Praesentation
+
+\begin{document}\def\proofname{{\bf\green Prova.}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Deckblatt
+%%%%%%%%%%%%%%%%%%%\usepackage{clrscode3e}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\maketitle
+
+%\slidesubhead{}  %% Teilvortrags-Titel (hier noch nicht)
+                 %% Dieser erscheint spaeter oben links unter
+                 %% dem ASZ Gesamt-Titel
+
+%%%%%%%%%%%%%%%%%%%%%%% TOC %%%%%%%%%%%%%%%%%%
+
+%\slidesubhead{Outline!!!}
+
+\begin{slide}
+  \stitle{Fontes principais}
+  \begin{enumerate}\makeatletter\itemsep\z@\makeatother
+  \item Cormem T. H.; Leiserson C. E.; Rivest R.: Stein C.. \textit{Introduction to Algorithms}, $3^a$ edição, MIT Press, 2009
+  \item Análise de algoritmo - IME/USP (prof. Paulo Feofiloff)
+    \verb|http://www.ime.usp.br/~pf/analise_de_algoritmos| 
+	
+  \end{enumerate}
+  \end{slide}
+ 
+
+
+ 
+\begin{slide}
+  \stitle{Notação ``Chão'' e ``Teto''}  
+\end{slide}
+ 
+
+
+ 
+\begin{slide}
+  \stitle{Notação ``Chão'' e ``Teto''}
+	
+O chão (ou piso) de um número não negativo $x$ é o único natural $i$ tal que $i \leq x < i+1$.
+O chão de $x$ é denotado por $\lfloor x \rfloor$.
+
+O teto de $x$ é o único número $j$ natural tal que que $j-1 < x \leq j$. O teto de $x$ é denotado por $\lceil x \rceil$
+\end{slide}
+ 
+
+\begin{slide}
+  \stitle{Divisão e conquista}
+\end{slide}
+
+\begin{slide}
+  \stitle{Divisão e conquista}
+  Dada uma instância do problema, dividí-lo em instâncias menores, resolvê-los recursivamente e, a partir de suas soluções, obter a solução da instância original.
+\end{slide}
+
+\begin{slide}
+  \stitle{Ordenação por intercalação}
+\end{slide}
+
+\begin{slide}
+  \stitle{Ordenação por intercalação}
+  
+ Divide-se a sequência em duas partes, ordena-se cada uma delas recursivamente e intercala-se as duas sequências ordenadas. 
+ \end{slide}
+
+\begin{slide}
+  \stitle{Ordenação por intercalação}
+
+\vspace{1.0cm}
+$\proc{Merge-Sort}(A, p, r)$
+\vspace{-2.0cm}
+\begin{tabbing}
+~~~~ \= ~~~~\= ~~~~~~~\= \hspace*{12cm}                                           \= custo \\
+1  \> \If $\id{p} < id{r}$ \> \>                                                  \>  \\
+2  \> \> {\blue \textbf{então}}  $\id{q} \gets \lfloor \frac{p+r}{2} \rfloor$\>   \>   \\
+3  \> \> \>$\proc{Merge-Sort}(A, p, q)$                                           \>  \\
+4  \> \> \> $\proc{Merge-Sort}(A, q+1, r)$                                        \> \\
+5  \> \> \> $\proc{Merge}(A, p, q, r)$                                            \>  \\
+\end{tabbing}  
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Ordenação por intercalação}
+
+\vspace{1.0cm}
+$\proc{Merge-Sort}(A, p, r)$
+\vspace{-2.0cm}
+\begin{tabbing}
+~~~~ \= ~~~~\= ~~~~~~~\= \hspace*{12cm}                                                  \= custo \\
+1  \> \If $\id{p} < id{r}$ \> \>                                                  \> $\Theta(1)$ \\
+2  \> \> {\blue \textbf{então}}  $\id{q} \gets \lfloor \frac{p+r}{2} \rfloor$\>   \> $\Theta(1)$  \\
+3  \> \> \>$\proc{Merge-Sort}(A, p, q)$                                           \> $T(\lceil \frac{n}{2} \rceil)$\\
+4  \> \> \> $\proc{Merge-Sort}(A, q+1, r)$                                        \> $T(\lfloor \frac{n}{2} \rfloor)$\\
+5  \> \> \> $\proc{Merge}(A, p, q, r)$                                            \> $\Theta(n)$ \\
+\end{tabbing}  
+\end{slide}
+
+\begin{slide}
+  \stitle{Ordenação por intercalação}
+$T(n)= \left\{  \begin{array}{ll} 
+                \Theta(1) & \textrm{, se } n=1 \\
+                T(\lceil \frac{n}{2} \rceil) + T(\lfloor \frac{n}{2} \rfloor)+\Theta(n)+\Theta(2) & \textrm{, se } n>1
+                \end{array} \right. $
+
+Resolver recorrências é importante para obter fórmulas fechadas para a complexidade de algoritmos recursivos.
+\end{slide}
+
+
+
+\begin{slide}
+  \stitle{Métodos para resolver a recorrência}
+\end{slide}
+
+\begin{slide}
+  \stitle{Métodos para resolver a recorrência}
+  \begin{itemize}
+  \item \textbf{Substituição}: Arriscamos um ``palpite'' para um limite e então usamos indução matemática para provar que nosso ``palpite'' estava certo.
+  \item \textbf{Árvore de recursão}: Convertemos recorrência em uma árvore e usamos a técnica para limitar somatórios com intuito de resolver a recorrência.
+  
+  \item \textbf{Método mestre}: Para recorrências da forma $T(n) = aT(n/b) + f(n)$, com $a \geq 1$ e $b > 1$.
+  
+  \end{itemize}
+  
+\end{slide}
+
+\begin{slide}
+  \stitle{Lembre-se}
+  
+  A meta não é determinar as soluções exatas de uma recorrência, mas encontrar uma solução $g(n)$ tal que $T(n) = \Theta(g(n))$ 
+\end{slide}
+
+\begin{slide}
+  \stitle{Método da substituição}   
+\end{slide}
+
+\begin{slide}
+  \stitle{Método da substituição}   
+Vamos resolver a recorrência que expressa o tempo de execução do algoritmo $\proc{Merge-Sort}$.  
+Primeiro vamos simplificar a recorrência:
+  
+
+$T(n)= \left\{  \begin{array}{ll} 
+                1 & \textrm{, se } n=1 \\
+                T(\lceil \frac{n}{2} \rceil) + T(\lfloor \frac{n}{2} \rfloor)+n & \textrm{, se } n>1
+                \end{array} \right. $
+\end{slide}
+
+\begin{slide}
+  \stitle{Método da substituição}   
+$T(n)= \left\{  \begin{array}{ll} 
+                1 & \textrm{, se } n=1 \\
+                T(\lceil \frac{n}{2} \rceil) + T(\lfloor \frac{n}{2} \rfloor)+n & \textrm{, se } n>1
+                \end{array} \right. $
+
+\textbf{Palpite}: $T(n) = O(n \cdot \log n)$. Ou seja, $T(n) \leq c \cdot n \cdot \log n$, para alguma constante $c$ quando $n \geq n_0$.  
+\end{slide}
+
+\begin{slide}
+  \stitle{Método da substituição}   
+$T(n)= \left\{  \begin{array}{ll} 
+                1 & \textrm{, se } n=1 \\
+                T(\lceil \frac{n}{2} \rceil) + T(\lfloor \frac{n}{2} \rfloor)+n & \textrm{, se } n>1
+                \end{array} \right. $
+
+\textbf{Prova por indução}
+
+\textbf{Base}:  $T(2) = T(1) + T(1) + 2 = 4 \leq 3 \cdot 2 \cdot \log 2 = 3 \cdot 2 \cdot 1 = 6$. 
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Método da substituição}   
+$T(n)= \left\{  \begin{array}{ll} 
+                1 & \textrm{, se } n=1 \\
+                T(\lceil \frac{n}{2} \rceil) + T(\lfloor \frac{n}{2} \rfloor)+n & \textrm{, se } n>1
+                \end{array} \right. $
+
+\textbf{Prova por indução}
+
+\textbf{Base}:  $T(2) = T(1) + T(1) + 2 = 4 \leq 3 \cdot 2 \cdot \log 2 = 3 \cdot 2 \cdot 1 = 6$. 
+
+\textbf{Hipótese}:  $T(n) \leq  c \cdot n \cdot \log n$, para todo $m < n$
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Método da substituição}   
+$T(n)= \left\{  \begin{array}{ll} 
+                1 & \textrm{, se } n=1 \\
+                T(\lceil \frac{n}{2} \rceil) + T(\lfloor \frac{n}{2} \rfloor)+n & \textrm{, se } n>1
+                \end{array} \right. $
+
+\textbf{Prova por indução}
+
+\textbf{Base}:  $T(2) = T(1) + T(1) + 2 = 4 \leq 3 \cdot 2 \cdot \log 2 = 3 \cdot 2 \cdot 1 = 6$. 
+
+\textbf{Hipótese}:  $T(n) \leq  c \cdot n \cdot \log n$, para todo $m < n$
+
+\textbf{Passo indutivo}: $T(n) = T(\underset{<n}{\lceil \frac{n}{2} \rceil}) + T(\underset{<n}{\lfloor \frac{n}{2} \rfloor})+n$
+\end{slide}
+
+\begin{slide}
+  \stitle{Método da substituição}   
+\textbf{Passo indutivo}: $T(n) = T(\underset{<n}{\lceil \frac{n}{2} \rceil}) + T(\underset{<n}{\lfloor \frac{n}{2} \rfloor})+n$
+
+$
+\begin{array}{l}
+\leq c \lceil \frac{n}{2} \rceil \log \lceil \frac{n}{2} \rceil +  c \lfloor \frac{n}{2} \rfloor \log \lfloor \frac{n}{2} \rfloor + n
+\end{array}
+$  
+\end{slide}
+
+\begin{slide}
+  \stitle{Método da substituição}   
+\textbf{Passo indutivo}: $T(n) = T(\underset{<n}{\lceil \frac{n}{2} \rceil}) + T(\underset{<n}{\lfloor \frac{n}{2} \rfloor})+n$
+
+$
+\begin{array}{l}
+\leq c \lceil \frac{n}{2} \rceil \log \lceil \frac{n}{2} \rceil +  c \lfloor \frac{n}{2} \rfloor \log \lfloor \frac{n}{2} \rfloor + n\\
+\leq c \lceil \frac{n}{2} \rceil \log n +  c \lfloor \frac{n}{2} \rfloor (\log n - \log 2) + n
+\end{array}
+$  
+\end{slide}
+
+\begin{slide}
+  \stitle{Método da substituição}   
+\textbf{Passo indutivo}: $T(n) = T(\underset{<n}{\lceil \frac{n}{2} \rceil}) + T(\underset{<n}{\lfloor \frac{n}{2} \rfloor})+n$
+
+$
+\begin{array}{l}
+\leq c \lceil \frac{n}{2} \rceil \log \lceil \frac{n}{2} \rceil +  c \lfloor \frac{n}{2} \rfloor \log \lfloor \frac{n}{2} \rfloor + n\\
+\leq c \lceil \frac{n}{2} \rceil \log n +  c \lfloor \frac{n}{2} \rfloor (\log n - \log 2) + n \\
+\leq c \lceil \frac{n}{2} \rceil \log n +  c \lfloor \frac{n}{2} \rfloor (\log n - 1) + n
+\end{array}
+$  
+\end{slide}
+
+\begin{slide}
+  \stitle{Método da substituição}   
+\textbf{Passo indutivo}: $T(n) = T(\underset{<n}{\lceil \frac{n}{2} \rceil}) + T(\underset{<n}{\lfloor \frac{n}{2} \rfloor})+n$
+
+$
+\begin{array}{l}
+\leq c \lceil \frac{n}{2} \rceil \log \lceil \frac{n}{2} \rceil +  c \lfloor \frac{n}{2} \rfloor \log \lfloor \frac{n}{2} \rfloor + n\\
+\leq c \lceil \frac{n}{2} \rceil \log n +  c \lfloor \frac{n}{2} \rfloor (\log n - \log 2) + n \\
+\leq c \lceil \frac{n}{2} \rceil \log n +  c \lfloor \frac{n}{2} \rfloor (\log n - 1) + n \\
+= c (\lceil \frac{n}{2} \rceil + \lfloor \frac{n}{2} \rfloor )\log n - c \lfloor \frac{n}{2} \rfloor + n
+\end{array}
+$  
+\end{slide}
+
+\begin{slide}
+  \stitle{Método da substituição}   
+\textbf{Passo indutivo}: $T(n) = T(\underset{<n}{\lceil \frac{n}{2} \rceil}) + T(\underset{<n}{\lfloor \frac{n}{2} \rfloor})+n$
+
+$
+\begin{array}{l}
+\leq c \lceil \frac{n}{2} \rceil \log \lceil \frac{n}{2} \rceil +  c \lfloor \frac{n}{2} \rfloor \log \lfloor \frac{n}{2} \rfloor + n\\
+\leq c \lceil \frac{n}{2} \rceil \log n +  c \lfloor \frac{n}{2} \rfloor (\log n - \log 2) + n \\
+\leq c \lceil \frac{n}{2} \rceil \log n +  c \lfloor \frac{n}{2} \rfloor (\log n - 1) + n \\
+= c (\lceil \frac{n}{2} \rceil + \lfloor \frac{n}{2} \rfloor )\log n - c \lfloor \frac{n}{2} \rfloor + n\\
+= c n \log n - c \lfloor \frac{n}{2} \rfloor + n
+\end{array}
+$  
+\end{slide}
+\begin{slide}
+  \stitle{Método da substituição}   
+\textbf{Passo indutivo}: $T(n) = T(\underset{<n}{\lceil \frac{n}{2} \rceil}) + T(\underset{<n}{\lfloor \frac{n}{2} \rfloor})+n$
+
+$
+\begin{array}{l}
+\leq c \lceil \frac{n}{2} \rceil \log \lceil \frac{n}{2} \rceil +  c \lfloor \frac{n}{2} \rfloor \log \lfloor \frac{n}{2} \rfloor + n\\
+\leq c \lceil \frac{n}{2} \rceil \log n +  c \lfloor \frac{n}{2} \rfloor (\log n - \log 2) + n \\
+\leq c \lceil \frac{n}{2} \rceil \log n +  c \lfloor \frac{n}{2} \rfloor (\log n - 1) + n \\
+= c (\lceil \frac{n}{2} \rceil + \lfloor \frac{n}{2} \rfloor )\log n - c \lfloor \frac{n}{2} \rfloor + n\\
+= c n \log n - c \lfloor \frac{n}{2} \rfloor + n\\
+\leq c n \log n
+\end{array}
+$  
+
+A inequação $n - c\lfloor \frac{n}{2} \rfloor \leq cn \log n$ é válida para $c \geq 3$, $n \geq 2$
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Resolver a recorrência}	
+$T(n)= \left\{  \begin{array}{ll} 
+                1 & \textrm{, se } n=1 \\
+                T(\lceil \frac{n}{2} \rceil) + T(\lfloor \frac{n}{2} \rfloor)+1 & \textrm{, se } n>1
+                \end{array} \right. $  
+\end{slide}
+ 
+\begin{slide}
+  \stitle{Resolver a recorrência}	
+$T(n)= \left\{  \begin{array}{ll} 
+                1 & \textrm{, se } n=1 \\
+                T(\lceil \frac{n}{2} \rceil) + T(\lfloor \frac{n}{2} \rfloor)+1 & \textrm{, se } n>1
+                \end{array} \right. $  
+
+\textbf{Palpite:} $T(n) = O(n)$
+                
+\end{slide}
+
+\begin{slide}
+  \stitle{Resolver a recorrência}	
+$T(n)= \left\{  \begin{array}{ll} 
+                1 & \textrm{, se } n=1 \\
+                T(\lceil \frac{n}{2} \rceil) + T(\lfloor \frac{n}{2} \rfloor)+1 & \textrm{, se } n>1
+                \end{array} \right. $  
+
+\textbf{Palpite:} $T(n) = O(n)$
+
+\textbf{Base:} Okay! $T(2) = T(1) + T(1) + 1 = 3 = O(2)$
+                
+\end{slide}
+
+\begin{slide}
+  \stitle{Resolver a recorrência}	
+$T(n)= \left\{  \begin{array}{ll} 
+                1 & \textrm{, se } n=1 \\
+                T(\lceil \frac{n}{2} \rceil) + T(\lfloor \frac{n}{2} \rfloor)+1 & \textrm{, se } n>1
+                \end{array} \right. $  
+
+\textbf{Palpite:} $T(n) = O(n)$
+
+\textbf{Base:} Okay! $T(2) = T(1) + T(1) + 1 = 3 = O(2)$
+                
+\textbf{Hipótese:} $T(n) \leq cn$, para todo $m < n$.
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Resolver a recorrência}	
+$T(n)= \left\{  \begin{array}{ll} 
+                1 & \textrm{, se } n=1 \\
+                T(\lceil \frac{n}{2} \rceil) + T(\lfloor \frac{n}{2} \rfloor)+1 & \textrm{, se } n>1
+                \end{array} \right. $  
+
+\textbf{Palpite:} $T(n) = O(n)$
+
+\textbf{Base:} Okay! $T(2) = T(1) + T(1) + 1 = 3 = O(2)$
+                
+\textbf{Hipótese:} $T(n) \leq cn$, para todo $m < n$.
+
+\textbf{Passo indutivo:}
+
+$T(n) = T(\lceil \frac{n}{2} \rceil) + T(\lfloor \frac{n}{2} \rfloor)+1$
+\end{slide}
+
+\begin{slide}
+  \stitle{Resolver a recorrência}	
+$T(n)= \left\{  \begin{array}{ll} 
+                1 & \textrm{, se } n=1 \\
+                T(\lceil \frac{n}{2} \rceil) + T(\lfloor \frac{n}{2} \rfloor)+1 & \textrm{, se } n>1
+                \end{array} \right. $  
+
+\textbf{Palpite:} $T(n) = O(n)$
+
+\textbf{Base:} Okay! $T(2) = T(1) + T(1) + 1 = 3 = O(2)$
+                
+\textbf{Hipótese:} $T(n) \leq cn$, para todo $m < n$.
+
+\textbf{Passo indutivo:}
+
+$T(n) = T(\lceil \frac{n}{2} \rceil) + T(\lfloor \frac{n}{2} \rfloor)+1$
+
+$\leq c\lceil \frac{n}{2} \rceil + c\lfloor \frac{n}{2} \rfloor + 1$
+\end{slide}
+
+\begin{slide}
+  \stitle{Resolver a recorrência}	
+$T(n)= \left\{  \begin{array}{ll} 
+                1 & \textrm{, se } n=1 \\
+                T(\lceil \frac{n}{2} \rceil) + T(\lfloor \frac{n}{2} \rfloor)+1 & \textrm{, se } n>1
+                \end{array} \right. $  
+
+\textbf{Palpite:} $T(n) = O(n)$
+
+\textbf{Base:} Okay! $T(2) = T(1) + T(1) + 1 = 3 = O(2)$
+                
+\textbf{Hipótese:} $T(n) \leq cn$, para todo $m < n$.
+
+\textbf{Passo indutivo:}
+
+$T(n) = T(\lceil \frac{n}{2} \rceil) + T(\lfloor \frac{n}{2} \rfloor)+1$
+
+$\leq c\lceil \frac{n}{2} \rceil + c\lfloor \frac{n}{2} \rfloor + 1 = cn + 1$
+\end{slide}
+
+\begin{slide}
+  \stitle{Resolver a recorrência}	
+$T(n)= \left\{  \begin{array}{ll} 
+                1 & \textrm{, se } n=1 \\
+                T(\lceil \frac{n}{2} \rceil) + T(\lfloor \frac{n}{2} \rfloor)+1 & \textrm{, se } n>1
+                \end{array} \right. $  
+
+\textbf{Palpite:} $T(n) = O(n)$
+
+\textbf{Base:} Okay! $T(2) = T(1) + T(1) + 1 = 3 = O(2)$
+                
+\textbf{Hipótese:} $T(n) \leq cn$, para todo $m < n$.
+
+\textbf{Passo indutivo:}
+
+$T(n) = T(\lceil \frac{n}{2} \rceil) + T(\lfloor \frac{n}{2} \rfloor)+1$
+
+$\leq c\lceil \frac{n}{2} \rceil + c\lfloor \frac{n}{2} \rfloor + 1 = cn + 1$ (?)
+\end{slide}
+
+\begin{slide}
+Solução para (?)
+
+Substituir a hipótese por $T(n) \leq cn - b$, com $b > 0$. $T(n) \leq cn-b$ permite as escolhas $c=2$, $b=1$ e $n_0=1$
+\end{slide}
+
+\begin{slide}
+  \stitle{Método da árvore de recursão}
+\end{slide}
+
+\begin{slide}
+  \stitle{Método da árvore de recursão}
+Esquema geral:
+
+\begin{itemize}
+\item Simplificar a fórmula de recorrência.
+\vspace{-0.8cm}\item Itere a recorrência visualmente como uma árvore.
+\vspace{-0.8cm}\item Indique em cada nó o custo correspondente às chamadas recursivas.
+\vspace{-0.8cm}\item Calcular a cada nível da árvore o custo que não corresponde às chamadas recursivas
+\vspace{-0.8cm}\item A solução da recorrência é a soma de todos os custos em cada nível.
+\end{itemize}
+\end{slide}
+
+\begin{slide}
+  \stitle{Método da árvore de recursão}
+Importante:
+
+Depois de encontrar a solução deve-se aplicar o método de substituição!
+\end{slide}
+
+\begin{slide}
+  \stitle{Método da árvore de recursão}
+  Resolver a recorrência a seguir para uma constante $c > 0$:
+  
+$T(n)= \left\{  \begin{array}{ll} 
+                \Theta(1) & \textrm{, se } n \leq 3 \\
+                3T(\lfloor \frac{n}{4} \rfloor) + \Theta(n^2) & \textrm{, se } n \geq 4
+                \end{array} \right. $    
+  
+\end{slide}
+
+\begin{slide}
+  \stitle{Método da árvore de recursão}
+  Simplifique a recorrência:
+  
+$T(n)= \left\{  \begin{array}{ll} 
+                \Theta(1) & \textrm{, se } n \leq 3 \\
+                3T(\frac{n}{4}) + cn^2 & \textrm{, se } n \geq 4^i \textrm{ (conveniência)}
+                \end{array} \right. $    
+  
+\end{slide}
+
+\begin{slide}
+  $T(n)= \left\{  \begin{array}{ll} 
+                \Theta(1) & \textrm{, se } n \leq 3 \\
+                3T(\frac{n}{4}) + cn^2 & \textrm{, se } n \geq 4^i  
+                \end{array} \right. $    
+
+\vspace{-0.8cm}\hspace{-2.5cm}\includegraphics[width=1.22\textwidth]{fig01.eps}
+\end{slide}
+
+
+\begin{slide}
+\vspace{-1cm}\hspace{-1cm}\includegraphics[width=1\textwidth]{fig02.eps}
+
+A altura da árvore de recursão é: $\log_4 n$ 
+\end{slide}
+ 
+\begin{slide}
+\vspace{-1cm}\hspace{-1cm}\includegraphics[width=1\textwidth]{fig02.eps}
+
+$3^i$ é número de nós na profundidade $i=0,1, \cdots, (\log_4 n - 1)$  
+\end{slide}
+
+\begin{slide}
+\vspace{-1cm}\hspace{-1cm}\includegraphics[width=1\textwidth]{fig02.eps}
+
+Cada nó na profundidade $i$ tem custo $c(n/4^i)^2$, então o custo total é $3^ic(n/4^i)^2 = (3/16)^icn^2$
+\end{slide}
+
+\begin{slide}
+\vspace{-1cm}\hspace{-1cm}\includegraphics[width=1\textwidth]{fig02.eps}
+
+No último nível, cada nó contribui com custo $T(1)$. Nesse nível existem $3^{\log_4 n}=n^{\log_4 3}$ nós.
+\end{slide}
+
+\begin{slide}
+  \stitle{Método da árvore de recursão}
+  
+$T(n)= \left\{  \begin{array}{ll} 
+                \Theta(1) & \textrm{, se } n \leq 3 \\
+                3T(\frac{n}{4}) + cn^2 & \textrm{, se } n \geq 4^i \textrm{ (conveniência)}
+                \end{array} \right. $    
+
+Então o custo total para a recorrência é:
+
+$
+\begin{array}{ll}
+\displaystyle T(n) &= cn^2 + \frac{3}{16}cn^2 + \left(\frac{3}{16}\right)^2cn^2 + \cdots + \left(\frac{3}{16}\right)^{\log_4 n -1}cn^2 + \Theta(n^{\log_4 3}) 
+\end{array}$
+  
+\end{slide}
+
+\begin{slide}
+  \stitle{Método da árvore de recursão}
+  
+$T(n)= \left\{  \begin{array}{ll} 
+                \Theta(1) & \textrm{, se } n \leq 3 \\
+                3T(\frac{n}{4}) + cn^2 & \textrm{, se } n \geq 4^i \textrm{ (conveniência)}
+                \end{array} \right. $    
+
+Então o custo total para a recorrência é:
+
+$
+\begin{array}{ll}
+\displaystyle T(n) & = cn^2 + \frac{3}{16}cn^2 + \left(\frac{3}{16}\right)^2cn^2 + \cdots + \left(\frac{3}{16}\right)^{\log_4 n - 1}cn^2 + \Theta(n^{\log_4 3}) \\
+                   & \displaystyle = \sum_{i=0}^{\log_4 n - 1}  \left(\frac{3}{16}\right)^i cn^2 + \Theta(n^{\log_4 3})
+\end{array}$
+  
+\end{slide}
+
+\begin{slide}
+  \stitle{Método da árvore de recursão}
+  
+$T(n)= \left\{  \begin{array}{ll} 
+                \Theta(1) & \textrm{, se } n \leq 3 \\
+                3T(\frac{n}{4}) + cn^2 & \textrm{, se } n \geq 4^i \textrm{ (conveniência)}
+                \end{array} \right. $    
+
+Então o custo total para a recorrência é:
+
+$
+\begin{array}{ll}
+\displaystyle T(n) & = cn^2 + \frac{3}{16}cn^2 + \left(\frac{3}{16}\right)^2cn^2 + \cdots + \left(\frac{3}{16}\right)^{\log_4 n - 1}cn^2 + \Theta(n^{\log_4 3}) \\
+                   & \displaystyle = \sum_{i=0}^{\log_4 n - 1}  \left(\frac{3}{16}\right)^i cn^2 + \Theta(n^{\log_4 3}) \\
+                   & \displaystyle \leq cn^2 \sum_{i=0}^{\infty}  \left(\frac{3}{16}\right)^i  + \Theta(n^{\log_4 3})
+
+\end{array}$
+\end{slide}
+
+\begin{slide}
+  \stitle{Método da árvore de recursão}
+  
+  Série geométrica:
+  
+  $$
+  \displaystyle   \sum_{i=0}^{\infty} r^i = \frac{1}{1-r} \textrm{, se } |r| < 1, 
+  $$
+  
+\end{slide}
+
+\begin{slide}
+  \stitle{Método da árvore de recursão}
+  
+$T(n)= \left\{  \begin{array}{ll} 
+                \Theta(1) & \textrm{, se } n \leq 3 \\
+                3T(\frac{n}{4}) + cn^2 & \textrm{, se } n \geq 4^i \textrm{ (conveniência)}
+                \end{array} \right. $    
+
+Então o custo total para a recorrência é:
+
+$
+\begin{array}{ll}
+\displaystyle T(n) & = cn^2 + \frac{3}{16}cn^2 + \left(\frac{3}{16}\right)^2cn^2 + \cdots + \left(\frac{3}{16}\right)^{\log_4 n - 1}cn^2 + \Theta(n^{\log_4 3}) \\
+                   & \displaystyle = \sum_{i=0}^{\log_4 n - 1}  \left(\frac{3}{16}\right)^i cn^2 + \Theta(n^{\log_4 3}) \\
+                   & \displaystyle \leq cn^2 \sum_{i=0}^{\infty}  \left(\frac{3}{16}\right)^i  + \Theta(n^{\log_4 3}) \\
+                   & \displaystyle =  \frac{1}{1 - \frac{3}{16}} cn^2+ \Theta(n^{\log_4 3}) \\
+                   
+
+\end{array}$
+\end{slide}
+
+\begin{slide}
+  \stitle{Método da árvore de recursão}
+  
+$T(n)= \left\{  \begin{array}{ll} 
+                \Theta(1) & \textrm{, se } n \leq 3 \\
+                3T(\frac{n}{4}) + cn^2 & \textrm{, se } n \geq 4^i \textrm{ (conveniência)}
+                \end{array} \right. $    
+
+Então o custo total para a recorrência é:
+
+$
+\begin{array}{ll}
+\displaystyle T(n) & = cn^2 + \frac{3}{16}cn^2 + \left(\frac{3}{16}\right)^2cn^2 + \cdots + \left(\frac{3}{16}\right)^{\log_4 n - 1}cn^2 + \Theta(n^{\log_4 3}) \\
+                   & \displaystyle = \sum_{i=0}^{\log_4 n - 1}  \left(\frac{3}{16}\right)^i cn^2 + \Theta(n^{\log_4 3}) \\
+                   & \displaystyle \leq cn^2 \sum_{i=0}^{\infty}  \left(\frac{3}{16}\right)^i  + \Theta(n^{\log_4 3}) \\
+                   & \displaystyle =  \frac{16}{13} cn^2+ \Theta(n^{\log_4 3}) \\
+                   
+
+\end{array}$
+\end{slide}
+
+\begin{slide}
+  \stitle{Método da árvore de recursão}
+  
+$T(n)= \left\{  \begin{array}{ll} 
+                \Theta(1) & \textrm{, se } n \leq 3 \\
+                3T(\frac{n}{4}) + cn^2 & \textrm{, se } n \geq 4^i \textrm{ (conveniência)}
+                \end{array} \right. $    
+
+
+Então o custo total para a recorrência é:
+
+$\displaystyle T(n) =  \frac{16}{13} cn^2+ \Theta(n^{\log_4 3})$
+
+Como $n^{\log_4 3} < n^2$, $\frac{16}{13}cn^2$ é ``dominante'' e $T(n) = O(n^2)$
+\end{slide}
+
+\begin{slide}
+  \stitle{De volta ao método da substituição}
+
+Agora, vamos verificar a fórmula de recorrência anterior usando o método da substituição.  
+
+$$T(n) = 3T \left( \left\lfloor \frac{n}{4} \right\rfloor \right) + \Theta(n^2)$$
+
+Queremos mostrar que $T(n) \leq dn^2$, para alguma constante $d>0$. 
+
+Pela hipótese de indução, nós temos que $T(\lfloor \frac{n}{4} \rfloor) = d\lfloor \frac{n}{4} \rfloor^2$
+\end{slide}
+
+\begin{slide}
+  \stitle{De volta ao método da substituição}
+
+Então usando a mesma constante $c > 0$ como antes, nós temos:
+
+$
+\begin{array}{ll}
+T(n) &\leq 3T(\lfloor \frac{n}{4} \rfloor) + cn^2\\\\
+\end{array}
+$
+  
+\end{slide}
+
+\begin{slide}
+  \stitle{De volta ao método da substituição}
+
+Então usando a mesma constante $c > 0$ como antes, nós temos:
+
+$
+\begin{array}{ll}
+T(n) &\leq 3T(\lfloor \frac{n}{4} \rfloor) + cn^2\\\\
+     &\leq 3d\lfloor \frac{n}{4} \rfloor^2 + cn^2\\\\
+\end{array}
+$
+  
+\end{slide}
+
+\begin{slide}
+  \stitle{De volta ao método da substituição}
+
+Então usando a mesma constante $c > 0$ como antes, nós temos:
+
+$
+\begin{array}{ll}
+T(n) &\leq 3T(\lfloor \frac{n}{4} \rfloor) + cn^2\\\\
+     &\leq 3d\lfloor \frac{n}{4} \rfloor^2 + cn^2\\\\
+     &\leq 3d (\frac{n}{4})^2 + cn^2\\\\
+\end{array}
+$
+  
+\end{slide}
+
+\begin{slide}
+  \stitle{De volta ao método da substituição}
+
+Então usando a mesma constante $c > 0$ como antes, nós temos:
+
+$
+\begin{array}{ll}
+T(n) &\leq 3T(\lfloor \frac{n}{4} \rfloor) + cn^2\\\\
+     &\leq 3d\lfloor \frac{n}{4} \rfloor^2 + cn^2\\\\
+     &\leq 3d (\frac{n}{4})^2 + cn^2\\\\
+     &\leq \frac{3}{16}dn^2 + cn^2\\\\
+\end{array}
+$
+  
+\end{slide}
+
+\begin{slide}
+  \stitle{De volta ao método da substituição}
+
+Então usando a mesma constante $c > 0$ como antes, nós temos:
+
+$
+\begin{array}{ll}
+T(n) &\leq 3T(\lfloor \frac{n}{4} \rfloor) + cn^2\\\\
+     &\leq 3d\lfloor \frac{n}{4} \rfloor^2 + cn^2\\\\
+     &\leq 3d (\frac{n}{4})^2 + cn^2\\\\
+     &\leq \frac{3}{16}dn^2 + cn^2\\\\
+     &\leq dn^2 \textrm{  (quando } c \leq (13/16)d \textrm{, i.e. } d \geq (16/13)c) 
+\end{array}
+$
+  
+\end{slide}
+
+\begin{slide}
+  \stitle{Método Mestre}
+\end{slide}
+
+\begin{slide}
+  \stitle{Método Mestre}
+  
+  Recorrências de algoritmos que requerem chamadas recursivas para resolver problemas de tamanho $(n/b)$ com custo $f(n)$ em passos de divisão e conquista podem ser escritas (com constantes $a\geq 1$ e $b>1$) da seguinte forma:
+  
+  $$T(n) = aT(n/b) + f(n)$$
+ \end{slide}
+
+\begin{slide}
+  \stitle{Método Mestre} 
+  
+    
+Assumindo que a base indutiva tem custo constante, temos um método geral para descrever solução de algumas destas recorrências. 
+
+A recorrência anterior também inclui casos $\lceil n/b \rceil$ e $\lfloor n/b \rfloor$.
+\end{slide}
+
+\begin{slide}
+  \stitle{Teorema Mestre} 
+  
+Sejam $a \geq 1$ e $b > 1$ constantes, $f(n)$ uma função e $T(n)$ definida para inteiros não-negativos como a recorrência.
+
+$$T(n) = aT(n/b) + f(n)$$
+\end{slide}
+
+\begin{slide}
+  \stitle{Teorema Mestre} 
+  
+Então, $T(n)$ tem os seguintes limites assintóticos
+
+\begin{enumerate}
+\item[(1)] Se $f(n) = O(n^{\log_b a - \varepsilon})$ para alguma constante $\varepsilon > 0$, então $T(n) = \Theta(n^{\log_b a})$
+\item[(2)] Se $f(n) = \Theta(n^{\log_b a})$, então $T(n) = \Theta(n^{\log_b a} \cdot \log n)$
+\item[(3)] Se $f(n) = \Omega(n^{\log_b a + \varepsilon})$ para alguma constante $\varepsilon > 0$, e se $af(n/b) \leq c f(n)$ para alguma constante $c < 1$ e todos $n$ suficientemente grandes, então $T(n) = \Theta(f(n))$
+\end{enumerate}
+\end{slide}
+
+\begin{slide}
+  \stitle{Exemplos (a)}
+$T(n)= \left\{  \begin{array}{ll} 
+                \Theta(1) & \textrm{, se } n = 1 \\
+                4T(\lfloor \frac{n}{2} \rfloor) + n & \textrm{, se } n > 1
+                \end{array} \right. $ 
+\end{slide}
+
+\begin{slide}
+  \stitle{Exemplos (a)}
+$T(n)= \left\{  \begin{array}{ll} 
+                \Theta(1) & \textrm{, se } n = 1 \\
+                4T(\lfloor \frac{n}{2} \rfloor) + n & \textrm{, se } n > 1
+                \end{array} \right. $ 
+                
+$a = 4$, $b = 2$, $f(n) = n$
+\end{slide}
+
+\begin{slide}
+  \stitle{Exemplos (a)}
+$T(n)= \left\{  \begin{array}{ll} 
+                \Theta(1) & \textrm{, se } n = 1 \\
+                4T(\lfloor \frac{n}{2} \rfloor) + n & \textrm{, se } n > 1
+                \end{array} \right. $ 
+                
+$a = 4$, $b = 2$, $f(n) = n$
+
+$n^{\log_b a} = n^{\log_2 4} = n^2 $               
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Exemplos (a)}
+$T(n)= \left\{  \begin{array}{ll} 
+                \Theta(1) & \textrm{, se } n = 1 \\
+                4T(\lfloor \frac{n}{2} \rfloor) + n & \textrm{, se } n > 1
+                \end{array} \right. $ 
+                
+$a = 4$, $b = 2$, $f(n) = n$
+
+$n^{\log_b a} = n^{\log_2 4} = n^2 $               
+
+$f(n) = n$ está ``por cima'' ou ``por baixo'' de $n^{\log_b a} = n^2 $?
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Exemplos (a)}
+$T(n)= \left\{  \begin{array}{ll} 
+                \Theta(1) & \textrm{, se } n = 1 \\
+                4T(\lfloor \frac{n}{2} \rfloor) + n & \textrm{, se } n > 1
+                \end{array} \right. $ 
+                
+$a = 4$, $b = 2$, $f(n) = n$
+
+$n^{\log_b a} = n^{\log_2 4} = n^2 $               
+
+$f(n) = n$ está ``por cima'' ou ``por baixo'' de $n^{\log_b a} = n^2 $?
+
+$f(n) = n = O(n^{2 - \varepsilon})$ para $\varepsilon = 1$ (Caso 1)
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Exemplos (a)}
+$T(n)= \left\{  \begin{array}{ll} 
+                \Theta(1) & \textrm{, se } n = 1 \\
+                4T(\lfloor \frac{n}{2} \rfloor) + n & \textrm{, se } n > 1
+                \end{array} \right. $ 
+                
+$a = 4$, $b = 2$, $f(n) = n$
+
+$n^{\log_b a} = n^{\log_2 4} = n^2 $               
+
+$f(n) = n$ está ``por cima'' ou ``por baixo'' de $n^{\log_b a} = n^2 $?
+
+$f(n) = n = O(n^{2 - \varepsilon})$ para $\varepsilon = 1$ (Caso 1)
+
+$\therefore T(n) = \Theta(n^2)$
+\end{slide}
+
+\begin{slide}
+  \stitle{Exemplos (b)}
+$T(n)= T(\lfloor \frac{2n}{3} \rfloor) + 1 $ 
+\end{slide}
+
+\begin{slide}
+  \stitle{Exemplos (b)}
+$T(n)= T(\lfloor \frac{2n}{3} \rfloor) + 1 $ 
+
+$a = 1$, $b = 3/2$, $f(n) = 1$
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Exemplos (b)}
+$T(n)= T(\lfloor \frac{2n}{3} \rfloor) + 1 $ 
+
+$a = 1$, $b = 3/2$, $f(n) = 1$
+
+$n^{\log_b a} = n^{\log_{3/2} 1} = n^0 = 1 $               
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Exemplos (b)}
+$T(n)= T(\lfloor \frac{2n}{3} \rfloor) + 1 $ 
+
+$a = 1$, $b = 3/2$, $f(n) = 1$
+
+$n^{\log_b a} = n^{\log_{3/2} 1} = n^0 = 1 $               
+
+$f(n) = 1$ está ``por cima'' ou ``por baixo'' de $n^{\log_b a} = 1 $?
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Exemplos (b)}
+$T(n)= T(\lfloor \frac{2n}{3} \rfloor) + 1 $ 
+
+$a = 1$, $b = 3/2$, $f(n) = 1$
+
+$n^{\log_b a} = n^{\log_{3/2} 1} = n^0 = 1 $               
+
+$f(n) = 1$ está ``por cima'' ou ``por baixo'' de $n^{\log_b a} = 1 $?
+
+$f(n) = 1 = \Theta(1)$ (Caso 2)
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Exemplos (b)}
+$T(n)= T(\lfloor \frac{2n}{3} \rfloor) + 1 $ 
+
+$a = 1$, $b = 3/2$, $f(n) = 1$
+
+$n^{\log_b a} = n^{\log_{3/2} 1} = n^0 = 1 $               
+
+$f(n) = 1$ está ``por cima'' ou ``por baixo'' de $n^{\log_b a} = 1 $?
+
+$f(n) = 1 = \Theta(1)$ (Caso 2)
+
+$\therefore T(n) = \Theta(1 \cdot \log n)$
+\end{slide}
+
+\begin{slide}
+  \stitle{Exemplos (c)}
+$T(n)= 3T(\lfloor \frac{n}{4} \rfloor) + n \log n$ , para $n = 4, 8, 16, \cdots$
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Exemplos (c)}
+$T(n)= 3T(\lfloor \frac{n}{4} \rfloor) + n \log n$ , para $n = 4, 8, 16, \cdots$
+
+$a = 3$, $b = 4$, $f(n) = n \log n$
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Exemplos (c)}
+$T(n)= 3T(\lfloor \frac{n}{4} \rfloor) + n \log n$ , para $n = 4, 8, 16, \cdots$
+
+$a = 3$, $b = 4$, $f(n) = n \log n$
+
+$n^{\log_b a} = n^{\log_{4} 3} = n^{0.8}$               
+
+$f(n) = n \log n$ está ``por cima'' ou ``por baixo'' de $n^{\log_b a} = n^{0.8} $?
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Exemplos (c)}
+$T(n)= 3T(\lfloor \frac{n}{4} \rfloor) + n \log n$ , para $n = 4, 8, 16, \cdots$
+
+$a = 3$, $b = 4$, $f(n) = n \log n$
+
+$n^{\log_b a} = n^{\log_{4} 3} = n^{0.8}$               
+
+$f(n) = n \log n$ está ``por cima'' ou ``por baixo'' de $n^{\log_b a} = n^{0.8} $?
+
+$f(n) = n \log n = \Omega(n^{0.8 + \varepsilon})$ para $\varepsilon = 0.2$ (Caso 3)
+\end{slide}
+
+\begin{slide}
+  \stitle{Exemplos (c)}
+Ainda temos que verificar a condição de regularidade: $af(n/b) \leq cf(n)$ para alguma constante $c<1$ e $n$ suficientemente grande.
+
+$a = 3$, $b = 4$, $f(n) = n \log n$
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Exemplos (c)}
+Ainda temos que verificar a condição de regularidade: $af(n/b) \leq cf(n)$ para alguma constante $c<1$ e $n$ suficientemente grande.
+
+$a = 3$, $b = 4$, $f(n) = n \log n$
+
+$
+\begin{array}{l}
+3 f(n/4) = \\
+\end{array}
+$
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Exemplos (c)}
+Ainda temos que verificar a condição de regularidade: $af(n/b) \leq cf(n)$ para alguma constante $c<1$ e $n$ suficientemente grande.
+
+$a = 3$, $b = 4$, $f(n) = n \log n$
+
+$
+\begin{array}{l}
+3 f(n/4) = \\
+3 (n/4 \log n/4) = \\
+\end{array}
+$
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Exemplos (c)}
+Ainda temos que verificar a condição de regularidade: $af(n/b) \leq cf(n)$ para alguma constante $c<1$ e $n$ suficientemente grande.
+
+$a = 3$, $b = 4$, $f(n) = n \log n$
+
+$
+\begin{array}{l}
+3 f(n/4) = \\
+3 (n/4 \log n/4) = \\
+3n/4 (\log n - \log 4) = \\
+\end{array}
+$
+\end{slide}
+
+\begin{slide}
+  \stitle{Exemplos (c)}
+Ainda temos que verificar a condição de regularidade: $af(n/b) \leq cf(n)$ para alguma constante $c<1$ e $n$ suficientemente grande.
+
+$a = 3$, $b = 4$, $f(n) = n \log n$
+
+$
+\begin{array}{l}
+3 f(n/4) = \\
+3 (n/4 \log n/4) = \\
+3n/4 (\log n - \log 4) = \\
+3/4 n\log n - 3/4 n\log 2^2 = \\
+\end{array}
+$
+\end{slide}
+
+\begin{slide}
+  \stitle{Exemplos (c)}
+Ainda temos que verificar a condição de regularidade: $af(n/b) \leq cf(n)$ para alguma constante $c<1$ e $n$ suficientemente grande.
+
+$a = 3$, $b = 4$, $f(n) = n \log n$
+
+$
+\begin{array}{l}
+3 f(n/4) = \\
+3 (n/4 \log n/4) = \\
+3n/4 (\log n - \log 4) = \\
+3/4 n\log n - 3/4 n\log 2^2 = \\
+3/4 n\log n - 3/2 n \\
+\end{array}
+$
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Exemplos (c)}
+Ainda temos que verificar a condição de regularidade: $af(n/b) \leq cf(n)$ para alguma constante $c<1$ e $n$ suficientemente grande.
+
+$a = 3$, $b = 4$, $f(n) = n \log n$
+
+$
+\begin{array}{l}
+3 f(n/4) = \\
+3 (n/4 \log n/4) = \\
+3n/4 (\log n - \log 4) = \\
+3/4 n\log n - 3/4 n\log 2^2 = \\
+3/4 n\log n - 3/2 n \leq\\
+3/4 n\log n \\
+\end{array}
+$
+
+para todo $n \geq 1$ e $c = 3/4 < 1$.
+\end{slide}
+
+\begin{slide}
+  \stitle{Exemplos (c)}
+Ainda temos que verificar a condição de regularidade: $af(n/b) \leq cf(n)$ para alguma constante $c<1$ e $n$ suficientemente grande.
+
+$a = 3$, $b = 4$, $f(n) = n \log n$
+
+$
+\begin{array}{l}
+3 f(n/4) = \\
+3 (n/4 \log n/4) = \\
+3n/4 (\log n - \log 4) = \\
+3/4 n\log n - 3/4 n\log 2^2 = \\
+3/4 n\log n - 3/2 n \leq\\
+3/4 n\log n \\
+\end{array}
+$
+
+para todo $n \geq 1$ e $c = 3/4 < 1$.
+
+$\therefore T(n) = \Theta(n \log n)$
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Lembre-se}
+  \begin{center}
+  O método mestre não resolve todas as recorrências!
+  \end{center}
+\end{slide}
+
+\begin{slide}
+  \stitle{Obrigado}
+\end{slide}
+
+\end{document}
+
+% Local Variables: 
+% mode: latex
+% eval: (Portug-mode)
+% TeX-master: t
+% End: 

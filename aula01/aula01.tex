@@ -1,0 +1,944 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% talk: prototype
+%%% 2002/10/16
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%
+%%% Erstellen eines Vortrags in PDF-Format wie folgt:
+%%%
+%%% 1) Uebersetzen der Datei mit 
+%%%    pdflatex asz
+%%% 2) Wenn Features von ppower4 gewuenscht werden, dann die eben
+%%%    entstandene Datei asz.pdf weiterverarbeiten mit
+%%%    ./ppower4 asz.pdf vortrag.pdf
+%%% 3) Die Datei vortrag.pdf kann nun mit dem Acrobat Reader angesehen
+%%%    werden
+%%%
+%%% Fuer Testzwecke ist auch ein "normales" Uebersetzen mit LaTeX
+%%% moeglich:
+%%% 1) latex asz
+%%% 2) dvips asz.dvi -o asz.ps -t a4 -t landscape
+%%% 3) Anschauen mit ghostview
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ifx\pdfoutput\undefined \documentclass[clock,landscape]{slides} \else
+\documentclass[clock,landscape]{slides} \fi
+%\documentclass[clock,pdftex,landscape]{slides} \fi
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Escrevendo em português:
+\usepackage[brazil]{babel}
+\usepackage[latin1]{inputenc} % isso é quase redundante
+\usepackage{textcomp}
+\usepackage[T1]{fontenc}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{epstopdf}
+\usepackage{psfrag}
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{multicol}
+%\usepackage{clrscode3e}
+
+%----------------------------
+\usepackage{tabularx}
+%%% Die Datei mit dem ASZ-Layout
+
+\usepackage{shi}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath,amssymb,amsthm} \usepackage{amsfonts}
+\usepackage[colorlinks,backref]{hyperref}
+%\usepackage{background}
+
+%\usepackage{picinpar}
+
+\hypersetup{pdftitle={Análise e projeto de algoritmos},
+  pdfsubject={Análise de algoritmos}, 
+  pdfauthor={Leonardo Takuno, Centro Universitário SENAC, 
+  <leonardo.takuno@gmail.com>},
+  pdfkeywords={acrobat, ppower4},
+%  pdfpagemode={FullScreen},
+  colorlinks={false},
+  linkcolor={red}
+}
+
+\usepackage{color}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Pauseneffekte mit ppower4 werden moeglich
+
+\usepackage{pause}
+\newcommand\plone{\pause\pauselevel{=1}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newtheoremstyle{mythm}% name
+  {40pt}%      Space above
+  {-15pt}%      Space below
+  {\sf\itshape\blue}%      Body font
+  {}%         Indent amount (empty = no indent, \parindent = para indent)
+  {\sf\bfseries\green}% Thm head \vspacefont
+  {.}%        Punctuation after thm head
+  { }%     Space after thm head: " " = normal interword space;
+        %       \newline = linebreak
+  {}%         Thm head spec (can be left empty, meaning `normal')
+
+\theoremstyle{mythm}
+\newtheorem{theorem}             {Theorem}       
+\newtheorem{claim}     [theorem] {Claim}         
+\newtheorem{lemma}     [theorem] {Lemma}         
+\newtheorem{corollary} [theorem] {Corollary}     
+\newtheorem{fact}      [theorem] {Fact}          
+\newtheorem{conjecture}[theorem] {Conjecture}    
+
+\newtheorem{problem}   [theorem] {Problema}       
+\newtheorem{propriedade}  [theorem] {Propriedade}       
+\newtheorem{corolario}  [theorem] {Corolário}       
+\newtheorem{definition}   [theorem] {Definição}       
+
+%%% Symbole
+
+\newcommand{\NN}{\mathbb{N}} \newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}} \newcommand{\1}{{{\mathchoice {\rm
+        1\mskip-4mu l} {\rm 1\mskip-4mu l} {\rm 1\mskip-4.5mu l} {\rm
+        1\mskip-5mu l}}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\let\phi\varphi
+\let\epsilon\varepsilon
+\let\rho\varrho
+\let\tilde\widetilde
+\let\approx\thickapprox
+\let\sim\thicksim
+
+\def\({\left(}
+\def\){\right)}
+\def\[{\left[}
+\def\]{\right]}
+\def\<{\langle}
+\def\>{\rangle}
+\let\:\colon
+\def\llfloor{\left\lfloor}
+\def\rrfloor{\right\rfloor}
+\def\llceil{\left\lceil}
+\def\rrceil{\right\rceil}
+
+%%% Textmakros
+\def\ex{\mathop{\text{\rm ex}}\nolimits} 
+\def\cB{{\mathcal B}} 
+\def\cG{{\mathcal G}}
+\def\cS{{\mathcal S}} 
+\def\cW{{\mathcal W}} 
+\def\cQ{{\mathcal Q}} 
+\def\PP{{\mathbb P}}
+\def\EE{{\mathbb E}} 
+\def\GG{{\mathbb G}} 
+\def\e{{\rm e}}
+\def\epsilon{{\varepsilon}} 
+\def\DISC{\mathop{\textrm{\rm DISC}}\nolimits} 
+\def\EIG{\mathop{\textrm{\rm EIG}}\nolimits}
+\def\CIRCUIT{\mathop{\textrm{\rm CIRCUIT}}\nolimits}
+\def\CYCLE{\mathop{\textrm{\rm CYCLE}}\nolimits}
+\def\SUB{\mathop{\textrm{\rm SUB}}\nolimits}
+\def\NSUB{\mathop{\textrm{\rm NSUB}}\nolimits}
+\def\PAIR{\mathop{\textrm{\rm PAIR}}\nolimits}
+\def\TFNSUB{\mathop{\textrm{\rm TFNSUB}}\nolimits}
+\def\BDD{\mathop{\textrm{\rm BDD}}\nolimits}
+\def\eps{\varepsilon}
+
+\def\rmd{\text{\rm d}}
+\def\wtc{\widetilde{c}\,}
+\def\whc{\widehat{c}}
+\def\bfb{{\bf b}}
+\def\bff{{\bf f}}
+\def\bft{{\bf t}}
+\def\bfx{{\bf x}}
+\def\bfz{{\bf z}}
+\def\cB{{\mathcal B}}
+\def\cD{{\mathcal D}}
+\def\cG{{\mathcal G}}
+\def\cM{{\mathcal M}}
+\def\cN{{\mathcal N}}
+\def\cR{{\mathcal R}}
+\def\cS{{\mathcal S}}
+\def\cW{{\mathcal W}}
+\def\PP{{\mathbb P}}
+\def\EE{{\mathbb E}}
+\def\FF{{\mathbb F}}
+\def\NN{{\mathbb N}}
+\def\RR{{\mathbb R}}
+\def\ZZ{{\mathbb Z}}
+\def\e{{\rm e}}
+\def\card{\mathop{\text{\rm card}}\nolimits}
+\def\rank{\mathop{\text{\rm rank}}\nolimits}
+\def\trace{\mathop{\text{\rm trace}}\nolimits}
+\def\Ave{\mathop{\text{\rm Ave}}\nolimits}
+\def\Bi{\mathop{\text{\rm Bi}}\nolimits}
+\def\im{\mathop{\text{\rm im}}\nolimits}
+\def\ind{\mathop{\text{\rm ind}}\nolimits}
+\def\dist{\mathop{\text{\rm dist}}\nolimits}
+\def\nDist{\mathop{\text{\rm \#Dist}}\nolimits}
+\let\Dist\nDist
+\def\De{D_{\rm e}}
+\def\sumL{\sum\nolimits_1}
+\def\sumS{\sum\nolimits_2}
+\def\GF{\mathop{\text{\rm GF}}\nolimits}
+\let\FF\GF
+\def\Bip{\mathop{\text{\rm Bip}}\nolimits}
+\def\adj{\mathop{\text{\rm adj}}\nolimits}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\nx}{{\hfill\vspace*{-2cm}\tiny +}}
+
+%\newcommand{\red}[1]{\textcolor{red}{#1}}
+%\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+%\newcommand{\yellow}[1]{\textcolor{yellow}{#1}}
+%\newcommand{\green}[1]{\textcolor{green}{#1}}
+%\newcommand{\darkgreen}[1]{\textcolor{darkgreen}{#1}}
+\def\red{\color[rgb]{0.7,0,0}}
+\def\green{\color[rgb]{0,.8,0}}
+\def\darkgreen{\color[rgb]{0.1,0.4,0.0}}
+\let\dgreen\darkgreen
+\def\blue{\color[rgb]{0,0,.8}}
+\def\yellow{\color[rgb]{1,1,0}}
+\def\black{\color[rgb]{0,0,0}}
+
+\def\pink{\color[rgb]{1,0,1}}
+\def\brown{\color[rgb]{.5,.1,.3}}
+\def\lilaz{\color[rgb]{.5,0,.5}}
+\def\hmmm{\color[rgb]{.3,.1,.5}}
+\def\magenta{\color[rgb]{.6,.05,.05}}
+
+\newcommand{\uc}[1]{\centerline{\underline{#1}}}
+\newcommand{\pic}[1]{\fbox{picture:{#1}}}
+%\renewcommand{\bf}{\mbox{}}
+\newcommand{\cP}{{\cal P}} \newcommand{\cT}{{\cal T}}
+\newcommand{\add}{\mbox{\rm add}} \newcommand{\pr}{\mbox{\rm Pr}}
+
+\def\stitle#1{\slidetitle{\red #1}\vspace{-0pt}}
+
+\def\itemtrig{$\vartriangleright$}
+\def\itemcirc{$\circ$}
+\def\itemT{\item[\itemtrig]}
+\def\itemC{\item[$\circ$]}
+
+\everymath={\blue}
+\everydisplay={\blue}
+
+\renewcommand{\algorithmicrequire}{\textrm{Entrada:}}
+\renewcommand{\algorithmicensure}{\textrm{Saída:}}
+\renewcommand{\algorithmicend}{\underline{fim algoritmo}}
+\renewcommand{\algorithmicif}{\underline{se}}
+\renewcommand{\algorithmicthen}{\underline{então}}
+\renewcommand{\algorithmicelse}{\underline{senão}}
+\renewcommand{\algorithmicelsif}{\underline{senão se}}
+\renewcommand{\algorithmicelsif}{\underline{senão se}}
+\renewcommand{\algorithmicendif}{\underline{fim se}}
+\renewcommand{\algorithmicfor}{\underline{para}}
+\renewcommand{\algorithmicforall}{\underline{para todo}}
+\renewcommand{\algorithmicdo}{} %\underline{faça}
+\renewcommand{\algorithmicendfor}{}
+\renewcommand{\algorithmicwhile}{\underline{enquanto}}
+\renewcommand{\algorithmicendwhile}{}
+\renewcommand{\algorithmicloop}{\underline{laço}}
+\renewcommand{\algorithmicendloop}{}
+\renewcommand{\algorithmicrepeat}{\underline{repita}}
+\renewcommand{\algorithmicuntil}{\underline{até que}}
+
+\newcommand{\TITLE}[1]{\item[#1]}
+\renewcommand{\algorithmiccomment}[1]{$\vartriangleright$ \parbox[t]{8.5cm}{\raggedright #1}}
+% ugly hack for for/while
+\newbox\fixbox
+\renewcommand{\algorithmicdo}{\setbox\fixbox\hbox{\ {} }\hskip-\wd\fixbox}
+% end of hack
+\newcommand{\algcost}[2]{\strut\hfill\makebox[3.5cm][l]{#1}\makebox[4cm][l]{#2}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%%Anuschs Extras
+%
+%\def\enddiscard{}
+%\long\def\discard#1\enddiscard{}
+%
+%%%\vpagecolor{bgblue}
+%\hypersetup{pdfpagetransition=Dissolve}
+%\hypersetup{pdfpagetransition=R}
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Farben kann man hier definieren
+
+\definecolor{bgblue}{rgb}{0.04,0.39,0.53}
+
+\definecolor{darkyellow}{rgb}{0.94,0.820,0.058}
+\definecolor{orange}{rgb}{0.95,0.47,0.14}
+\definecolor{darkgreen}{rgb}{0.0,0.5,0.0}
+
+\definecolor{blue2}{rgb}{0.1,0.39,0.53}
+\definecolor{yellow1}{rgb}{1,1,0} \definecolor{pink}{rgb}{1,0,1}
+
+\definecolor{lightred}{rgb}{1,0.5,0.5}
+\definecolor{lightred2}{rgb}{1,0.7,0.7}
+\definecolor{lightred3}{rgb}{1,0.3,0.3}
+\definecolor{black}{rgb}{0,0,0} \definecolor{gray1}{rgb}{0.9,0.9,0.9}
+\definecolor{red1}{rgb}{1,1,0.9}
+
+\title{Arquitetura paralela e distribuída} 
+\author{{\blue L.~Takuno} (SENAC)}
+\date{{\dgreen 1o. Semestre 2015}} 
+
+%%% Hier beginnt die Praesentation
+
+\begin{document}\def\proofname{{\bf\green Prova.}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Deckblatt
+%%%%%%%%%%%%%%%%%%%\usepackage{clrscode3e}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\maketitle
+
+%\slidesubhead{}  %% Teilvortrags-Titel (hier noch nicht)
+                 %% Dieser erscheint spaeter oben links unter
+                 %% dem ASZ Gesamt-Titel
+
+%%%%%%%%%%%%%%%%%%%%%%% TOC %%%%%%%%%%%%%%%%%%
+
+%\slidesubhead{Outline!!!}
+
+\begin{slide}
+  \stitle{Fontes principais}
+  \begin{enumerate}\makeatletter\itemsep\z@\makeatother
+  \item Cormem T. H.; Leiserson C. E.; Rivest R.: Stein C.. \textit{Introduction to Algorithms}, $3^a$ edição, MIT Press, 2009
+  \item Análise de algoritmo - IME/USP (prof. Paulo Feofiloff)
+    \verb|http://www.ime.usp.br/~pf/analise_de_algoritmos| 
+	
+  \end{enumerate}
+\end{slide}
+ 
+
+
+\begin{slide}
+  \stitle{Objetivos da análise e projeto de algoritmos}
+	
+	\itemtrig\ Prova de \textbf{corretude} de um algoritmo
+	
+	\vspace{-1cm} \itemtrig\ Análise da quantidade de recursos para executar um algoritmo (complexidade)
+	
+	\vspace{-1cm} \itemtrig\ Projeto de algoritmos utilizando várias técnicas
+	
+\end{slide}
+
+\begin{slide}
+  \stitle{Definição informal de algoritmos}
+
+  \itemtrig\ \textbf{Algoritmo} é um procedimento bem definido para resolver um problema computacional específico.
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Algoritmos}
+
+  \itemtrig\ \textbf{Busca} e \textbf{ordenação} são exemplos de problemas computacionais clássicos.
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema e instância}
+  
+  Um \textbf{problema} é definido por:
+  
+  \begin{itemize}
+  \vspace{-1.5cm} \item Uma descrição dos parâmetros
+  \vspace{-1.5cm} \item Uma descrição sobre as propriedades que a resposta deve satisfazer
+  \end{itemize}
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema e instância}
+ \textbf{Instância:} Conjunto de valores da entrada necessários para que se possa resolver o problema.
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema e instância}
+\begin{problem}
+Dada uma sequência de $n$ números $\langle a_1, a_2, \cdots, a_n \rangle$, determinar uma permutação $\langle a_1', a_2', \cdots, a_n' \rangle$ da sequência de entrada tal que $a_1 \leq a_2 \leq \cdots \leq a_n $.
+\end{problem}  
+
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Problema e instância}
+ \textbf{Instância:} Ordenar o vetor de maneira crescente.
+ 
+ \itemcirc\ Entrada: $[10,20,5,40,4]$
+ 
+ \vspace{-1cm} \itemcirc\ Saída: $[4,5,10,20,40]$
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da ordenação}
+ Qual algoritmo de ordenação é melhor?
+ 
+\itemtrig\ Depende:
+
+ \vspace{-1cm} \hspace{1cm} \itemcirc\ do tamanho da instância a ser ordenada;
+
+ \vspace{-1cm} \hspace{1cm} \itemcirc\ tipo de dispositivo é utilizado
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Ordenação por inserção}
+\begin{algorithmic}[1]
+  \TITLE{\textsc{Insertion-Sort}$(A,n)$}
+  \FOR{$j=2$ {\blue até} $n$}
+  \STATE $\mathit{chave} = A[j]$
+  \STATE \COMMENT{Insere $A[j]$ na sequência ordenada $A[1..j-1]$}
+  \STATE $i = j-1$
+  \WHILE{$i>0$ {\blue e} $A[i]>chave$}
+  \STATE $A[i+1]= A[i]$
+  \STATE $i = i-1$
+  \ENDWHILE
+  \STATE $A[i+1] = \mathit{chave}$
+  \ENDFOR
+\end{algorithmic}
+  
+\end{slide}
+
+\begin{slide}
+  \stitle{Análise de algoritmos}
+  
+  \begin{definition}
+  Análise de um algoritmo significa predizer os recursos que um algoritmo requer.
+  \end{definition}
+
+Ex.: memória, comunicação, tempo computacional
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Análise de algoritmos}
+
+{\blue Objetivo geral:} é encontrar uma expressão matemática que é simples para escrever e manipular, que mostre as características importantes das necessidades do algoritmo e omita os detalhes desnecessários.
+  
+\end{slide}
+
+\begin{slide}
+  \stitle{Ordenação por inserção}
+\begin{algorithmic}[1]
+  \TITLE{\textsc{Insertion-Sort}$(A,n)$}
+    \algcost{\textit{cost} }{ \textit{times}}
+  \FOR{$j=2$ {\blue até} $n$
+    \algcost{$c_1$}{$n$}}
+  \STATE $\mathit{chave} = A[j]$
+    \algcost{ $c_2$}{ $n-1$}
+  \STATE \COMMENT{Insere $A[j]$ na sequência ordenada $A[1..j-1]$}
+    \algcost{ $0$}{ $n-1$}
+  \STATE $i = j-1$
+    \algcost{ $c_4$}{ $n-1$}
+  \WHILE{$i>0$ {\blue e} $A[i]>chave$
+    \algcost{$c_5$}{$\sum_{j=2}^{n} t_j$}}
+  \STATE $A[i+1]= A[i]$
+    \algcost{ $c_6$}{ $\sum_{j=2}^{n} (t_j-1)$}
+  \STATE $i = i-1$
+    \algcost{$c_7$}{$\sum_{j=2}^{n} (t_j-1)$}
+  \ENDWHILE
+  \STATE $A[i+1] = \mathit{chave}$
+    \algcost{$c_8$}{$n-1$}
+  \ENDFOR
+\end{algorithmic}
+$t_j$ é o número de vezes que o teste do while da linha 5 é executado para cada $j$.
+\end{slide}
+
+\begin{slide}
+  \stitle{Análise da ordenação por inserção}
+
+\itemtrig\  Tamanho da entrada: n
+
+ \vspace{-1cm} \itemtrig\ Tempo de execução com uma instância de tamanho n
+
+ $$\begin{array}{ll}
+  T(n) = & c_1 n + c_2 (n - 1) + c_4 (n - 1) + c_5 \sum_{j=2}^{n} t_j \\
+         & + c_6 \sum_{j=2}^{n} (t_j-1) + c_7 \sum_{j=2}^{n} (t_j-1) + c_8 (n - 1)
+ \end{array} $$
+  
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Análise da ordenação por inserção}
+
+\itemtrig\  Melhor caso: sequência ordenada, $t_j=1, \forall j$
+
+ \vspace{-1cm}  \itemtrig\ A linha 5 é executada 1 vez a cada iteração de 2 até n.
+ 
+
+ \vspace{-1cm} \itemtrig\ As linhas 6 e 7 não são executadas
+ $$\begin{array}{ll}
+  T(n) &=   c_1 n + c_2 (n - 1) + c_4 (n - 1) + c_5 (n - 1) + c_8 (n - 1) 
+ \end{array}$$
+  
+\end{slide}
+
+\begin{slide}
+  \stitle{Análise da ordenação por inserção}
+
+\itemtrig\  Melhor caso: sequência ordenada, $t_j=1, \forall j$
+
+ \vspace{-1cm}  \itemtrig\ A linha 5 é executada 1 vez a cada iteração de 2 até n.
+ 
+
+ \vspace{-1cm} \itemtrig\ As linhas 6 e 7 não são executadas
+ $$\begin{array}{ll}
+  T(n) &=   c_1 n + c_2 (n - 1) + c_4 (n - 1) + c_5 (n - 1) + c_8 (n - 1) \\
+  T(n) &=   (c_1 + c_2 + c_4 + c_5 + c_8) n - (c_2 + c_4 + c_5 + c_8) \\
+ \end{array}$$
+  
+\end{slide}
+
+\begin{slide}
+  \stitle{Análise da ordenação por inserção}
+
+\itemtrig\  Melhor caso: sequência ordenada, $t_j=1, \forall j$
+
+ \vspace{-1cm}  \itemtrig\ A linha 5 é executada 1 vez a cada iteração de 2 até n.
+ 
+
+ \vspace{-1cm} \itemtrig\ As linhas 6 e 7 não são executadas
+ $$\begin{array}{ll}
+  T(n) &=   c_1 n + c_2 (n - 1) + c_4 (n - 1) + c_5 (n - 1) + c_8 (n - 1) \\
+  T(n) &=   (c_1 + c_2 + c_4 + c_5 + c_8) n - (c_2 + c_4 + c_5 + c_8) \\
+  T(n) &=   an + b
+ \end{array}$$
+  
+  Linear em $n$
+\end{slide}
+
+\begin{slide}
+  \stitle{Análise da ordenação por inserção}
+
+\itemtrig\  Pior caso: sequência em ordem decrescente, $t_j=j, \forall j$  
+
+ $$\begin{array}{ll}
+  T(n) &=   c_1 n + c_2 (n - 1) + c_4 (n - 1) + c_5 (\frac{n (n+1)}{2} - 1)\\
+       &    c_6 (\frac{n (n-1)}{2}) + c_7 (\frac{n (n-1)}{2}) + c_8 (n - 1) 
+ \end{array}$$
+ 
+ Lembre-se: $\displaystyle \sum_{j=1}^{n} j = \frac{n(n+1)}{2}$
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Análise da ordenação por inserção}
+
+\itemtrig\  Pior caso: sequência em ordem decrescente, $t_j=j, \forall j$  
+
+ $$\begin{array}{ll}
+  T(n) &=   c_1 n + c_2 (n - 1) + c_4 (n - 1) + c_5 (\frac{n (n+1)}{2} - 1)\\
+       &    c_6 (\frac{n (n-1)}{2}) + c_7 (\frac{n (n-1)}{2}) + c_8 (n - 1)\\
+  T(n) &=   (c_5 + c_6 + c_7) n^2/2 + (c_1+c_2+c_4+c_8+c_9+ \frac{c_5-c_6-c_7}{2})n\\
+       &    - (c_2 + c_4 + c_5 + c_8)\\
+
+ \end{array}$$
+
+\end{slide}
+\begin{slide}
+  \stitle{Análise da ordenação por inserção}
+
+\itemtrig\  Pior caso: sequência em ordem decrescente, $t_j=j, \forall j$  
+
+ $$\begin{array}{ll}
+  T(n) &=   c_1 n + c_2 (n - 1) + c_4 (n - 1) + c_5 (\frac{n (n+1)}{2} - 1)\\
+       &    c_6 (\frac{n (n-1)}{2}) + c_7 (\frac{n (n-1)}{2}) + c_8 (n - 1)\\
+  T(n) &=   (c_5 + c_6 + c_7) n^2/2 + (c_1+c_2+c_4+c_8+c_9+ \frac{c_5-c_6-c_7}{2})n\\
+       &    - (c_2 + c_4 + c_5 + c_8)\\
+  T(n) & a n^2 + b n + c
+ \end{array}$$
+
+Quadrático em $n$.
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Notação assintótica}
+\end{slide}
+
+\begin{slide}
+  \stitle{Notação $\Theta$}
+\end{slide}
+
+\begin{slide}
+  \stitle{Notação $\Theta$}
+  
+  \begin{definition}
+  Para uma dada função $g(n)$, denotamos por $\theta(g(n))$ o conjunto de funções:
+  
+  $$\begin{array}{ll}\Theta(g(n)) = &\{ f(n) : \exists c1, c2 > 0 \textrm{ e }  n_0 > 0 \textrm{ tal que } \\
+                                    & c_1 g(n) \leq f(n) \leq c_2 g(n), \forall n \geq n_0     \}\end{array}$$
+                                    
+  \end{definition}
+\end{slide}
+
+\begin{slide}
+  \stitle{Notação $\Theta$}  
+  Em vez de escrever $f(n) \in \Theta(g(n))$ escreveremos $f(n) = \Theta(g(n))$
+\begin{center}
+\psfrag{c1gn}{$c_1 g(n)$}
+\psfrag{c2gn}{$c_2 g(n)$}
+\psfrag{fn}{$f(n)$}
+\psfrag{no}{$n_0$}
+\includegraphics[height=8.0cm]{fig01.eps}
+\end{center} 
+
+A notação $\Theta$ é usada para delimitações exatas de funções.
+\end{slide}
+
+\begin{slide}
+  \stitle{Exemplo: Notação $\Theta$}  
+
+$$\begin{array}{l}
+\displaystyle \frac{1}{2} n^2 - 3n = \Theta(n^2) \\\\
+\displaystyle  \frac{1}{2} n^2 - 3n \leq \frac{1}{2} n^2, \forall n \geq 0 \rightarrow c_2 = \frac{1}{2}, n_0^{(2)} \geq 0.\\\\
+\displaystyle  \frac{1}{4} n^2 \leq \frac{1}{2} n^2 - 3n \rightarrow c_1 = \frac{1}{4}, n_0^{(1)} \geq 12 \\\\
+n_0 = max\{0,12\} = 12
+\end{array} 
+$$
+
+Portanto, $\displaystyle c_1 = \frac{1}{4}$, $\displaystyle c_2 = \frac{1}{2}$ e $n_0 = 12$
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Notação $O$ (oh grande)}   
+\end{slide}
+
+\begin{slide}
+  \stitle{Notação $O$ (oh grande)}   
+  \begin{definition}
+  Para uma dada função $g(n)$, denotamos por $O(g(n))$ o conjunto de funções:
+  
+  $$\begin{array}{ll}O(g(n)) = &\{ f(n) : \exists c > 0 \textrm{ e }  n_0 > 0 \textrm{ tal que } \\
+                                    &  f(n) \leq c g(n), \forall n \geq n_0     \}\end{array}$$
+  
+  \end{definition}
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Notação $O$ (oh grande)}  
+  
+ A notação $O$ serve para atribuir delimitações superiores para a função $g(n)$. 
+ 
+  \begin{center}
+\psfrag{cgn}{$c g(n)$}
+\psfrag{fn}{$f(n)$}
+\psfrag{no}{$n_0$}
+\includegraphics[height=8.0cm]{fig02.eps}
+\end{center} 
+Novamente escrevemos $f(n) = O(g(n))$ em vez de $f(n) \in O(g(n))$.
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Exemplos: Notação $O$}  
+  
+  \begin{itemize}
+  \item[(a)] $n = O(n^2)$?
+
+  Sim, tome $c = 1$ e $n_0 = 1$
+  
+  \item[(b)] $\frac{1}{2}n^2 - 3n = O(n^2)$? 
+  
+  Sim , tome $c = \frac{1}{2}$ e $n_0 = 7$
+  \end{itemize}
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Notação $\Omega$}  
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Notação $\Omega$}  
+  \begin{definition}
+  Para uma dada função $g(n)$, denotamos por $\Omega(g(n))$ o conjunto de funções:
+  
+  $$\begin{array}{ll}\Omega(g(n)) = &\{ f(n) : \exists c > 0 \textrm{ e }  n_0 > 0 \textrm{ tal que } \\
+                                    &  f(n) \geq c g(n), \forall n \geq n_0     \}\end{array}$$
+  
+  \end{definition}
+\end{slide}
+
+\begin{slide}
+  \stitle{Exemplos: Notação $\Omega$}  
+ A notação $O$ serve para atribuir delimitações inferiores para a função $g(n)$. 
+  \begin{center}
+\psfrag{cgn}{$f(n)$}
+\psfrag{fn}{$c g(n)$}
+\psfrag{no}{$n_0$}
+\includegraphics[height=8.0cm]{fig02.eps}
+\end{center} 
+
+$f(n) = \Omega(g(n))$ 
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Exemplos: Notação $\Omega$}  
+  
+  \begin{itemize}
+  \item[(a)] $\frac{1}{3}n^2 - 3n  = \Omega(n^2)$?
+
+  Sim, tome $c = \frac{1}{4}$ e $n_0 = 7$
+  
+  \item[(b)] $n^2 - 2n = \Omega(n)$? 
+  
+  Sim , tome $c = 10$ e $n_0 = 8$
+  \end{itemize}
+  \end{slide}
+
+\begin{slide}
+  \stitle{Notação $o$ (oh pequeno)}   
+\end{slide}
+
+\begin{slide}
+  \stitle{Notação $o$ (oh pequeno)}    
+  Para quando há apenas um \textbf{limite assintótico superior}, sem permitir $f(n) = cg(n)$.
+  
+  Utiliza-se a notação $o$ para denotar um limitante superior que é assintoticamente restrito.
+\end{slide}
+
+\begin{slide}
+  \stitle{Notação $o$ (oh pequeno)}   
+  \begin{definition}
+  Para uma dada função $g(n)$, denotamos por $o(g(n))$ o conjunto de funções:
+  
+  $$\begin{array}{ll}o(g(n)) = &\{ f(n) : \textrm{ para qualquer constante positiva } c \textrm{ existe } \\  & \textrm{uma constante positiva }  n_0  \textrm{ tal que } 
+                                  f(n) < c g(n), \forall n \geq n_0     \}\end{array}$$
+  
+  \end{definition}
+  
+  Intuitivamente, $f$ é dominado por $g$ assintoticamente.
+\end{slide}
+
+\begin{slide}
+  \stitle{Notação $o$ (oh pequeno)}   
+  Por exemplo, $2n = o(n^2)$, mas $2 n^2 \neq o(n^2)$
+  
+  Intuitivamente, na notação $o$, a função $f(n)$ torna-se insignificante em relação a $g(n)$ quando vai para o infinito. Ou seja,
+  
+  $$\displaystyle \lim_{n \rightarrow \infty} \frac{f(n)}{g(n)} = 0$$
+\end{slide}
+
+\begin{slide}
+  \stitle{Notação $o$ (oh pequeno)}
+    Exemplo:  $2n = o(n^2)$
+    
+  $$\displaystyle \lim_{n \rightarrow \infty} \frac{2n}{n ^ 2} = \lim_{n \rightarrow \infty} \frac{2}{n} = 0$$
+ 
+   Portanto, $2n = o(n^2)$.
+\end{slide}
+
+\begin{slide}
+  \stitle{Notação $\omega$ (omega pequeno)}   
+\end{slide}
+
+\begin{slide}
+  \stitle{Notação $\omega$ (omega pequeno)}   
+  Por analogia, a notação $\omega$ está para a notação $\Omega$, assim como a notação $o$ está para a notação $O$. 
+
+  Então, para quando há apenas um limite assintótico inferior, sem permitir $f(n) = cg(n)$.  
+  
+  Utiliza-se a notação $\omega$ para denotar um limitante inferior que não é assintoticamente restrito.
+\end{slide}
+
+\begin{slide}
+  \stitle{Notação $\omega$ (omega pequeno)}   
+  \begin{definition}
+  Para uma dada função $g(n)$, denotamos por $\omega(g(n))$ o conjunto de funções:
+  
+  $$\begin{array}{ll}o(g(n)) = &\{ f(n) : \textrm{ para qualquer constante positiva } c \textrm{ existe } \\  & \textrm{uma constante positiva }  n_0  \textrm{ tal que } 
+                                  c g(n) < f(n)  , \forall n \geq n_0     \}\end{array}$$
+  
+  \end{definition}
+  
+  Intuitivamente, $f$ domina $g$ assintoticamente.
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Notação $\omega$ (omega pequeno)}   
+    Por exemplo, $2n^2 = \omega(n)$, mas $2n^2 \neq \omega(n^2)$
+    
+    Intuitivamente na notação $\omega(n)$ a função $f(n)$ domina $cg(n)$ quando $n$ vai para o infinito. Ou seja, $f(n) = \omega(g(n))$ indica que 
+    
+$$\displaystyle \lim_{n \rightarrow \infty} \frac{f(n)}{g(n)} = \infty$$    
+    
+\end{slide}
+
+\begin{slide}
+  \stitle{Notação $\omega$ (omega pequeno)}   
+    Por exemplo, $n^2/2 = \omega(n)$.
+    
+  $$\displaystyle \lim_{n \rightarrow \infty} \frac{n^2/2}{n} = \lim_{n \rightarrow \infty} \frac{n}{2} = \infty$$
+ 
+
+   Portanto, $n^2/2 = \omega(n)$.
+\end{slide}
+
+\begin{slide}
+  \stitle{Comparação de funções}      
+\end{slide}
+
+\begin{slide}
+  \stitle{Comparação de funções}      
+  \itemtrig\ Transitividade
+  
+  \hspace{1cm} $f(n) = \Theta(g(n))$ e $g(n) = \Theta(h(n))$ então $f(n) = \Theta(h(n))$
+  
+ \vspace{-1cm} \hspace{1cm} $f(n) = O(g(n))$ e $g(n) = O(h(n))$ então $f(n) = O(h(n))$
+
+ \vspace{-1cm} \hspace{1cm} $f(n) = \Omega(g(n))$ e $g(n) = \Omega(h(n))$ então $f(n) = \Omega(h(n))$
+
+ \vspace{-1cm}  \hspace{1cm} $f(n) = o(g(n))$ e $g(n) = o(h(n))$ então $f(n) = o(h(n))$
+
+ \vspace{-1cm}  \hspace{1cm} $f(n) = \omega(g(n))$ e $g(n) = \omega(h(n))$ então $f(n) = \omega(h(n))$
+\end{slide}
+
+\begin{slide}
+  \stitle{Comparação de funções}      
+  \itemtrig\ Reflexividade
+  
+    \hspace{1cm} $f(n) = \Theta(f(n))$
+
+    \vspace{-1cm} \hspace{1cm} $f(n) = O(f(n))$
+
+    \vspace{-1cm} \hspace{1cm} $f(n) = \Omega(f(n))$
+
+    \vspace{-1cm} \hspace{1cm} $f(n) \neq o(f(n))$
+
+    \vspace{-1cm} \hspace{1cm} $f(n) \neq \omega(f(n))$
+\end{slide}
+
+\begin{slide}
+  \stitle{Comparação de funções}      
+  \itemtrig\ Simetria
+  
+    $f(n) = \Theta(g(n))$, se somente se, $g(n) = \Theta(f(n))$
+
+  \itemtrig\ Simetria transposta
+
+    $f(n) = O(g(n))$, se somente se, $g(n) = \Omega(f(n))$
+
+ \vspace{-1cm}  $f(n) = o(g(n))$, se somente se, $g(n) = \omega(f(n))$
+\end{slide}
+
+\begin{slide}
+  \stitle{Analogia entre notação assintótica e números reais}        
+\end{slide}
+
+\begin{slide}
+  \stitle{Analogia entre notação assintótica e números reais}        
+  Sejam $f$, $g$ funções e $a, b \in R$
+  
+    \hspace{1cm} $f(n) = O(f(n)) \approx a\leq b $
+
+    \vspace{-1cm} \hspace{1cm} $f(n) = \Omega(f(n)) \approx a \geq b$
+    
+    \vspace{-1cm} \hspace{1cm} $f(n) = \Theta(f(n)) \approx a = b$
+
+    \vspace{-1cm} \hspace{1cm} $f(n) = o(f(n)) \approx a < b$
+
+    \vspace{-1cm} \hspace{1cm} $f(n) = \omega(f(n)) \approx a > b$
+\end{slide}
+
+\begin{slide}
+  \stitle{Tricotomia}   
+  Para quaisquer dois números reais a e b, exatamente uma das sequintes sentenças deve ser verdadeira: 
+  $a < b$, $a = b$ ou $a > b$.
+  
+  Apesar de quaisquer dois números poderem ser comparados, nem todas as funções são assintoticamente comparáveis. Ou seja, para duas funções $f(n)$ e $g(n)$, pode ser que nem $f(n) = O(g(n))$ nem $f(n) = \Omega(g(n))$.
+  
+\end{slide}
+
+\begin{slide}
+  \stitle{Tricotomia}   
+  
+Exemplo:  Considere as funções $f(n) = n$ e $g(n) = n^{1 + \sin n}$
+
+Neste exemplo, a expressão $1 + \sin n$ varia entre $0$ e $2$.
+
+$$
+n^{1 + \sin n} = \left \{ \begin{array}{ll}
+1 & \textrm{se } n \in \{ 3\pi/2, 7\pi/2, \cdots \} \\
+n & \textrm{se } n \in \{ \pi, 3\pi, \cdots \} \\
+n^2 & \textrm{se } n \in \{ \pi/2, 5\pi/2, \cdots \} \\
+\end{array}  \right.
+$$
+
+Não se pode afirmar que $f(n) = O(g(n))$ e nem $f(n) = \Omega(g(n))$.
+\end{slide}
+
+\begin{slide}
+  \stitle{Notação assintótica em expressões}
+  Como interpretar, por exemplo, $2n^2+n-1 = 2n^2+\Theta(n)$ ?  
+  
+  Existem uma função $f(n) = \Theta(n)$ tal que 
+  
+  $$2n^2+n-1 = 2n^2+f(n).$$
+  
+  Neste caso, $f(n) = n - 1$.
+\end{slide}
+
+\begin{slide}
+  \stitle{Notação assintótica em expressões}
+  E a expressão $2n^2 + \Theta(n) = \Theta(n^2)$ ?
+  
+  Para toda função $f(n) = \Theta(n)$, existe uma função $g(n) = \Theta(n^2)$ tal que $2n^2 + f(n) = g(n)$.
+  
+  Por exemplo, 
+  
+  $f(n) =n - \log n + 5 = \Theta(n)$ e 
+  
+  $g(n) = 2n^2 + n - \log n + 5 = \Theta(n^2)$.
+  \end{slide}
+
+\begin{slide}
+  \stitle{Principais classes $O$ (oh grande)}
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\multicolumn{1}{|l|}{Complexidade} & \multicolumn{1}{l|}{Nome} & Eficiente            \\ \hline
+$O(1)$                             & Constante                 & \multirow{4}{*}{sim} \\ \cline{1-2}
+$O(\log n)$                        & Logaritmica               &                      \\ \cline{1-2}
+$O(n)$                             & Linear                    &                      \\ \cline{1-2}
+$O(n \log n)$                      & ``Linearítma''            &                      \\ \hline
+$O(n^2)$                           & Quadrática                & \multirow{4}{*}{não} \\ \cline{1-2}
+$O(n^3)$                           & Cúbica                    &                      \\ \cline{1-2}
+$O(2^n)$                           & Exponencial               &                      \\ \cline{1-2}
+$O(n!)$                            & Fatorial                  &                      \\ \hline
+\end{tabular}
+\end{center}
+  
+\end{slide}
+
+\begin{slide}
+  \stitle{Obrigado}
+\end{slide}
+
+\end{document}
+
+% Local Variables: 
+% mode: latex
+% eval: (Portug-mode)
+% TeX-master: t
+% End: 

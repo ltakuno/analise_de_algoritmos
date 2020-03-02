@@ -1,0 +1,184 @@
+\documentclass{article}
+
+\usepackage[brazil]{babel}     % Definição-padrão língua portuguesa
+\usepackage[latin1]{inputenc}  % Para traduzir acentos
+\usepackage{graphicx}
+\usepackage{indentfirst}
+\usepackage{float}
+
+\usepackage{clrscode}
+
+\usepackage{amsmath,amssymb,amsthm} \usepackage{amsfonts}
+\usepackage[colorlinks,backref]{hyperref}
+
+\setlength{\topmargin}{-0.5in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{-.125in}
+\setlength{\evensidemargin}{-.125in}
+\setlength{\textwidth}{6.75in}
+
+
+\newcommand{\CWEB}{\texttt{CWEB} }
+\newtheorem{definicao}{Definição}[section]
+\newtheorem{exemplo}{Exemplo}[section]
+\newtheorem{teorema}{Teorema}[section]
+\newtheorem{corolario}{Corolário}[section]
+
+\def\red{\color[rgb]{0.7,0,0}}
+\def\green{\color[rgb]{0,.8,0}}
+\def\darkgreen{\color[rgb]{0.1,0.4,0.0}}
+\let\dgreen\darkgreen
+\def\blue{\color[rgb]{0,0,.8}}
+\def\yellow{\color[rgb]{1,1,0}}
+\def\black{\color[rgb]{0,0,0}}
+
+\def\pink{\color[rgb]{1,0,1}}
+\def\brown{\color[rgb]{.5,.1,.3}}
+\def\lilaz{\color[rgb]{.5,0,.5}}
+\def\hmmm{\color[rgb]{.3,.1,.5}}
+\def\magenta{\color[rgb]{.6,.05,.05}}
+
+\newcommand{\uc}[1]{\centerline{\underline{#1}}}
+\newcommand{\pic}[1]{\fbox{picture:{#1}}}
+%\renewcommand{\bf}{\mbox{}}
+\newcommand{\cP}{{\cal P}} \newcommand{\cT}{{\cal T}}
+\newcommand{\add}{\mbox{\rm add}} \newcommand{\pr}{\mbox{\rm Pr}}
+
+\def\stitle#1{\slidetitle{\red #1}\vspace{-0pt}}
+\everymath={\blue}
+\everydisplay={\blue}
+
+\def\itemtrig{$\vartriangleright$}
+\def\itemcirc{$\circ$}
+\def\itemT{\item[\itemtrig]}
+\def\itemC{\item[$\circ$]}
+
+\renewcommand{\For}{\textbf{\blue for} }
+\renewcommand{\To}{\textbf{\blue to} }
+\renewcommand{\Do}{\>\>\textbf{\blue do}\hspace*{-0.7em}\'\addtocounter{indent}{1}}
+\renewcommand{\While}{\textbf{\blue while} }
+\renewcommand{\If}{\textbf{\blue if} }
+\renewcommand{\Then}{\>\textbf{\blue then}\>\addtocounter{indent}{1}}
+\renewcommand{\Else}{\kill\addtocounter{indent}{-1}\liprint\>\textbf{\blue else}\>\addtocounter{indent}{1}}
+\renewcommand{\ElseIf}{\kill\addtocounter{indent}{-1}\liprint\textbf{\blue elseif} }
+\renewcommand{\ElseNoIf}{\kill\addtocounter{indent}{-1}\liprint\textbf{\blue else} \addtocounter{indent}{1}}
+\renewcommand{\Return}{\textbf{\blue return} }
+
+
+
+\begin{document}
+
+
+\bibliographystyle{plain}       % estilo de bibliografia
+
+\title{Centro Universitário Senac\\ Bacharelado em Ciência da Computação \\ Análise e projeto de algoritmos}
+\author{Professor: Leonardo Takuno \\
+\texttt{\{leonardo.takuno@gmail.com\}}}
+\maketitle
+
+\begin{enumerate}
+\item Considere o seguinte algoritmo, cujo argumento $n$ é uma potência de 2. O algoritmo não faz nada útil.
+
+\begin{codebox}
+\Procname{$\proc{Algo}(n)$}
+\li \If $n = 1$
+\li \Then \Return 1
+\End
+\li \For $j \gets 1$ \To $8$
+\li \Do $\id{z} \gets \proc{Algo}(n/2)$
+\End
+\li \For $i \gets 1$ \To $n^3$
+\li \Do $\id{z} \gets 0$
+\End
+\end{codebox}
+
+\begin{itemize}
+\item[(a)] (0,5) Seja $T(n)$ o número de vezes que a atribuição $z \leftarrow 0$ é executada. Escreva uma recorrência que define $T(n)$.
+\item[(b)] (1,0) Mostre, \textbf{sem usar} o Teorema Mestre, que $T(n)$ é $\Omega(n^3 \log n)$.
+\item[(c)] (1,0) Troque {\blue ``$8$''} por {\blue ``$7$''} no algoritmo e determine, usando o Teorema Mestre, a complexidade do algoritmo.
+\end{itemize}
+
+\item Um algoritmo age sobre que dependem de um parâmetro $n$. Explique o significado das seguintes expressões:
+
+\begin{itemize}
+\item[(a)] (0,5) ``O consumo de tempo do algoritmo é $O(n^3 \log n)$''
+\item[(b)] (0,5) ``O consumo de tempo do algoritmo é $\Omega(n^2)$''
+\end{itemize}
+
+\item 
+\begin{itemize}
+\item[(a)](1,5) Escreva um procedimento que recebe um vetor A de $n$ inteiros distintos e devolve o vetor A ordenado, em ordem crescente, usando \textit{Bubble Sort}.
+
+\item [(b)](2,0) Prove a corretude do procedimento.
+
+\item [(c)](2,0) Determine a complexidade de pior e de melhor caso. Indique para que tipo de instância o melhor e o pior caso ocorrem.  
+\end{itemize}
+
+\item Merge Sort
+
+\begin{codebox}
+\Procname{$\proc{Merge-Sort}(A, p, r)$}
+\li \If $p < r$
+\li \Then
+        $q \gets \lfloor{(p + r) / 2} \rfloor$
+\li $\proc{Merge-Sort}(A, p, q)$
+\li $\proc{Merge-Sort}(A, q+1, r)$
+\li $\proc{Merge}(A, p, q, r)$
+\End
+\end{codebox}
+
+\item Inserção em árvore:
+
+\begin{codebox}
+\Procname{$\proc{Tree-Insert}(T,z)$}
+\li $y \gets \const{nil}$
+\li $x \gets \id{root}[T]$
+\li \While $x \neq \const{nil}$
+\li \Do
+$y \gets x$
+\li \If $\id{key}[z] < \id{key}[x]$
+\li \Then $x \gets \id{left}[x]$
+\li \Else $x \gets \id{right}[x]$
+\End
+\End
+\li $p[z] \gets y$
+\li \If $y = \const{nil}$
+\li \Then
+$\id{root}[T] \gets z$\>\>\>\>\>\>\>\>\Comment Tree $T$ was empty
+\li \Else
+\If $\id{key}[z] <\ id{key}[y]$
+\li \Then $\id{left}[y]\ gets z$
+\li \Else $\id{right}[y] \gets z$
+\End
+\End
+\end{codebox}
+
+\item outro:
+
+\begin{codebox}
+\Procname{$\proc{Segments-Intersect}(p_1, p_2, p_3, p_4)$}
+\li $d_1 \gets \proc{Direction}(p_3, p_4, p_1)$
+\li $d_2 \gets \proc{Direction}(p_3, p_4, p_2)$
+\li $d_3 \gets \proc{Direction}(p_1, p_2, p_3)$
+\li $d_4 \gets \proc{Direction}(p_1, p_2, p_4)$
+\li \If $((d_1 > 0 \mbox{ and } d_2 < 0) \mbox{ or }
+(d_1 < 0 \mbox{ and } d_2 > 0))$ and
+\Indentmore
+\zi $((d_3 > 0 \mbox{ and } d_4 < 0) \mbox{ or }
+(d_3 < 0 \mbox{ and } d_4 > 0))$
+\End
+\li \Then \Return \const{\blue true}
+\li \ElseIf $d_1 = 0$ {\blue and} $\proc{On-Segment}(p_3, p_4, p_1)$
+\li \Then \Return \const{\blue true}
+\li \ElseIf $d_2 = 0$ {\blue and} $\proc{On-Segment}(p_3, p_4, p_2)$
+\li \Then \Return \const{\blue true}
+\li \ElseIf $d_3 = 0$ {\blue and} $\proc{On-Segment}(p_1, p_2, p_3)$
+\li \Then \Return \const{\blue true}
+\li \ElseIf $d_4 = 0$ {\blue and} $\proc{On-Segment}(p_1, p_2, p_4)$
+\li \Then \Return \const{\blue true}
+\li \ElseNoIf \Return \const{\blue false}
+\End
+\end{codebox}
+
+\end{enumerate}
+\end{document}
