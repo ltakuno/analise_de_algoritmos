@@ -931,6 +931,312 @@ $c = 11$
 \end{slide}
 
 \begin{slide}
+\begin{codebox}
+\Procname{$\proc{conta-e-intercala}(A, p, q, r)$}
+\li \For $i = p$ \To $q$ {\blue \textbf{faça}}
+\li \>  $B[i] = A[i]$
+\li \For $j = q + 1$ \To $r$ {\blue \textbf{faça}}
+\li \>  $B[r + q + 1 - j] = A[j]$
+\li $i = p$
+\li $j = r$
+\li $c = 0$
+\li \For $k = p$ \To $r$ {\blue \textbf{faça}}
+\li \> \If $\id{B[i]} \leq \id{B[j]}$ \textbf{\blue então}
+\li \>\> $A[k] = B[i]$
+\li \>\>      $i = i + 1$ 
+\li \>\Else $A[k] = B[j]$
+\li \>\>      $j = j - 1$ 
+\li \>\>      $c = c + (q - i + 1)$
+\End   
+\li \Return $c$
+\end{codebox}   
+  
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Contagem de inversões} 
+  Análise do algoritmo $\proc{conta-e-intercala}$:
+  
+\itemtrig\ linhas 1-4 : $O(n)$   
+
+\vspace{-1cm}\itemtrig\ linhas 5-7 : $O(1)$   
+  
+\vspace{-1cm}\itemtrig\ linhas 8-14 : $O(n)$   
+
+\vspace{-1cm}\itemtrig\ linha 15 : $O(1)$   
+
+total: $T(n) = 11n + 4 = O(n)$
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Contagem de inversões} 
+  
+  Análise do algoritmo $\proc{conta-e-ordena}$:
+  
+  $T(n) = 2 T(n/2) + n$
+
+definida para $n$ potência de 2.
+
+Prova utilizando a técnica da \textbf{árvore de recorrência}.
+
+$T(n) = \left\{ 
+\begin{array}{ll}
+1 & \textrm{se } n=1 \\\\
+2T(n/2) + n & \textrm{se } n\geq 2, n\textrm{ potência de }2 \\
+\end{array}
+\right.$
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Contagem de inversões} 
+
+$T(n) = \left\{ 
+\begin{array}{ll}
+1 & \textrm{se } n=1 \\\\
+2T(n/2) + n & \textrm{se } n\geq 2, n\textrm{ potência de }2 \\
+\end{array}
+\right.$
+
+Desenrolando a recorrência:
+
+$\begin{array}{ll}
+T(n) & = 2T(n/2) + n\\
+\end{array}$
+  
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Contagem de inversões} 
+
+$T(n) = \left\{ 
+\begin{array}{ll}
+1 & \textrm{se } n=1 \\\\
+2T(n/2) + n & \textrm{se } n\geq 2, n\textrm{ potência de }2 \\
+\end{array}
+\right.$
+
+Desenrolando a recorrência:
+
+$\begin{array}{ll}
+T(n) & = 2T(n/2) + n\\
+T(n) & = 2T(2T(n/2^2) + n/2) + n = 2^2T(n/2^2) + 2n\\
+\end{array}$
+  
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Contagem de inversões} 
+
+$T(n) = \left\{ 
+\begin{array}{ll}
+1 & \textrm{se } n=1 \\\\
+2T(n/2) + n & \textrm{se } n\geq 2, n\textrm{ potência de }2 \\
+\end{array}
+\right.$
+
+Desenrolando a recorrência:
+
+$\begin{array}{ll}
+T(n) & = 2T(n/2) + n\\
+T(n) & = 2T(2T(n/2^2) + n/2) + n = 2^2T(n/2^2) + 2n\\
+T(n) & = 2^2T(2T(n/2^3) + n/2^2) + 2n = 2^3T(n/2^3) + 3n\\
+\end{array}$
+  
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Contagem de inversões} 
+
+$T(n) = \left\{ 
+\begin{array}{ll}
+1 & \textrm{se } n=1 \\\\
+2T(n/2) + n & \textrm{se } n\geq 2, n\textrm{ potência de }2 \\
+\end{array}
+\right.$
+
+Desenrolando a recorrência:
+
+$\begin{array}{ll}
+T(n) & = 2T(n/2) + n\\
+     & = 2T(2T(n/2^2) + n/2) + n = 2^2T(n/2^2) + 2n\\
+     & = 2^2T(2T(n/2^3) + n/2^2) + 2n = 2^3T(n/2^3) + 3n\\
+     & = 2^3T(2T(n/2^4) + n/2^3) + 3n = 2^4T(n/2^4) + 4n\\
+\end{array}$
+  
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Contagem de inversões} 
+
+$T(n) = \left\{ 
+\begin{array}{ll}
+1 & \textrm{se } n=1 \\\\
+2T(n/2) + n & \textrm{se } n\geq 2, n\textrm{ potência de }2 \\
+\end{array}
+\right.$
+
+Desenrolando a recorrência:
+
+$\begin{array}{ll}
+T(n) & = 2T(n/2) + n\\
+     & = 2T(2T(n/2^2) + n/2) + n = 2^2T(n/2^2) + 2n\\
+     & = 2^2T(2T(n/2^3) + n/2^2) + 2n = 2^3T(n/2^3) + 3n\\
+     & = 2^3T(2T(n/2^4) + n/2^3) + 3n = 2^4T(n/2^4) + 4n\\
+     & = \cdots\\
+     & = 2^kT(n/2^k) + kn
+\end{array}$
+  
+onde $k = \lg n$. Disso concluimos que $T(n) = n + n\lg n$  
+  
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Contagem de inversões} 
+  
+  Análise do algoritmo $\proc{conta-e-ordena}$:
+  
+  $T(n) = 2 T(n/2) + n$
+
+definida para $n$ potência de 2.
+
+Prova utilizando o \textbf{método da substituição}
+
+Palpite:  $T(n) = O(n \lg n)$
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Contagem de inversões} 
+Afirmação: A recorrência
+
+$T(n) = \left\{ 
+\begin{array}{ll}
+1 & \textrm{se } n=1 \\\\
+2T(n/2) + n & \textrm{se } n\geq 2, n\textrm{ potência de }2 \\
+\end{array}
+\right.$
+  
+tem como solução $T(n) = n + n \lg n$  
+
+\textbf{Prova:} Por indução em $n$
+
+\textbf{Base:} $n=1$
+
+$$T(1) = 1 + 1 \cdot \lg 1 = 1 + 1\cdot 0 = 1$$
+ 
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Contagem de inversões} 
+  
+\textbf{Hipótese de indução:} $T(n) = n + n \lg n$  para $m < n$       
+
+
+\textbf{Passo de indução: } $n \geq 2$
+
+$\begin{array}{ll}
+T(n) & = 2T(n/2) + n\\
+\end{array}$
+
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Contagem de inversões} 
+  
+\textbf{Hipótese de indução:} $T(n) = n + n \lg n$  para $m < n$       
+
+
+\textbf{Passo de indução: } $n \geq 2$
+
+$\begin{array}{ll}
+T(n) & = 2T(n/2) + n\\
+     & = 2 (n/2 + (n/2) \lg (n/2)) + n\\
+\end{array}$
+
+
+\end{slide}
+\begin{slide}
+  \stitle{Contagem de inversões} 
+  
+\textbf{Hipótese de indução:} $T(n) = n + n \lg n$  para $m < n$       
+
+
+\textbf{Passo de indução: } $n \geq 2$
+
+$\begin{array}{ll}
+T(n) & = 2T(n/2) + n\\
+     & = 2 (n/2 + (n/2) \lg (n/2)) + n\\
+     & = 2n + n\lg(n/2)\\
+\end{array}$
+
+
+\end{slide}
+\begin{slide}
+  \stitle{Contagem de inversões} 
+  
+\textbf{Hipótese de indução:} $T(n) = n + n \lg n$  para $m < n$       
+
+
+\textbf{Passo de indução: } $n \geq 2$
+
+$\begin{array}{ll}
+T(n) & = 2T(n/2) + n\\
+     & = 2 (n/2 + (n/2) \lg (n/2)) + n\\
+     & = 2n + n\lg(n/2)\\
+     & = 2n + n(\lg n - 1) \\
+\end{array}$
+
+
+\end{slide}
+\begin{slide}
+  \stitle{Contagem de inversões} 
+  
+\textbf{Hipótese de indução:} $T(n) = n + n \lg n$  para $m < n$       
+
+
+\textbf{Passo de indução: } $n \geq 2$
+
+$\begin{array}{ll}
+T(n) & = 2T(n/2) + n\\
+     & = 2 (n/2 + (n/2) \lg (n/2)) + n\\
+     & = 2n + n\lg(n/2)\\
+     & = 2n + n(\lg n - 1) \\
+     & = n + n \lg n
+\end{array}$ 
+
+$\square$
+\end{slide}
+\begin{slide}
+  \stitle{Contagem de inversões} 
+  
+\textbf{Hipótese de indução:} $T(n) = n + n \lg n$  para $m < n$       
+
+
+\textbf{Passo de indução: } $n \geq 2$
+
+$\begin{array}{ll}
+T(n) & = 2T(n/2) + n\\
+     & = 2 (n/2 + (n/2) \lg (n/2)) + n\\
+     & = 2n + n\lg(n/2)\\
+     & = 2n + n(\lg n - 1) \\
+     & = n + n \lg n
+\end{array}$
+
+
+\end{slide}
+
+
+\begin{slide}
   \stitle{Máximo e o mínimo de um vetor} 
 \end{slide}
 
