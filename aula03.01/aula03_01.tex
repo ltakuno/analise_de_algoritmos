@@ -630,10 +630,10 @@ Inversões: $(1, 3), (2, 3), (4, 5),(2, 6),(4, 6),(5, 6),$
   
 \begin{codebox}
 \Procname{$\proc{conta-inversões}(p, n)$}
-\li c = 0
+\li $c = 0$
 \li \For $i = 0$ \To $n-1$ {\blue \textbf{faça}}
-\li \> \For $j = 0$ \To $n-1$ {\blue \textbf{faça}}
-\li \> \> \If $\id{p[i]} = \id{p{j}}$ {\blue \textbf{então}}
+\li \> \For $j = i+1$ \To $n$ {\blue \textbf{faça}}
+\li \> \> \If $\id{p[i]} > \id{p[j]}$ {\blue \textbf{então}}
 \li \> \> \> $c = c + 1$
 \li \Return $c$
 \end{codebox}   
@@ -1367,6 +1367,8 @@ Utilizando divisão e conquista, vamos projetar um algoritmo linear.
 
 \begin{slide}
   \stitle{seleção do k-ésimo mínimo}   
+\textbf{\red Algoritmo:} $\proc{seleção}(k, L)$    
+\vspace{-1cm}
   \begin{enumerate}
   \item Se $n < 15$ então "ordene $L$ e devolva $L_k$;
   \vspace{-1.2cm}\item Divida $L$ em listas de 5 elementos cada;

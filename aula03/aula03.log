@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.3.3)  18 NOV 2019 06:12
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.3.3)  13 MAR 2020 00:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1059,10 +1059,10 @@ Package babel Info: Redefining portuges shorthand "|
 (babel)             in language  on input line 747.
 [39]
 Package epstopdf Info: Source file: <fig01.eps>
-(epstopdf)                    date: 2019-11-14 01:57:35
+(epstopdf)                    date: 2019-11-14 00:57:35
 (epstopdf)                    size: 353439 bytes
 (epstopdf)             Output file: <fig01-eps-converted-to.pdf>
-(epstopdf)                    date: 2019-11-14 02:00:32
+(epstopdf)                    date: 2019-11-14 01:00:32
 (epstopdf)                    size: 93549 bytes
 (epstopdf)             Command: <repstopdf --outfile=fig01-eps-converted-to.pdf
  fig01.eps>
@@ -1093,10 +1093,10 @@ Package babel Info: Redefining portuges shorthand "|
 (babel)             in language  on input line 756.
 [40 <./fig01-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <fig02.eps>
-(epstopdf)                    date: 2019-11-14 08:07:33
+(epstopdf)                    date: 2019-11-14 07:07:33
 (epstopdf)                    size: 652786 bytes
 (epstopdf)             Output file: <fig02-eps-converted-to.pdf>
-(epstopdf)                    date: 2019-11-14 08:07:53
+(epstopdf)                    date: 2019-11-14 07:07:53
 (epstopdf)                    size: 141111 bytes
 (epstopdf)             Command: <repstopdf --outfile=fig02-eps-converted-to.pdf
  fig02.eps>
@@ -1122,10 +1122,10 @@ Package babel Info: Redefining portuges shorthand "|
 (babel)             in language  on input line 763.
 [41 <./fig02-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <fig02.eps>
-(epstopdf)                    date: 2019-11-14 08:07:33
+(epstopdf)                    date: 2019-11-14 07:07:33
 (epstopdf)                    size: 652786 bytes
 (epstopdf)             Output file: <fig02-eps-converted-to.pdf>
-(epstopdf)                    date: 2019-11-14 08:07:53
+(epstopdf)                    date: 2019-11-14 07:07:53
 (epstopdf)                    size: 141111 bytes
 (epstopdf)             Command: <repstopdf --outfile=fig02-eps-converted-to.pdf
  fig02.eps>
@@ -1146,10 +1146,10 @@ Package babel Info: Redefining portuges shorthand "|
 (babel)             in language  on input line 769.
 [42]
 Package epstopdf Info: Source file: <fig02.eps>
-(epstopdf)                    date: 2019-11-14 08:07:33
+(epstopdf)                    date: 2019-11-14 07:07:33
 (epstopdf)                    size: 652786 bytes
 (epstopdf)             Output file: <fig02-eps-converted-to.pdf>
-(epstopdf)                    date: 2019-11-14 08:07:53
+(epstopdf)                    date: 2019-11-14 07:07:53
 (epstopdf)                    size: 141111 bytes
 (epstopdf)             Command: <repstopdf --outfile=fig02-eps-converted-to.pdf
  fig02.eps>
@@ -1173,10 +1173,10 @@ Package babel Info: Redefining portuges shorthand "|
 (babel)             in language  on input line 775.
 [43]
 Package epstopdf Info: Source file: <fig02.eps>
-(epstopdf)                    date: 2019-11-14 08:07:33
+(epstopdf)                    date: 2019-11-14 07:07:33
 (epstopdf)                    size: 652786 bytes
 (epstopdf)             Output file: <fig02-eps-converted-to.pdf>
-(epstopdf)                    date: 2019-11-14 08:07:53
+(epstopdf)                    date: 2019-11-14 07:07:53
 (epstopdf)                    size: 141111 bytes
 (epstopdf)             Command: <repstopdf --outfile=fig02-eps-converted-to.pdf
  fig02.eps>
