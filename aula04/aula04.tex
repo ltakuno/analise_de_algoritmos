@@ -391,7 +391,7 @@ $\proc{Selection-Sort}(A, n)$
 3  \> \> \For $j = 	i + 1$ \To $n$ \textbf{\blue faça} \>   \>   \\
 4  \> \> \> \If $A[j] < A[min]$ \textbf{\blue então} \> \> \\
 5  \> \> \> \> $\id{min} = j$                            \>   \>   \\
-6  \> \> \> $A[i] \leftrightarrow A[min]$  \> \\
+6  \> \> $A[i] \leftrightarrow A[min]$  \> \\
 \end{tabbing}  
 \end{slide}
 
@@ -509,7 +509,7 @@ $\proc{Merge-Sort}(A, p, r)$
 \vspace{-2.0cm}
 \begin{tabbing}
 ~~~~ \= ~~~~\= ~~~~~~~\= \hspace*{12cm}                                           \=  \\
-1  \> \If $\id{p} < id{r}$ \> \>                                                  \>  \\
+1  \> \If $\id{p} < \id{r}$ \> \>                                                  \>  \\
 2  \> \> {\blue \textbf{então}}  $\id{q} \gets \lfloor \frac{p+r}{2} \rfloor$\>   \>   \\
 3  \> \> \>$\proc{Merge-Sort}(A, p, q)$                                           \>  \\
 4  \> \> \> $\proc{Merge-Sort}(A, q+1, r)$                                        \> \\
