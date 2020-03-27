@@ -357,7 +357,7 @@ $\proc{Merge-Sort}(A, p, r)$
 \vspace{-2.0cm}
 \begin{tabbing}
 ~~~~ \= ~~~~\= ~~~~~~~\= \hspace*{12cm}                                           \= custo \\
-1  \> \If $\id{p} < id{r}$ \> \>                                                  \>  \\
+1  \> \If $\id{p} < \id{r}$ \> \>                                                  \>  \\
 2  \> \> {\blue \textbf{então}}  $\id{q} \gets \lfloor \frac{p+r}{2} \rfloor$\>   \>   \\
 3  \> \> \>$\proc{Merge-Sort}(A, p, q)$                                           \>  \\
 4  \> \> \> $\proc{Merge-Sort}(A, q+1, r)$                                        \> \\
@@ -374,7 +374,7 @@ $\proc{Merge-Sort}(A, p, r)$
 \vspace{-2.0cm}
 \begin{tabbing}
 ~~~~ \= ~~~~\= ~~~~~~~\= \hspace*{12cm}                                                  \= custo \\
-1  \> \If $\id{p} < id{r}$ \> \>                                                  \> $\Theta(1)$ \\
+1  \> \If $\id{p} < \id{r}$ \> \>                                                  \> $\Theta(1)$ \\
 2  \> \> {\blue \textbf{então}}  $\id{q} \gets \lfloor \frac{p+r}{2} \rfloor$\>   \> $\Theta(1)$  \\
 3  \> \> \>$\proc{Merge-Sort}(A, p, q)$                                           \> $T(\lceil \frac{n}{2} \rceil)$\\
 4  \> \> \> $\proc{Merge-Sort}(A, q+1, r)$                                        \> $T(\lfloor \frac{n}{2} \rfloor)$\\
