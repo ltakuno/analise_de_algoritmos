@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.3.3)  4 FEB 2020 10:12
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.3.3)  3 APR 2020 16:16
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -865,7 +865,7 @@ Package babel Info: Redefining portuges shorthand "|
 Package babel Info: Redefining portuges shorthand "|
 (babel)             in language  on input line 477.
 [15 <./fig02-eps-converted-to.pdf>]
-Overfull \hbox (18.96182pt too wide) in paragraph at lines 481--485
+Overfull \hbox (57.25552pt too wide) in paragraph at lines 481--485
 []$[]\OML/lcmm/m/it/19.907 T\OT1/lcmss/m/n/19.907 (\OML/lcmm/m/it/19.907 n\OT1/
 lcmss/m/n/19.907 ) = []$[] 
  []
@@ -885,52 +885,61 @@ Overfull \hbox (16.6667pt too wide) has occurred while \output is active
  []
 
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 513.
+(babel)             in language  on input line 512.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 513.
+(babel)             in language  on input line 512.
 [17]
 Overfull \hbox (16.6667pt too wide) has occurred while \output is active
 [][] 
  []
 
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 528.
+(babel)             in language  on input line 534.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 528.
+(babel)             in language  on input line 534.
 [18]
 Overfull \hbox (16.6667pt too wide) has occurred while \output is active
 [][] 
  []
 
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 543.
+(babel)             in language  on input line 549.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 543.
+(babel)             in language  on input line 549.
 [19]
 Overfull \hbox (16.6667pt too wide) has occurred while \output is active
 [][] 
  []
 
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 560.
+(babel)             in language  on input line 564.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 560.
+(babel)             in language  on input line 564.
 [20]
 Overfull \hbox (16.6667pt too wide) has occurred while \output is active
 [][] 
  []
 
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 570.
+(babel)             in language  on input line 581.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 570.
+(babel)             in language  on input line 581.
 [21]
+Overfull \hbox (16.6667pt too wide) has occurred while \output is active
+[][] 
+ []
+
+Package babel Info: Redefining portuges shorthand "|
+(babel)             in language  on input line 591.
+Package babel Info: Redefining portuges shorthand "|
+(babel)             in language  on input line 591.
+[22]
 0 minutes
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 572.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 572.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 593.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 593.
 (./aula05.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 572.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 572.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 593.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 593.
 Package rerunfilecheck Info: File `aula05.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
 
@@ -941,11 +950,11 @@ LaTeX Font Warning: Size substitutions with differences
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 572.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 593.
  ) 
 Here is how much of TeX's memory you used:
- 8291 strings out of 492982
- 118742 string characters out of 6134897
+ 8292 strings out of 492982
+ 118749 string characters out of 6134897
  209301 words of memory out of 5000000
  11644 multiletter control sequences out of 15000+600000
  15411 words of font info for 43 fonts, out of 8000000 for 9000
@@ -960,10 +969,10 @@ ype1/public/amsfonts/symbols/msam10.pfb></usr/share/texmf/fonts/type1/public/cm
 -super/sflb8.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfli8.pfb></usr/
 share/texmf/fonts/type1/public/cm-super/sflq8.pfb></usr/share/texmf/fonts/type1
 /public/cm-super/sfltt8.pfb>
-Output written on aula05.pdf (21 pages, 221648 bytes).
+Output written on aula05.pdf (22 pages, 222400 bytes).
 PDF statistics:
- 156 PDF objects out of 1000 (max. 8388607)
- 118 compressed objects within 2 object streams
- 27 named destinations out of 1000 (max. 500000)
+ 160 PDF objects out of 1000 (max. 8388607)
+ 121 compressed objects within 2 object streams
+ 28 named destinations out of 1000 (max. 500000)
  11 words of extra memory for PDF output out of 10000 (max. 10000000)
 

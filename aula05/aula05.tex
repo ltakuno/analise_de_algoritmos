@@ -461,7 +461,7 @@ $\proc{particiona}(A, p, r)$
 5  \> \> \> $i = i+1$                 \> \> $\Theta(n)$ \\
 6  \> \> \> $A[i] \leftrightarrow A[j]$                 \> \> $\Theta(n)$ \\
 \End
-7  \> \> $A[i] \leftrightarrow A[j]$              \> \> \> $\Theta(1)$ \\
+7  \> $A[i+1] \leftrightarrow A[r]$             \> \> \> \> $\Theta(1)$ \\
 8  \> \Return $i+1$           \>  \> \> \> $\Theta(1)$ \\
    \> \> \> \> \> Total: $\Theta(n)$                  
 \end{tabbing}  
@@ -479,8 +479,8 @@ $\proc{particiona}(A, p, r)$
 \begin{slide}
   \stitle{Complexidade do Quick-Sort}
     $T(n)= \left\{  \begin{array}{ll} 
-                0 & \textrm{, se } n=1 \\
-                \max \{ T(m) + T(n-m)\} + \Theta(n) & \textrm{, se } n>1 \textrm{ e } 0 \leq m < n
+                0 & \textrm{, se } n=0 \\
+                \max \{ T(m) + T(n-m-1)\} + \Theta(n) & \textrm{, se } n>0 \textrm{ e } 0 \leq m < n
                 \end{array} \right. $
                 
   Resolvendo a recorrência temos, que:
@@ -490,6 +490,27 @@ $\proc{particiona}(A, p, r)$
   Dica: utilize indução para verificar que a solução é de fato esta.
 \end{slide}
 
+\begin{slide}
+  \stitle{Complexidade do Quick-Sort}
+Pior caso: partições não balanceadas
+
+	$\begin{array}{l}
+	T(n) = T(n-1) + \Theta(n)\\
+	T(n) = \Theta(n^2)	
+\end{array}$
+
+Melhor caso: partições balanceadas
+
+	$\begin{array}{l}
+	T(n) = 2T(n/2) + \Theta(n)\\
+	T(n) = \Theta(n \log n)	
+\end{array}$
+
+Caso médio: 
+
+	$T(n) = \Theta(n \log n)$
+\end{slide}
+
 
 \begin{slide}
   \stitle{Quick-Sort aleatorizado} 
@@ -497,7 +518,7 @@ $\proc{particiona}(A, p, r)$
 \begin{codebox}
 \Procname{$\proc{particiona-aleatorizado}(A, p, r)$}
 \li  $i = \proc{aleatorio}(p, r)$
-\li  $A[p] \leftrightarrow A[i]$
+\li  $A[r] \leftrightarrow A[i]$
 \li  $\Return$ $\proc{particiona}(A, p, r)$
 \end{codebox} 
 

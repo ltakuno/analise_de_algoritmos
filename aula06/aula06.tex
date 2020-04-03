@@ -346,17 +346,53 @@ Qualquer algoritmo de ordenação por comparação exige $\Omega(n \lg n)$ comparaçõ
  
 \begin{slide}
   \stitle{Limite inferior para ordenação}  
+\begin{theorem}
+Qualquer árvore de decisão que ordena $n$ elementos tem altura $\Omega(n \log n)$.
+\end{theorem}  
+\textbf{Dem.:} Considere uma árvore de decisão de altura $h$, que ordena $n$ elementos. Como existem $n!$ permutações distintas de $n$ elementos, cada uma apresentando uma ordenação desses elementos, então a árvore de decisão deve ter $n!$ folhas. 
+\end{slide}
+ 
+\begin{slide}
+  \stitle{Limite inferior para ordenação}  
+
+Também como uma árvore binária de altura $h$ tem no máximo $2^h$ folhas, então a árvore de decisão tem no máximo $2^h$ folhas.
+
+Assim,
+	
+	$$n! \leq \textrm{número de folhas} \leq 2^h$$
+	
   Logo, temos:
   
   $\begin{array}{l}
     n! \leq 2^h \Rightarrow \lg(n!) \leq h \quad (a \leq b \Rightarrow \lg a \leq \lg b)\\
-    h \geq \lg(n!) \Rightarrow h = \Omega(n \lg n)\\
-    \lg(n!) \geq \displaystyle \frac{n}{4} \lg n, n \geq 16
-  \end{array} $ 
+    h \geq \lg(n!) 
+  \end{array} $ 	
   
-  Portanto, $h = \Omega(n \lg n)$
-  \end{slide}
+\end{slide}
  
+\begin{slide}
+  \stitle{Limite inferior para ordenação}  
+
+  
+Pela aproximação de Stirling
+
+$
+n! = \sqrt{2 \pi n} \displaystyle \left(\frac{n}{e} \right)^n > \displaystyle \left(\frac{n}{e} \right)^n
+$  
+
+Portanto, temos 
+
+$
+\begin{array}{l}
+h \geq \log(n!) \Rightarrow  h > \log \displaystyle \left(\frac{n}{e} \right)^n\\
+= n \log \frac{n}{e} \\
+= n \log n - n \log e = \Omega(n \log n)
+\end{array}
+$  
+
+$\square$
+\end{slide}
+
 \begin{slide}
   \stitle{Ordenação em tempo linear}  
 \end{slide}
@@ -383,7 +419,7 @@ $\proc{Counting-Sort}(A, B, n, k)$
 1  \> \For $i = 1$ \To  $k$  \textbf{\blue faça}\> \> \> \> \> $\Theta(k)$ \\
 2  \> \>  $\id{C[i]} = 0$ \> \> \> \>  $\Theta(k)$  \\
 3  \> \For $j = 1$ \To $n$ \textbf{\blue faça} \> \> \>\>\> $\Theta(n)$   \\
-4  \> \>  $C[A[i]] = C[A[i]] + 1$ \>   \> \>\>  $\Theta(n)$  \\
+4  \> \>  $C[A[j]] = C[A[j]] + 1$ \>   \> \>\>  $\Theta(n)$  \\
 5  \> $\vartriangleright$ C[i] contém núm. de elementos iguais a i  \> \>   \>   \\
 6  \> \For $i = 2$ \To  $k$  \textbf{\blue faça}\> \> \> \> \>  $\Theta(k)$   \\
 7  \> \>  $C[i] = C[i] + C[i-1]$  \> \>  \> \>  $\Theta(k)$\\
