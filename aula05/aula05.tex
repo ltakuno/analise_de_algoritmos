@@ -479,7 +479,7 @@ $\proc{particiona}(A, p, r)$
 \begin{slide}
   \stitle{Complexidade do Quick-Sort}
     $T(n)= \left\{  \begin{array}{ll} 
-                0 & \textrm{, se } n=0 \\
+                \Theta(1) & \textrm{, se } n=0 \\
                 \max \{ T(m) + T(n-m-1)\} + \Theta(n) & \textrm{, se } n>0 \textrm{ e } 0 \leq m < n
                 \end{array} \right. $
                 

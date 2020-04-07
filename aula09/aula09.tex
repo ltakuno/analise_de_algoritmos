@@ -318,23 +318,36 @@
 
 \begin{slide}
   \stitle{Programação dinâmica}  
-"Recursão com apoio de uma tabela"
 
-Programação dinâmica $\neq$ programação de computadores
+Quando se aplica:
 
-Aplicável a problemas de otimização
+\itemtrig\ Problemas de otimização
 
-Combina solução de subproblemas que \textbf{não são independentes}
+\itemtrig\ Solução consiste em uma sequência de decisões
+\end{slide}
+
+\begin{slide}
+  \stitle{Programação dinâmica}  
+Características:
+  
+\itemtrig\ \textbf{Existência de subestrutura ótima}: as soluções ótimas do problema contém soluções ótimas dos subproblemas
+
+\itemtrig\ \textbf{Fórmula de recorrência}: descreve a relação entre as soluções ótimas dos subproblemas.
+
+\itemtrig\ \textbf{Sobreposição de subproblemas}: a solução ótima de um subproblema é usada várias vezes mas \textbf{calculada uma vez}!
+
 \end{slide}
 
 
 \begin{slide}
   \stitle{Programação dinâmica}  
-  Relação problema - subproblema geralmente expressa em termos de uma fórmula recursiva.
+Características:
   
-  "Não existe" prova de corretude
-  
-  Estratégia bottom-up (diferente de divisão e conquista que é top down) e possui muitas sequências de decisões.
+\itemtrig\ \textbf{Soluções de subproblemas são armazenadas em tabelas}, logo é preciso que um número total de subproblemas que precisam ser resolvidos seja pequeno (polinomial no tamanho da entrada)
+
+\itemtrig\ \textbf{Estratégia bottom-up} (diferente de divisão e conquista que é top down) e possui muitas sequências de decisões.
+
+\itemtrig\ "Não existe" prova de corretude
 
 \end{slide}
 
@@ -828,7 +841,92 @@ $$\displaystyle \sum^{n-1}_{i=1} i \cdot (n-i) = O(n^3)$$
 \End
 \end{codebox}  
 \end{slide}
- 
+
+\begin{slide}
+  \stitle{Subsequência Comum Máxima (SCM)}  
+\end{slide}
+
+\begin{slide}
+  \stitle{Subsequência Comum Máxima (SCM)}  
+  Problema: Dadas duas sequências X e Y determinar a maior subsequência comum de X e Y.
+  
+Exemplo: X = ATCTGAT e Y = TGCATTA  
+\end{slide}
+
+\begin{slide}
+  \stitle{Subsequência Comum Máxima (SCM)}  
+  Problema: Dadas duas sequências X e Y determinar a maior subsequência comum de X e Y.
+  
+Exemplo: X = ATCTGAT e Y = TGCATTA  
+
+SCM(X,Y) = TCTA
+\end{slide} 
+
+\begin{slide}
+  \stitle{Subsequência Comum Máxima (SCM)}  
+  Problema: Dadas duas sequências X e Y determinar a maior subsequência comum de X e Y.
+  
+Exemplo: X = ATCTGAT e Y = TGCATTA  
+
+SCM(X,Y) = TCTA
+
+Visualmente temos:
+
+\begin{verbatim}
+                AT_C_TGAT
+                 | | | | 
+                _TGCAT_A_
+\end{verbatim}
+
+\end{slide} 
+
+\begin{slide}
+  \stitle{Subsequência Comum Máxima (SCM)} 
+Seja $c[i,j]$ o comprimento da sequencia comum máxima dos prefixos $X_i$ e $Y_j$. Se $|X|=m$ e $|Y|=n$, então $c[m,n]$ é o valor \textbf{ótimo}.
+\end{slide} 
+
+\begin{slide}
+  \stitle{Subestrutura ótima} 
+  Seja $Z = z_1 \cdots z_k$ a subsequência comum máxima de $X = x_1 \cdots x_m$ e $Y = y_1 \cdots y_n$, temos:
+  
+  \hspace{1cm}\itemtrig\ Se $x_m=y_n$, então $z_k=x_m=y_n$ e $Z_{k-1} = SCM(X_{m-1}, Y_{n-1})$
+  
+  \vspace{-1cm}\hspace{1cm}\itemtrig\ Se $x_m \neq y_n$, então $z_k \neq x_m$ e $Z = SCM(X_{m-1}, Y)$
+
+    \vspace{-1cm}\hspace{1cm}\itemtrig\ Se $x_m \neq y_n$, então $z_k \neq y_n$ e $Z = SCM(X, Y_{n-1})$
+  
+Fórmula de recorrência:
+
+  $c[i,j]= \left\{  \begin{array}{ll} 
+                0 & \textrm{, se } i=0 \textrm{ ou } j=0 \\
+                c[i-1,j-1] + 1 & \textrm{, se } i,j>0 \textrm{ e } x_i = y_j\\
+                max \{c[i-1,j], c[i,j-1]\} & \textrm{, se } i,j>0 \textrm{ e } x_i \neq y_j                
+                \end{array} \right. $  
+\end{slide} 
+
+\begin{slide}
+\begin{codebox}
+\Procname{$\proc{SCM}(X,Y, m, n, c, b)$}
+\li \For $i = 0$ \To $m$ {\blue \textbf{faça}} $c[i,0] = 0$
+\li \For $j = 0$ \To $n$ {\blue \textbf{faça}} $c[0,j] = 0$
+\li \For $i = 1$ \To $m$ {\blue \textbf{faça}} 
+\li \> \For $j = 0$ \To $n$ {\blue \textbf{faça}} 
+\li \> \> \If $x_i == y_i$ {\blue \textbf{então}}
+\li \> \> \> $c[i,j] = c[i-1,j-1]+1$
+\li \> \> \> $b[i,j] = "\nwarrow" $
+\li \> \> {\blue \textbf{senão}}
+\li \> \> \> \If $c[i, j-1] > c[i-1, j]$ {\blue \textbf{então}}
+\li \> \> \> \> $c[i,j] = c[i,j-1]$
+\li \> \> \> \> $b[i,j] = "\leftarrow"$
+\li \> \> \> {\blue \textbf{senão}}
+\li \> \> \> \> $c[i,j] = c[i-1,j]$
+\li \> \> \> \> $b[i,j] = "\uparrow"$
+\li  \Return $(c[m,n], b)$
+\End
+\End
+\end{codebox}   
+\end{slide} 
+
 
 \begin{slide}
   \stitle{Obrigado}
