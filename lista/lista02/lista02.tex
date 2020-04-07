@@ -77,73 +77,45 @@
 \maketitle
 
 \begin{enumerate}
-\item Utilizando a definição de notação $\Theta$ verifique se:
+\item Prove a corretude do algoritmo de Euclides, que determina o Máximo Divisor Comum (MDC) entre dois números naturais. 
+{\blue
+\begin{verbatim}
+mdc(m,n)
+1  x = m
+2  y = n
+3  enquanto y != 0 faça
+4    r = x mod y
+5    x = y
+6    y = r
+7  devolva x
+\end{verbatim}
+}
+
+\item Demonstre a corretude do algoritmo a seguir, que converte um número inteiro na base decimal para a sua representação em binário, ou seja, com 0's e 1's.
+
+{\blue
+\begin{verbatim}
+converte(n)
+1  t = n
+2  k = -1
+3  enquanto t > 0 faça
+4    k = k + 1
+5    b[k] = t mod 2
+6    t = t div 2
+7  devolva b
+\end{verbatim}
+}
+
+\item Descreva (em pseudocódigo) a versão recursiva da técnica de busca binária para um \textit{array} ordenado e mostre a corretude deste algoritmo.
+
+\item Use o método de árvore de recursão para determinar o tempo de execução dos algoritmos expressos pelas recorrências abaixo:
 
 \begin{enumerate}
-\item $6n^3 = \Theta(n^2)$
-\item $\log_{10} n = \Theta(\lg n)$
-\item $\displaystyle \sum_{n=1}^n i^{k}= \Theta(n^{k+1})$
-\end{enumerate}
-
-\item Utilizando a definição de notação $O$ verifique se:
-
-\begin{enumerate}
-\item $10n^3-3n^2 + 27 = O(n^3)$
-\item $n = O(2^n)$
-\item $\displaystyle \frac{n^2}{2}= O(n)$
-\end{enumerate}
-
-\item Utilizando a definição de notação $\Omega$ verifique se:
-
-\begin{enumerate}
-\item $n^2-2 = \Omega(n^2)$
-\item $\lg n = \Omega(n)$
-\item $\displaystyle n \lg n= \Omega(n)$
-\end{enumerate}
-
-\item Analise a complexidade dos códigos abaixo. Para cada complexidade, expresse-a em termos de notação O, justificando sua resposta:
-
-\begin{enumerate}
-\item 
-\begin{verbatim}
-sum=0;
-for(i=1; i<=n; i++)
-  for(j=1; j<=i; j++)
-    sum++;
-\end{verbatim}
-
-\item 
-\begin{verbatim}
-sum=0;
-for(i=1; i<=n; i++)
-  for(j=i; j<=n; j++)
-    sum++;
-\end{verbatim}
-
-\item 
-\begin{verbatim}
-sum=0;
-for(i=1; i<=n; i+=2)
-  for(j=1; j<=n; j++)
-    sum++;
-\end{verbatim}
-
-\item 
-\begin{verbatim}
-sum=0;
-for(i=1; i<=n; i*=2)
-  for(j=1; j<=n; j++)
-    sum++;
-\end{verbatim}
-
-\item 
-\begin{verbatim}
-sum=0;
-for(i=1; i*i<=n; i++)
-  for(j=1; j<=n; j++)
-    sum++;
-\end{verbatim}
-
+\item $T(n) = 3 T(\lfloor n/2 \rfloor) + \Theta(n)$
+\item $T(n) = 4 T(\lfloor n/2 \rfloor) + \Theta(n)$
+\item $T(n) = 2 T(\lfloor n/2 \rfloor) + \Theta(n^2)$
+\item $T(n) = 2 T(\lfloor n/2 \rfloor) + \Theta(n)$ (Mergesort)
+\item $T(n) = 2 T(\lfloor n/3 \rfloor) + \Theta(n)$ 
 \end{enumerate}
 
 \end{enumerate}
