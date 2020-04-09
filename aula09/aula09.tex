@@ -927,6 +927,67 @@ Fórmula de recorrência:
 \end{codebox}   
 \end{slide} 
 
+\begin{slide}
+  \stitle{Subsequência Comum Máxima (SCM)}
+Ex.: $X = ABCBDAB$ e $Y = BDCABA$, $m=8$, $n=7$
+\begin{center}
+\includegraphics[width=.5\textwidth]{fig03}
+\end{center}
+\end{slide} 
+
+
+\begin{slide}
+  \stitle{Subsequência Comum Máxima (SCM)}
+  Note que: 
+  
+  
+  \itemtrig\ A complexidade do algoritmo é $O(mn)$   
+  
+  \vspace{-1cm} \itemtrig\ O algoritmo não encontra a subsequência comum de comprimento máximo, ele determina qual é o valor do comprimento máximo.
+  
+  \vspace{-1cm} \itemtrig\ Com a matriz $b$ preenchida é fácil encontrar a subsequência comum máxima.
+  
+\end{slide} 
+
+
+\begin{slide}
+
+Para recuperar a SCM, temos:
+
+
+\begin{codebox}
+\Procname{$\proc{recupera-SCM}(b, X, Y, i, j)$}
+\li \If $i = j$ {\blue \textbf{então retorne}}
+\li \If $b[i,j] = "\nwarrow"$ {\blue \textbf{então}}
+\li \> $\proc{recupera-SCM}(b, X, Y, i-1, j-1)$
+\li \> $\proc{imprime}(X_i)$
+\li {\blue \textbf{senão}}
+\li \> \If $b[i,j] = "\uparrow"$ {\blue \textbf{então}}
+\li \> \> $\proc{recupera-SCM}(b, X, Y, i-1, j)$
+\li \> {\blue \textbf{senão}}
+\li \> \> $\proc{recupera-SCM}(b, X, Y, i, j-1)$
+\End
+\End
+\end{codebox}   
+\end{slide}
+
+\begin{slide}
+  \stitle{Subsequência Comum Máxima (SCM)}
+  Perceba que: 
+  
+  
+  \itemtrig\ Dado $b$ é possível determinar a subsequência comum máxima em tempo $O(m+n)$ no pior caso.
+  
+  \vspace{-1cm} \itemtrig\ A complexidade de tempo e de espaço do algoritmo de programação dinâmica para o problema de subsequência comum máxima é $O(mn)$
+  
+  \vspace{-1cm} \itemtrig\ A matriz $b$ é dispensável, pois podemos economizar memória recuperando a solução a partir da matriz $c$.
+\end{slide}
+
+\begin{slide}
+  \stitle{Subsequência Comum Máxima (SCM)}
+  Caso não exista interesse em determinar a subsequência comum máxima, mas apenas seu comprimento, é possível reduzi o gasto de memória para $O(min\{m,n\})$, basta registrar apenas a linha da matriz sendo preenchida e a anterior.
+\end{slide} 
+
 
 \begin{slide}
   \stitle{Obrigado}

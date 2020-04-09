@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.3.3)  5 APR 2020 03:03
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.3.3)  9 APR 2020 18:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1221,21 +1221,88 @@ Package babel Info: Redefining portuges shorthand "|
 Package babel Info: Redefining portuges shorthand "|
 (babel)             in language  on input line 927.
 [49]
+Package epstopdf Info: Source file: <fig03.eps>
+(epstopdf)                    date: 2020-04-09 18:22:49
+(epstopdf)                    size: 733914 bytes
+(epstopdf)             Output file: <fig03-eps-converted-to.pdf>
+(epstopdf)                    date: 2020-04-09 18:23:44
+(epstopdf)                    size: 101756 bytes
+(epstopdf)             Command: <repstopdf --outfile=fig03-eps-converted-to.pdf
+ fig03.eps>
+(epstopdf)             \includegraphics on input line 934.
+Package epstopdf Info: Output file is already uptodate.
+
+
+pdfTeX warning: pdflatex (file ./fig03-eps-converted-to.pdf): PDF inclusion: fo
+und PDF version <1.7>, but at most version <1.5> allowed
+<fig03-eps-converted-to.pdf, id=241, 863.225pt x 829.0975pt>
+File: fig03-eps-converted-to.pdf Graphic file (type pdf)
+<use fig03-eps-converted-to.pdf>
+Package pdftex.def Info: fig03-eps-converted-to.pdf  used on input line 934.
+(pdftex.def)             Requested size: 325.0pt x 312.1506pt.
+
 Overfull \hbox (16.6667pt too wide) has occurred while \output is active
 [][] 
  []
 
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 933.
+(babel)             in language  on input line 936.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 933.
-[50]
+(babel)             in language  on input line 936.
+[50 <./fig03-eps-converted-to.pdf>]
+Overfull \hbox (16.6667pt too wide) has occurred while \output is active
+[][] 
+ []
+
+Package babel Info: Redefining portuges shorthand "|
+(babel)             in language  on input line 950.
+Package babel Info: Redefining portuges shorthand "|
+(babel)             in language  on input line 950.
+[51]
+Warning: Indentation ends at level -2 in codebox on page 0.
+
+Overfull \hbox (16.6667pt too wide) has occurred while \output is active
+[][] 
+ []
+
+Package babel Info: Redefining portuges shorthand "|
+(babel)             in language  on input line 972.
+Package babel Info: Redefining portuges shorthand "|
+(babel)             in language  on input line 972.
+[52]
+Overfull \hbox (16.6667pt too wide) has occurred while \output is active
+[][] 
+ []
+
+Package babel Info: Redefining portuges shorthand "|
+(babel)             in language  on input line 984.
+Package babel Info: Redefining portuges shorthand "|
+(babel)             in language  on input line 984.
+[53]
+Overfull \hbox (16.6667pt too wide) has occurred while \output is active
+[][] 
+ []
+
+Package babel Info: Redefining portuges shorthand "|
+(babel)             in language  on input line 989.
+Package babel Info: Redefining portuges shorthand "|
+(babel)             in language  on input line 989.
+[54]
+Overfull \hbox (16.6667pt too wide) has occurred while \output is active
+[][] 
+ []
+
+Package babel Info: Redefining portuges shorthand "|
+(babel)             in language  on input line 994.
+Package babel Info: Redefining portuges shorthand "|
+(babel)             in language  on input line 994.
+[55]
 0 minutes
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 935.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 935.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 996.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 996.
 (./aula09.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 935.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 935.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 996.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 996.
 Package rerunfilecheck Info: File `aula09.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
 
@@ -1246,13 +1313,13 @@ LaTeX Font Warning: Size substitutions with differences
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 935.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 996.
  ) 
 Here is how much of TeX's memory you used:
- 8330 strings out of 492982
- 119106 string characters out of 6134897
+ 8340 strings out of 492982
+ 119297 string characters out of 6134897
  211301 words of memory out of 5000000
- 11653 multiletter control sequences out of 15000+600000
+ 11657 multiletter control sequences out of 15000+600000
  13871 words of font info for 41 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  42i,10n,26p,319b,436s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1265,10 +1332,10 @@ ype1/public/amsfonts/symbols/msam10.pfb></usr/share/texmf/fonts/type1/public/cm
 -super/sflb8.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfli8.pfb></usr/
 share/texmf/fonts/type1/public/cm-super/sflq8.pfb></usr/share/texmf/fonts/type1
 /public/cm-super/sfltt8.pfb>
-Output written on aula09.pdf (50 pages, 187444 bytes).
+Output written on aula09.pdf (55 pages, 291555 bytes).
 PDF statistics:
- 293 PDF objects out of 1000 (max. 8388607)
- 224 compressed objects within 3 object streams
- 57 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 319 PDF objects out of 1000 (max. 8388607)
+ 243 compressed objects within 3 object streams
+ 62 named destinations out of 1000 (max. 500000)
+ 16 words of extra memory for PDF output out of 10000 (max. 10000000)
 
