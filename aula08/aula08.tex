@@ -398,10 +398,9 @@ Solução 1:
 \li   $A' = a_{n-1}, \cdots, a_1, a_0$
 \li   $P' = \proc{Calculo-Polinomio}(A', n-1, x)$  
 \li   $x_n = x$
-\li  \For $i=0$ \To $n$ 
-\li  \Do $x_n = x_n * x$
+\li  \For $i=0$ \To $n$ {\blue \textbf{faça}}
+\li  \> $x_n = x_n * x$
 \li  $P = P' + a_n * x_n$ 
-\End
 \End
 \li  \Return $P$
 \End
@@ -425,9 +424,10 @@ Solução 1:
 \begin{slide}
     \stitle{Solução 1}                
 Não é difícil perceber que:
+
 $T(n) = \displaystyle \sum_{i=1}^n (i$ multiplicações $ + 1 $ adição $) =$
 
-$= \displaystyle \frac{n(n+1)}{2} $ multiplicações $ + 1 $ adição $ = O(n^2)$
+$= \displaystyle \frac{n(n+1)}{2} $ multiplicações $ + n $ adições $ = O(n^2)$
 
 Note que a solução desperdiça tempo recalculando $x^n$.
 
