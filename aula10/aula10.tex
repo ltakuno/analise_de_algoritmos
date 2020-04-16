@@ -1,0 +1,1752 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% talk: prototype
+%%% 2002/10/16
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%
+%%% Erstellen eines Vortrags in PDF-Format wie folgt:
+%%%
+%%% 1) Uebersetzen der Datei mit 
+%%%    pdflatex asz
+%%% 2) Wenn Features von ppower4 gewuenscht werden, dann die eben
+%%%    entstandene Datei asz.pdf weiterverarbeiten mit
+%%%    ./ppower4 asz.pdf vortrag.pdf
+%%% 3) Die Datei vortrag.pdf kann nun mit dem Acrobat Reader angesehen
+%%%    werden
+%%%
+%%% Fuer Testzwecke ist auch ein "normales" Uebersetzen mit LaTeX
+%%% moeglich:
+%%% 1) latex asz
+%%% 2) dvips asz.dvi -o asz.ps -t a4 -t landscape
+%%% 3) Anschauen mit ghostview
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ifx\pdfoutput\undefined \documentclass[clock,landscape]{slides} \else
+\documentclass[clock,landscape]{slides} \fi
+%\documentclass[clock,pdftex,landscape]{slides} \fi
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Escrevendo em português:
+\usepackage[brazil]{babel}
+\usepackage[latin1]{inputenc} % isso é quase redundante
+\usepackage{textcomp}
+\usepackage[T1]{fontenc}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{epstopdf}
+\usepackage{psfrag}
+ 
+
+\usepackage{multicol}
+
+\usepackage{clrscode}
+%----------------------------
+\usepackage{tabularx}
+%%% Die Datei mit dem ASZ-Layout
+
+\usepackage{shi}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath,amssymb,amsthm} \usepackage{amsfonts}
+\usepackage[colorlinks,backref]{hyperref}
+%\usepackage{background}
+
+%\usepackage{picinpar}
+
+\hypersetup{pdftitle={Análise e projeto de algoritmos},
+  pdfsubject={Análise de algoritmos}, 
+  pdfauthor={Leonardo Takuno, Centro Universitário SENAC, 
+  <leonardo.takuno@gmail.com>},
+  pdfkeywords={acrobat, ppower4},
+%  pdfpagemode={FullScreen},
+  colorlinks={false},
+  linkcolor={red}
+}
+
+\usepackage{color}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Pauseneffekte mit ppower4 werden moeglich
+
+\usepackage{pause}
+\newcommand\plone{\pause\pauselevel{=1}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newtheoremstyle{mythm}% name
+  {40pt}%      Space above
+  {-15pt}%      Space below
+  {\sf\itshape\blue}%      Body font
+  {}%         Indent amount (empty = no indent, \parindent = para indent)
+  {\sf\bfseries\green}% Thm head \vspacefont
+  {.}%        Punctuation after thm head
+  { }%     Space after thm head: " " = normal interword space;
+        %       \newline = linebreak
+  {}%         Thm head spec (can be left empty, meaning `normal')
+
+\theoremstyle{mythm}
+\newtheorem{theorem}             {Theorem}       
+\newtheorem{claim}     [theorem] {Claim}         
+\newtheorem{lemma}     [theorem] {Lemma}         
+\newtheorem{corollary} [theorem] {Corollary}     
+\newtheorem{fact}      [theorem] {Fact}          
+\newtheorem{conjecture}[theorem] {Conjecture}    
+
+\newtheorem{problem}   [theorem] {Problema}       
+\newtheorem{propriedade}  [theorem] {Propriedade}       
+\newtheorem{corolario}  [theorem] {Corolário}       
+\newtheorem{definition}   [theorem] {Definição}       
+
+%%% Symbole
+
+\newcommand{\NN}{\mathbb{N}} \newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}} \newcommand{\1}{{{\mathchoice {\rm
+        1\mskip-4mu l} {\rm 1\mskip-4mu l} {\rm 1\mskip-4.5mu l} {\rm
+        1\mskip-5mu l}}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\let\phi\varphi
+\let\epsilon\varepsilon
+\let\rho\varrho
+\let\tilde\widetilde
+\let\approx\thickapprox
+\let\sim\thicksim
+
+\def\({\left(}
+\def\){\right)}
+\def\[{\left[}
+\def\]{\right]}
+\def\<{\langle}
+\def\>{\rangle}
+\let\:\colon
+\def\llfloor{\left\lfloor}
+\def\rrfloor{\right\rfloor}
+\def\llceil{\left\lceil}
+\def\rrceil{\right\rceil}
+
+%%% Textmakros
+\def\ex{\mathop{\text{\rm ex}}\nolimits} 
+\def\cB{{\mathcal B}} 
+\def\cG{{\mathcal G}}
+\def\cS{{\mathcal S}} 
+\def\cW{{\mathcal W}} 
+\def\cQ{{\mathcal Q}} 
+\def\PP{{\mathbb P}}
+\def\EE{{\mathbb E}} 
+\def\GG{{\mathbb G}} 
+\def\e{{\rm e}}
+\def\epsilon{{\varepsilon}} 
+\def\DISC{\mathop{\textrm{\rm DISC}}\nolimits} 
+\def\EIG{\mathop{\textrm{\rm EIG}}\nolimits}
+\def\CIRCUIT{\mathop{\textrm{\rm CIRCUIT}}\nolimits}
+\def\CYCLE{\mathop{\textrm{\rm CYCLE}}\nolimits}
+\def\SUB{\mathop{\textrm{\rm SUB}}\nolimits}
+\def\NSUB{\mathop{\textrm{\rm NSUB}}\nolimits}
+\def\PAIR{\mathop{\textrm{\rm PAIR}}\nolimits}
+\def\TFNSUB{\mathop{\textrm{\rm TFNSUB}}\nolimits}
+\def\BDD{\mathop{\textrm{\rm BDD}}\nolimits}
+\def\eps{\varepsilon}
+
+\def\rmd{\text{\rm d}}
+\def\wtc{\widetilde{c}\,}
+\def\whc{\widehat{c}}
+\def\bfb{{\bf b}}
+\def\bff{{\bf f}}
+\def\bft{{\bf t}}
+\def\bfx{{\bf x}}
+\def\bfz{{\bf z}}
+\def\cB{{\mathcal B}}
+\def\cD{{\mathcal D}}
+\def\cG{{\mathcal G}}
+\def\cM{{\mathcal M}}
+\def\cN{{\mathcal N}}
+\def\cR{{\mathcal R}}
+\def\cS{{\mathcal S}}
+\def\cW{{\mathcal W}}
+\def\PP{{\mathbb P}}
+\def\EE{{\mathbb E}}
+\def\FF{{\mathbb F}}
+\def\NN{{\mathbb N}}
+\def\RR{{\mathbb R}}
+\def\ZZ{{\mathbb Z}}
+\def\e{{\rm e}}
+\def\card{\mathop{\text{\rm card}}\nolimits}
+\def\rank{\mathop{\text{\rm rank}}\nolimits}
+\def\trace{\mathop{\text{\rm trace}}\nolimits}
+\def\Ave{\mathop{\text{\rm Ave}}\nolimits}
+\def\Bi{\mathop{\text{\rm Bi}}\nolimits}
+\def\im{\mathop{\text{\rm im}}\nolimits}
+\def\ind{\mathop{\text{\rm ind}}\nolimits}
+\def\dist{\mathop{\text{\rm dist}}\nolimits}
+\def\nDist{\mathop{\text{\rm \#Dist}}\nolimits}
+\let\Dist\nDist
+\def\De{D_{\rm e}}
+\def\sumL{\sum\nolimits_1}
+\def\sumS{\sum\nolimits_2}
+\def\GF{\mathop{\text{\rm GF}}\nolimits}
+\let\FF\GF
+\def\Bip{\mathop{\text{\rm Bip}}\nolimits}
+\def\adj{\mathop{\text{\rm adj}}\nolimits}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\nx}{{\hfill\vspace*{-2cm}\tiny +}}
+
+%\newcommand{\red}[1]{\textcolor{red}{#1}}
+%\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+%\newcommand{\yellow}[1]{\textcolor{yellow}{#1}}
+%\newcommand{\green}[1]{\textcolor{green}{#1}}
+%\newcommand{\darkgreen}[1]{\textcolor{darkgreen}{#1}}
+\def\red{\color[rgb]{0.7,0,0}}
+\def\green{\color[rgb]{0,.8,0}}
+\def\darkgreen{\color[rgb]{0.1,0.4,0.0}}
+\let\dgreen\darkgreen
+\def\blue{\color[rgb]{0,0,.8}}
+\def\yellow{\color[rgb]{1,1,0}}
+\def\black{\color[rgb]{0,0,0}}
+
+\def\pink{\color[rgb]{1,0,1}}
+\def\brown{\color[rgb]{.5,.1,.3}}
+\def\lilaz{\color[rgb]{.5,0,.5}}
+\def\hmmm{\color[rgb]{.3,.1,.5}}
+\def\magenta{\color[rgb]{.6,.05,.05}}
+
+\newcommand{\uc}[1]{\centerline{\underline{#1}}}
+\newcommand{\pic}[1]{\fbox{picture:{#1}}}
+%\renewcommand{\bf}{\mbox{}}
+\newcommand{\cP}{{\cal P}} \newcommand{\cT}{{\cal T}}
+\newcommand{\add}{\mbox{\rm add}} \newcommand{\pr}{\mbox{\rm Pr}}
+
+\def\stitle#1{\slidetitle{\red #1}\vspace{-0pt}}
+
+\def\itemtrig{$\vartriangleright$}
+\def\itemcirc{$\circ$}
+\def\itemT{\item[\itemtrig]}
+\def\itemC{\item[$\circ$]}
+
+\everymath={\blue}
+\everydisplay={\blue}
+
+\renewcommand{\For}{\textbf{\blue para} }
+\renewcommand{\To}{\textbf{\blue até} }
+\renewcommand{\Do}{\>\>\textbf{\blue faça}\hspace*{-0.7em}\'\addtocounter{indent}{1}}
+\renewcommand{\While}{\textbf{\blue enquanto} }
+\renewcommand{\If}{\textbf{\blue se} }
+\renewcommand{\Then}{\>\textbf{\blue então}\>\hspace*{0.5em}\addtocounter{indent}{1}}
+\renewcommand{\Else}{\kill\addtocounter{indent}{-1}\liprint\>\textbf{\blue senão}\>\hspace*{0.5em}\addtocounter{indent}{1}}
+\renewcommand{\ElseIf}{\kill\addtocounter{indent}{-1}\liprint\textbf{\blue senão se} }
+\renewcommand{\ElseNoIf}{\kill\addtocounter{indent}{-1}\liprint\textbf{\blue senão} \addtocounter{indent}{1}}
+\renewcommand{\Return}{\textbf{\blue retorne} }
+
+
+\newcommand{\TITLE}[1]{\item[#1]}
+
+% ugly hack for for/while
+\newbox\fixbox
+
+% end of hack
+\newcommand{\algcost}[2]{\strut\hfill\makebox[3.5cm][l]{#1}\makebox[4cm][l]{#2}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%%Anuschs Extras
+%
+%\def\enddiscard{}
+%\long\def\discard#1\enddiscard{}
+%
+%%%\vpagecolor{bgblue}
+%\hypersetup{pdfpagetransition=Dissolve}
+%\hypersetup{pdfpagetransition=R}
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Farben kann man hier definieren
+
+\definecolor{bgblue}{rgb}{0.04,0.39,0.53}
+
+\definecolor{darkyellow}{rgb}{0.94,0.820,0.058}
+\definecolor{orange}{rgb}{0.95,0.47,0.14}
+\definecolor{darkgreen}{rgb}{0.0,0.5,0.0}
+
+\definecolor{blue2}{rgb}{0.1,0.39,0.53}
+\definecolor{yellow1}{rgb}{1,1,0} \definecolor{pink}{rgb}{1,0,1}
+
+\definecolor{lightred}{rgb}{1,0.5,0.5}
+\definecolor{lightred2}{rgb}{1,0.7,0.7}
+\definecolor{lightred3}{rgb}{1,0.3,0.3}
+\definecolor{black}{rgb}{0,0,0} \definecolor{gray1}{rgb}{0.9,0.9,0.9}
+\definecolor{red1}{rgb}{1,1,0.9}
+
+\title{Análise e projeto de algoritmos} 
+\author{{\blue L.~Takuno} (SENAC)}
+\date{{\dgreen 1o. Semestre 2019}} 
+
+%%% Hier beginnt die Praesentation
+
+\begin{document}\def\proofname{{\bf\green Prova.}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Deckblatt
+%%%%%%%%%%%%%%%%%%%\usepackage{clrscode3e}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\maketitle
+
+%\slidesubhead{}  %% Teilvortrags-Titel (hier noch nicht)
+                 %% Dieser erscheint spaeter oben links unter
+                 %% dem ASZ Gesamt-Titel
+
+%%%%%%%%%%%%%%%%%%%%%%% TOC %%%%%%%%%%%%%%%%%%
+
+%\slidesubhead{Outline!!!}
+
+\begin{slide}
+  \stitle{Fontes principais}
+  \begin{enumerate}\makeatletter\itemsep\z@\makeatother
+  \item Cormem T. H.; Leiserson C. E.; Rivest R.: Stein C.. \textit{Introduction to Algorithms}, $3^a$ edição, MIT Press, 2009
+  \item Análise de algoritmo - IME/USP (prof. Paulo Feofiloff)
+    \verb|http://www.ime.usp.br/~pf/analise_de_algoritmos| 
+	
+  \end{enumerate}
+  \end{slide}
+ 
+ 
+\begin{slide}
+  \stitle{Programação dinâmica (parte 2)}  
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema do troco}  
+Dado um valor $P$, e um conjunto $S$ de $n$ moedas, cada um com um valor $c_i$, precisamos determinar o número mínimo de moedas para obter a quantidade $P$.
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema do troco}  
+Exemplo: $P = 8$, $S = \{1,4,6\}$, $n= 3$
+
+\begin{center}
+\includegraphics[width=.7\textwidth]{fig01}
+\end{center}
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema do troco}  
+  Perceba que temos três casos base:
+
+  \itemtrig\ Se o valor do troco é 0, então temos 0 moedas como solução.
+  
+   \vspace{-1cm}\itemtrig\ Se o valor do troco é negativo ($< 0$), então não é possível dar o troco.
+   
+      \vspace{-1cm}\itemtrig\ Se o conjunto $S$ é vazio ($\{\}$ ou $\emptyset$), então não é possível dar o troco.
+     
+  
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema do troco}  
+Definimos a função $m(i, Q)$ como o número mínimo de moedas necessárias para obter uma quantidade $Q$, usando os $i$ primeiros tipos de moedas ($1 \cdots i$).
+
+A solução para o troco pode utilizar 0 ou mais moedas do tipo $i$, e assim:
+
+$m(i, Q)= \left\{  \begin{array}{ll} 
+                m(i-1, Q) & \textrm{, se não usa moeda tipo} i \\
+                m(i-1, Q-k \cdot c_i)  & \textrm{, se usa } k \textrm{ moedas do tipo } i
+                \end{array} \right. $
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema do troco}
+Exemplo: $P = 8$, $S = \{1,4,6\}$, $n= 3$
+  
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+\hline
+          & \multicolumn{9}{c|}{Q}    \\ \hline
+Moedas    & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_1 = 1$ & 0 &  &  &  &  &  &  &  &  \\ \hline
+$c_2 = 4$ & 0 &  &  &  &  &  &  &  &  \\ \hline
+$c_3 = 6$ & 0 &  &  &  &  &  &  &  &  \\ \hline
+\end{tabular}  
+\end{center}  
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema do troco}
+Exemplo: $P = 8$, $S = \{1,4,6\}$, $n= 3$
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+\hline
+          & \multicolumn{9}{c|}{Q}    \\ \hline
+Moedas    & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_1 = 1$ & 0 & 1 &  &  &  &  &  &  &  \\ \hline
+$c_2 = 4$ & 0 &  &  &  &  &  &  &  &  \\ \hline
+$c_3 = 6$ & 0 &  &  &  &  &  &  &  &  \\ \hline
+\end{tabular}  
+\end{center}  
+
+Para o valor $1$ utilizar $\{1\}$.
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema do troco}
+Exemplo: $P = 8$, $S = \{1,4,6\}$, $n= 3$
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+\hline
+          & \multicolumn{9}{c|}{Q}    \\ \hline
+Moedas    & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_1 = 1$ & 0 & 1 & 2 &  &  &  &  &  &  \\ \hline
+$c_2 = 4$ & 0 &  &  &  &  &  &  &  &  \\ \hline
+$c_3 = 6$ & 0 &  &  &  &  &  &  &  &  \\ \hline
+\end{tabular}  
+\end{center}  
+
+Para o valor $2$ utilizar $\{1,1\}$.
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema do troco}
+Exemplo: $P = 8$, $S = \{1,4,6\}$, $n= 3$
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+\hline
+          & \multicolumn{9}{c|}{Q}    \\ \hline
+Moedas    & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_1 = 1$ & 0 & 1 & 2 & 3 &  &  &  &  &  \\ \hline
+$c_2 = 4$ & 0 &  &  &  &  &  &  &  &  \\ \hline
+$c_3 = 6$ & 0 &  &  &  &  &  &  &  &  \\ \hline
+\end{tabular}  
+\end{center}  
+
+Para o valor $3$ utilizar $\{1,1,1\}$.
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema do troco}
+Exemplo: $P = 8$, $S = \{1,4,6\}$, $n= 3$
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+\hline
+          & \multicolumn{9}{c|}{Q}    \\ \hline
+Moedas    & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_1 = 1$ & 0 & 1 & 2 & 3 & 4 &  &  &  &  \\ \hline
+$c_2 = 4$ & 0 &  &  &  &  &  &  &  &  \\ \hline
+$c_3 = 6$ & 0 &  &  &  &  &  &  &  &  \\ \hline
+\end{tabular}  
+\end{center}  
+
+Para o valor $4$ utilizar $\{1,1,1,1\}$.
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema do troco}
+Exemplo: $P = 8$, $S = \{1,4,6\}$, $n= 3$
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+\hline
+          & \multicolumn{9}{c|}{Q}    \\ \hline
+Moedas    & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_1 = 1$ & 0 & 1 & 2 & 3 & 4 & 5 &  &  &  \\ \hline
+$c_2 = 4$ & 0 &  &  &  &  &  &  &  &  \\ \hline
+$c_3 = 6$ & 0 &  &  &  &  &  &  &  &  \\ \hline
+\end{tabular}  
+\end{center}  
+
+Para o valor $5$ utilizar $\{1,1,1,1,1\}$.
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema do troco}
+Exemplo: $P = 8$, $S = \{1,4,6\}$, $n= 3$
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+\hline
+          & \multicolumn{9}{c|}{Q}    \\ \hline
+Moedas    & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_1 = 1$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_2 = 4$ & 0 &  &  &  &  &  &  &  &  \\ \hline
+$c_3 = 6$ & 0 &  &  &  &  &  &  &  &  \\ \hline
+\end{tabular}  
+\end{center}  
+
+Para o valor $8$ utilizar $\{1,1,1,1,1,1,1,1\}$.
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema do troco}
+Exemplo: $P = 8$, $S = \{1,4,6\}$, $n= 3$
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+\hline
+          & \multicolumn{9}{c|}{Q}    \\ \hline
+Moedas    & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_1 = 1$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_2 = 4$ & 0 & 1 &  &  &  &  &  &  &  \\ \hline
+$c_3 = 6$ & 0 &  &  &  &  &  &  &  &  \\ \hline
+\end{tabular}  
+\end{center}  
+
+Para o valor $1$ utilizar $\{1\}$.
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema do troco}
+Exemplo: $P = 8$, $S = \{1,4,6\}$, $n= 3$
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+\hline
+          & \multicolumn{9}{c|}{Q}    \\ \hline
+Moedas    & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_1 = 1$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_2 = 4$ & 0 & 1 & 2 &  &  &  &  &  &  \\ \hline
+$c_3 = 6$ & 0 &  &  &  &  &  &  &  &  \\ \hline
+\end{tabular}  
+\end{center}  
+
+Para o valor $2$ utilizar $\{1,1\}$.
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema do troco}
+Exemplo: $P = 8$, $S = \{1,4,6\}$, $n= 3$
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+\hline
+          & \multicolumn{9}{c|}{Q}    \\ \hline
+Moedas    & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_1 = 1$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_2 = 4$ & 0 & 1 & 2 & 3 &  &  &  &  &  \\ \hline
+$c_3 = 6$ & 0 &  &  &  &  &  &  &  &  \\ \hline
+\end{tabular}  
+\end{center}  
+
+Para o valor $3$ utilizar $\{1,1,1\}$.
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema do troco}
+Exemplo: $P = 8$, $S = \{1,4,6\}$, $n= 3$
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+\hline
+          & \multicolumn{9}{c|}{Q}    \\ \hline
+Moedas    & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_1 = 1$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_2 = 4$ & 0 & 1 & 2 & 3 & 1 &  &  &  &  \\ \hline
+$c_3 = 6$ & 0 &  &  &  &  &  &  &  &  \\ \hline
+\end{tabular}  
+\end{center}  
+
+Para o valor $4$ utilizar $\{4\}$.
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema do troco}
+Exemplo: $P = 8$, $S = \{1,4,6\}$, $n= 3$
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+\hline
+          & \multicolumn{9}{c|}{Q}    \\ \hline
+Moedas    & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_1 = 1$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_2 = 4$ & 0 & 1 & 2 & 3 & 1 & 2 &  &  &  \\ \hline
+$c_3 = 6$ & 0 &  &  &  &  &  &  &  &  \\ \hline
+\end{tabular}  
+\end{center}  
+
+Para o valor $5$ utilizar $\{1,4\}$.
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema do troco}
+Exemplo: $P = 8$, $S = \{1,4,6\}$, $n= 3$
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+\hline
+          & \multicolumn{9}{c|}{Q}    \\ \hline
+Moedas    & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_1 = 1$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_2 = 4$ & 0 & 1 & 2 & 3 & 1 & 2 & 3 &  &  \\ \hline
+$c_3 = 6$ & 0 &  &  &  &  &  &  &  &  \\ \hline
+\end{tabular}  
+\end{center}  
+
+Para o valor $6$ utilizar $\{1,1,4\}$.
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema do troco}
+Exemplo: $P = 8$, $S = \{1,4,6\}$, $n= 3$
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+\hline
+          & \multicolumn{9}{c|}{Q}    \\ \hline
+Moedas    & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_1 = 1$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_2 = 4$ & 0 & 1 & 2 & 3 & 1 & 2 & 3 & 4 &  \\ \hline
+$c_3 = 6$ & 0 &  &  &  &  &  &  &  &  \\ \hline
+\end{tabular}  
+\end{center}  
+
+Para o valor $7$ utilizar $\{1,1,1,4\}$.
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema do troco}
+Exemplo: $P = 8$, $S = \{1,4,6\}$, $n= 3$
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+\hline
+          & \multicolumn{9}{c|}{Q}    \\ \hline
+Moedas    & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_1 = 1$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_2 = 4$ & 0 & 1 & 2 & 3 & 1 & 2 & 3 & 4 & 2 \\ \hline
+$c_3 = 6$ & 0 &  &  &  &  &  &  &  &  \\ \hline
+\end{tabular}  
+\end{center}  
+
+Para o valor $8$ utilizar $\{4,4\}$.
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema do troco}
+Exemplo: $P = 8$, $S = \{1,4,6\}$, $n= 3$
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+\hline
+          & \multicolumn{9}{c|}{Q}    \\ \hline
+Moedas    & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_1 = 1$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_2 = 4$ & 0 & 1 & 2 & 3 & 1 & 2 & 3 & 4 & 2 \\ \hline
+$c_3 = 6$ & 0 & 1 &  &  &  &  &  &  &  \\ \hline
+\end{tabular}  
+\end{center}  
+
+Para o valor $1$ utilizar $\{1\}$.
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema do troco}
+Exemplo: $P = 8$, $S = \{1,4,6\}$, $n= 3$
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+\hline
+          & \multicolumn{9}{c|}{Q}    \\ \hline
+Moedas    & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_1 = 1$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_2 = 4$ & 0 & 1 & 2 & 3 & 1 & 2 & 3 & 4 & 2 \\ \hline
+$c_3 = 6$ & 0 & 1 & 2 &  &  &  &  &  &  \\ \hline
+\end{tabular}  
+\end{center}  
+
+Para o valor $2$ utilizar $\{1,1\}$.
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema do troco}
+Exemplo: $P = 8$, $S = \{1,4,6\}$, $n= 3$
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+\hline
+          & \multicolumn{9}{c|}{Q}    \\ \hline
+Moedas    & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_1 = 1$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_2 = 4$ & 0 & 1 & 2 & 3 & 1 & 2 & 3 & 4 & 2 \\ \hline
+$c_3 = 6$ & 0 & 1 & 2 & 3 &  &  &  &  &  \\ \hline
+\end{tabular}  
+\end{center}  
+
+Para o valor $3$ utilizar $\{1,1,1\}$.
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema do troco}
+Exemplo: $P = 8$, $S = \{1,4,6\}$, $n= 3$
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+\hline
+          & \multicolumn{9}{c|}{Q}    \\ \hline
+Moedas    & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_1 = 1$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_2 = 4$ & 0 & 1 & 2 & 3 & 1 & 2 & 3 & 4 & 2 \\ \hline
+$c_3 = 6$ & 0 & 1 & 2 & 3 & 1 &  &  &  &  \\ \hline
+\end{tabular}  
+\end{center}  
+
+Para o valor $4$ utilizar $\{4\}$.
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Problema do troco}
+Exemplo: $P = 8$, $S = \{1,4,6\}$, $n= 3$
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+\hline
+          & \multicolumn{9}{c|}{Q}    \\ \hline
+Moedas    & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_1 = 1$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_2 = 4$ & 0 & 1 & 2 & 3 & 1 & 2 & 3 & 4 & 2 \\ \hline
+$c_3 = 6$ & 0 & 1 & 2 & 3 & 1 & 2 &  &  &  \\ \hline
+\end{tabular}  
+\end{center}  
+
+Para o valor $5$ utilizar $\{1,4\}$.
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema do troco}
+Exemplo: $P = 8$, $S = \{1,4,6\}$, $n= 3$
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+\hline
+          & \multicolumn{9}{c|}{Q}    \\ \hline
+Moedas    & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_1 = 1$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_2 = 4$ & 0 & 1 & 2 & 3 & 1 & 2 & 3 & 4 & 2 \\ \hline
+$c_3 = 6$ & 0 & 1 & 2 & 3 & 1 & 2 & 1 &  &  \\ \hline
+\end{tabular}  
+\end{center}  
+
+Para o valor $6$ utilizar $\{6\}$.
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema do troco}
+Exemplo: $P = 8$, $S = \{1,4,6\}$, $n= 3$
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+\hline
+          & \multicolumn{9}{c|}{Q}    \\ \hline
+Moedas    & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_1 = 1$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_2 = 4$ & 0 & 1 & 2 & 3 & 1 & 2 & 3 & 4 & 2 \\ \hline
+$c_3 = 6$ & 0 & 1 & 2 & 3 & 1 & 2 & 1 & 2 &  \\ \hline
+\end{tabular}  
+\end{center}  
+
+Para o valor $7$ utilizar $\{1,6\}$.
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema do troco}
+Exemplo: $P = 8$, $S = \{1,4,6\}$, $n= 3$
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+\hline
+          & \multicolumn{9}{c|}{Q}    \\ \hline
+Moedas    & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_1 = 1$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_2 = 4$ & 0 & 1 & 2 & 3 & 1 & 2 & 3 & 4 & 2 \\ \hline
+$c_3 = 6$ & 0 & 1 & 2 & 3 & 1 & 2 & 1 & 2 &  \\ \hline
+\end{tabular}  
+\end{center}  
+
+Para o valor $7$ utilizar $\{1,6\}$.
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Problema do troco}
+Exemplo: $P = 8$, $S = \{1,4,6\}$, $n= 3$
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+\hline
+          & \multicolumn{9}{c|}{Q}    \\ \hline
+Moedas    & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_1 = 1$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_2 = 4$ & 0 & 1 & 2 & 3 & 1 & 2 & 3 & 4 & 2 \\ \hline
+$c_3 = 6$ & 0 & 1 & 2 & 3 & 1 & 2 & 1 & 2 & 3 \\ \hline
+\end{tabular}  
+\end{center}  
+
+Para o valor $8$ utilizar $\{1,1,6\}$.
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema do troco}
+Exemplo: $P = 8$, $S = \{1,4,6\}$, $n= 3$
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+\hline
+          & \multicolumn{9}{c|}{Q}    \\ \hline
+Moedas    & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_1 = 1$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_2 = 4$ & 0 & 1 & 2 & 3 & 1 & 2 & 3 & 4 & 2 \\ \hline
+$c_3 = 6$ & 0 & 1 & 2 & 3 & 1 & 2 & 1 & 2 & 3 \\ \hline
+\end{tabular}  
+\end{center}  
+
+Para o valor $8$ utilizar $\{1,1,6\}$ ou $\{4,4\}$ ? 
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Problema do troco}
+Exemplo: $P = 8$, $S = \{1,4,6\}$, $n= 3$
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+\hline
+          & \multicolumn{9}{c|}{Q}    \\ \hline
+Moedas    & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_1 = 1$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_2 = 4$ & 0 & 1 & 2 & 3 & 1 & 2 & 3 & 4 & 2 \\ \hline
+$c_3 = 6$ & 0 & 1 & 2 & 3 & 1 & 2 & 1 & 2 & 3 \\ \hline
+\end{tabular}  
+\end{center}  
+
+Para o valor $8$ utilizar $\{1,1,6\}$ ou $\{4,4\}$ ? 
+
+\vspace{-1cm} Queremos o número mínimo de moedas.
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Problema do troco}
+  
+  Para determinar o número mínimo de moedas devemos ter:
+  
+  $m(i,Q) = \underset{k = 0 \cdots Q}{\mathrm{min}} \{m(i-1, Q), m(i-1,Q - k \cdot c_i)+k\} $
+
+
+Como é o algoritmo de programação dinâmica para resolver este problema?
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Problema do troco}
+\begin{codebox}
+\Procname{$\proc{calcula\_total\_moedas}(P,n,c[])$}
+\li  \For $i=0$ \To $n$ {\blue \textbf{faça}} $m[i][0] = 0$   
+\li  \For $i=1$ \To $P$ {\blue \textbf{faça}} $m[0][i] = \infty$   
+\li  \For $i=0$ \To $n$ {\blue \textbf{faça}}
+\li  \> \For $j=1$ \To $P$ {\blue \textbf{faça}}
+\li  \> \> \If ($c[i] > j$) {\blue \textbf{então}} $m[i][j] = m[i-1][j]$
+\li  \> \> {\blue \textbf{senão}}
+\li  \> \> \> \If ($m[i-1][j] < m[i][j-c[i]] + 1$) {\blue \textbf{então}} 
+\li  \> \> \> \> $m[i][j] = m[i-1][j]$	
+\li  \> \> \> {\blue \textbf{senão}}
+\li  \> \> \> \> $m[i][j] = m[i][j - c[i]]+1$	
+\End
+\end{codebox}  
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema do troco}
+\begin{codebox}
+\Procname{$\proc{calcula\_total\_moedas}(P,n,c[])$}
+\li  \For $i=0$ \To $n$ {\blue \textbf{faça}} $m[i][0] = 0$   
+\li  \For $i=1$ \To $P$ {\blue \textbf{faça}} $m[0][i] = \infty$   
+\li  \For $i=1$ \To $n$ {\blue \textbf{faça}}
+\li  \> \For $j=1$ \To $P$ {\blue \textbf{faça}}
+\li  \> \> \If ($c[i] > j$) {\blue \textbf{então}} $m[i][j] = m[i-1][j]$
+\li  \> \> {\blue \textbf{senão}}
+\li  \> \> \> \If ($m[i-1][j] < m[i][j-c[i]] + 1$) {\blue \textbf{então}} 
+\li  \> \> \> \> $m[i][j] = m[i-1][j]$	
+\li  \> \> \> {\blue \textbf{senão}}
+\li  \> \> \> \> $m[i][j] = m[i][j - c[i]]+1$	
+\End
+\end{codebox}  
+Complexidade: $O(n \cdot P)$
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da mochila} 
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da mochila} 
+\textbf{Mochila}  
+
+Dados dois vetores $m[1 \cdots n]$ e $w[1 \cdots n]$, denotamos por $m \cdot w$ o produto escalar $m[1]w[1] + m[2]w[2] + \cdots + m[n]w[n]$.
+
+Suponha um número inteiro não-negativo $W$ e vetores positivos $w[1 \cdots n]$ e $v[1 \cdots n]$.
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da mochila}
+  Uma mochila é qualquer vetor $m[1 \cdots n]$ tal que $m \cdot w \leq W$ e $0 \leq m[i] \leq 1$ para todo $i$.
+  
+  Denotamos por $W$ a capacidade da mochila. O \textbf{\blue valor} de uma mochila é o produto escalar $m \cdot v$.
+  
+  Dizemos que uma mochila é \textbf{ótima} se ela tem valor máximo.
+  
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da mochila booleana}
+  Uma mochila $m[1 \cdots n]$ tal que $m[i] = 0$ ou $m[i] = 1$, para todo $i$, é chamada de mochila booleana (ou binária ou $0-1$).
+
+Exemplo: $n = 4$, $W = 50$  
+
+\begin{center}
+\begin{tabular}{c|c|c|c|c|}
+\cline{2-5}
+                              & 1  & 2  & 3  & 4 \\ \hline
+\multicolumn{1}{|c|}{\blue w} & 40 & 30 & 20 & 10 \\ \hline
+\multicolumn{1}{|c|}{\blue v} & 840 & 600 & 400 & 100 \\ \hline
+\multicolumn{1}{|c|}{\blue m} & 0 & 0 & 0 & 0 \\ \hline
+\end{tabular}
+\end{center}
+
+Valor: $0$
+
+\vspace{-1cm} Peso: $0$
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da mochila booleana}
+  Uma mochila $m[1 \cdots n]$ tal que $m[i] = 0$ ou $m[i] = 1$, para todo $i$, é chamada de mochila booleana (ou binária ou $0-1$).
+
+Exemplo: $n = 4$, $W = 50$  
+
+\begin{center}
+\begin{tabular}{c|c|c|c|c|}
+\cline{2-5}
+                              & 1  & 2  & 3  & 4 \\ \hline
+\multicolumn{1}{|c|}{\blue w} & 40 & 30 & 20 & 10 \\ \hline
+\multicolumn{1}{|c|}{\blue v} & 840 & 600 & 400 & 100 \\ \hline
+\multicolumn{1}{|c|}{\blue m} & 1 & 0 & 0 & 0 \\ \hline
+\end{tabular}
+\end{center}
+
+Valor: $840$
+
+\vspace{-1cm} Peso: $40$
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da mochila booleana}
+  Uma mochila $m[1 \cdots n]$ tal que $m[i] = 0$ ou $m[i] = 1$, para todo $i$, é chamada de mochila booleana (ou binária ou $0-1$).
+
+Exemplo: $n = 4$, $W = 50$  
+
+\begin{center}
+\begin{tabular}{c|c|c|c|c|}
+\cline{2-5}
+                              & 1  & 2  & 3  & 4 \\ \hline
+\multicolumn{1}{|c|}{\blue w} & 40 & 30 & 20 & 10 \\ \hline
+\multicolumn{1}{|c|}{\blue v} & 840 & 600 & 400 & 100 \\ \hline
+\multicolumn{1}{|c|}{\blue m} & 1 & 0 & 0 & 1 \\ \hline
+\end{tabular}
+\end{center}
+
+Valor: $940$
+
+\vspace{-1cm} Peso: $50$   \itemtrig\ {\darkgreen atingiu a capacidade}
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da mochila booleana}
+  Uma mochila $m[1 \cdots n]$ tal que $m[i] = 0$ ou $m[i] = 1$, para todo $i$, é chamada de mochila booleana (ou binária ou $0-1$).
+
+Exemplo: $n = 4$, $W = 50$  
+
+\begin{center}
+\begin{tabular}{c|c|c|c|c|}
+\cline{2-5}
+                              & 1  & 2  & 3  & 4 \\ \hline
+\multicolumn{1}{|c|}{\blue w} & 40 & 30 & 20 & 10 \\ \hline
+\multicolumn{1}{|c|}{\blue v} & 840 & 600 & 400 & 100 \\ \hline
+\multicolumn{1}{|c|}{\blue m} & 0 & 0 & 0 & 0 \\ \hline
+\end{tabular}
+\end{center}
+
+Valor: $0$
+
+\vspace{-1cm} Peso: $0$
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da mochila booleana}
+  Uma mochila $m[1 \cdots n]$ tal que $m[i] = 0$ ou $m[i] = 1$, para todo $i$, é chamada de mochila booleana (ou binária ou $0-1$).
+
+Exemplo: $n = 4$, $W = 50$  
+
+\begin{center}
+\begin{tabular}{c|c|c|c|c|}
+\cline{2-5}
+                              & 1  & 2  & 3  & 4 \\ \hline
+\multicolumn{1}{|c|}{\blue w} & 40 & 30 & 20 & 10 \\ \hline
+\multicolumn{1}{|c|}{\blue v} & 840 & 600 & 400 & 100 \\ \hline
+\multicolumn{1}{|c|}{\blue m} & 0 & 1 & 0 & 0 \\ \hline
+\end{tabular}
+\end{center}
+
+Valor: $600$
+
+\vspace{-1cm} Peso: $30$
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da mochila booleana}
+  Uma mochila $m[1 \cdots n]$ tal que $m[i] = 0$ ou $m[i] = 1$, para todo $i$, é chamada de mochila booleana (ou binária ou $0-1$).
+
+Exemplo: $n = 4$, $W = 50$  
+
+\begin{center}
+\begin{tabular}{c|c|c|c|c|}
+\cline{2-5}
+                              & 1  & 2  & 3  & 4 \\ \hline
+\multicolumn{1}{|c|}{\blue w} & 40 & 30 & 20 & 10 \\ \hline
+\multicolumn{1}{|c|}{\blue v} & 840 & 600 & 400 & 100 \\ \hline
+\multicolumn{1}{|c|}{\blue m} & 0 & 1 & 1 & 0 \\ \hline
+\end{tabular}
+\end{center}
+
+Valor: $1000$ \itemtrig\ {\darkgreen ótimo}
+
+\vspace{-1cm} Peso: $50$ \itemtrig\ {\darkgreen atingiu a capacidade}
+\end{slide}
+
+\begin{slide}
+  \stitle{Subestrutura ótima}
+  Suponha que $m[1..n]$ é uma mochila ótima para o problema $(w, v, n, W)$.
+  
+  Se $m[n] = 1$
+  
+  \vspace{-1cm} \hspace{1cm} então $m[1.. n-1]$ é uma mochila booleana 
+  
+  \vspace{-1cm} \hspace{2cm}  ótima para o subproblema $(w, v, n-1, W-w[n])$
+
+  \vspace{-1cm} \hspace{1cm} senão $m[1.. n]$ é uma mochila booleana 
+
+  \vspace{-1cm} \hspace{2cm}  ótima para o subproblema $(w, v, n-1, W)$
+\end{slide}
+
+\begin{slide}
+  \stitle{Simplificação}
+  
+  \textbf{\darkgreen Problema:}  Encontrar o \textbf{valor} de uma mochila boolean ótima.
+  
+  \hspace{1.5cm} $t[i, Y] = $ valor de uma mochila booleana ótima 
+  
+    \vspace{-1cm} \hspace{4.7cm}   para $(w,v,i,W)$
+    
+ Possíveis valores de $Y = 0,1,2, \cdots , W$    
+\end{slide}
+
+\begin{slide}
+  \stitle{Recorrência}
+
+  \hspace{1cm} $t[i, Y] = $ valor da expressão $m \cdot v$ 
+
+    \vspace{-1cm} \hspace{4.3cm} sujeito à restrição $m \cdot w \leq Y$ (pesquisa operacional)
+    
+  \hspace{1cm} $t[0, Y] = 0$ para todo $Y$ 
+
+  \vspace{-1cm}  \hspace{1cm} $t[i, 0] = 0$ para todo $i$
+  
+  \hspace{1cm} $t[i, Y] = t[i-1, Y]$ se $w[i] > Y$ 
+   
+  \vspace{-1cm}  \hspace{1cm} $t[i, Y] = \mathrm{max}\{t[i-1, Y], t[i-1, Y - w[i]] + v[i]\}$ se $w[i] \leq Y$
+\end{slide}
+
+\begin{slide}
+  \stitle{Solução recursiva}
+  Devolve o \textbf{valor} de uma mochila booleana ótima para $(w,v,n,W)$.
+  
+\begin{codebox}
+\Procname{$\proc{mochila-recursiva}(w, v, n, W)$}
+\li  \If $n = 0$ {\blue \textbf{ou}} $W=0$
+\li \Then \Return $0$	
+\End
+\li  \If $w[n] > W$
+\li \Then \Return $\proc{mochila-recursiva}(w, v, n-1, W)$	
+\End
+\li $a = \proc{mochila-recursiva}(w, v, n-1, W)$	
+\li $b = \proc{mochila-recursiva}(w, v, n-1, W-w[n]) + v[n]$	
+\li \Return $\mathrm{max}\{a, b\}$
+\End
+\End
+\end{codebox}  
+\end{slide}
+
+\begin{slide}
+  \stitle{Solução recursiva}
+Consumo de tempo no pior caso é $\Omega(2^n)$, pois o mesmo subproblema é resolvido muitas vezes.
+
+Com programação dinâmica cada subproblema, valor de uma mochila booleana ótima para $(w, v, i, Y)$, é resolvido \textbf{apenas uma vez}.
+
+Como é o algoritmo?
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da mochila booleana (PD)}
+    Devolve o \textbf{valor} de uma mochila booleana ótima para $(w,v,n,W)$.
+
+\vspace{-1cm}\begin{codebox}
+\Procname{$\proc{mochila-pd}(w, v, n, W)$}
+\li \For $Y = 0$ \To $W$ \textbf{\blue faça}
+\li \> 	$t[0,Y] = 0$
+\li \> \For $i = 1$ \To $n$ \textbf{\blue faça}
+\li \> \> $a = t[i-1, Y]$
+\li \> \> \If $w[i]>Y$ \textbf{\blue então} $b = 0$
+\li \> \> \hspace{4.3cm}\textbf{\blue senão} $b = t[i-1, Y-w[i]] + v[i]$
+\li \> \> $t[i, Y] = \mathrm{max}\{a, b\}$
+\li \Return $t[n,W]$
+\End
+\end{codebox}   
+    
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da mochila booleana (PD)}
+    Devolve o \textbf{valor} de uma mochila booleana ótima para $(w,v,n,W)$.
+
+\vspace{-1cm}\begin{codebox}
+\Procname{$\proc{mochila-pd}(w, v, n, W)$}
+\li \For $Y = 0$ \To $W$ \textbf{\blue faça}
+\li \> 	$t[0,Y] = 0$
+\li \> \For $i = 1$ \To $n$ \textbf{\blue faça}
+\li \> \> $a = t[i-1, Y]$
+\li \> \> \If $w[i]>Y$ \textbf{\blue então} $b = 0$
+\li \> \> \hspace{4.3cm}\textbf{\blue senão} $b = t[i-1, Y-w[i]] + v[i]$
+\li \> \> $t[i, Y] = \mathrm{max}\{a, b\}$
+\li \Return $t[n,W]$
+\end{codebox}   
+
+Complexidade: $O(n \cdot W)$    
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da mochila booleana (PD)}
+Exemplo: $n= 4$, $W = 5$
+
+\begin{tabular}{ccccc}
+                       & 1                        & 2                        & 3                        & 4                        \\ \cline{2-5} 
+\multicolumn{1}{c|}{w} & \multicolumn{1}{c|}{4}   & \multicolumn{1}{c|}{2}   & \multicolumn{1}{c|}{1}   & \multicolumn{1}{c|}{3}   \\ \cline{2-5} 
+\multicolumn{1}{c|}{v} & \multicolumn{1}{c|}{500} & \multicolumn{1}{c|}{400} & \multicolumn{1}{c|}{300} & \multicolumn{1}{c|}{450} \\ \cline{2-5} 
+\end{tabular}
+
+
+\begin{tabular}{cccccccc}
+                       & 0                      & 1                      & 2                      & 3                      & 4                      & 5                      & Y \\ \cline{2-7}
+\multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} &   \\ \cline{2-7}
+\multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{2} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{3} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{4} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+i                      &                        &                        &                        &                        &                        &                        &  
+\end{tabular}
+
+capacidade: $0$, objetos: $\{\}$
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Problema da mochila booleana (PD)}
+Exemplo: $n= 4$, $W = 5$
+
+\begin{tabular}{ccccc}
+                       & 1                        & 2                        & 3                        & 4                        \\ \cline{2-5} 
+\multicolumn{1}{c|}{w} & \multicolumn{1}{c|}{4}   & \multicolumn{1}{c|}{2}   & \multicolumn{1}{c|}{1}   & \multicolumn{1}{c|}{3}   \\ \cline{2-5} 
+\multicolumn{1}{c|}{v} & \multicolumn{1}{c|}{500} & \multicolumn{1}{c|}{400} & \multicolumn{1}{c|}{300} & \multicolumn{1}{c|}{450} \\ \cline{2-5} 
+\end{tabular}
+
+
+\begin{tabular}{cccccccc}
+                       & 0                      & 1                      & 2                      & 3                      & 4                      & 5                      & Y \\ \cline{2-7}
+\multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} &   \\ \cline{2-7}
+\multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{2} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{3} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{4} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+i                      &                        &                        &                        &                        &                        &                        &  
+\end{tabular}
+
+capacidade: $1$, objetos: $\{\}$
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da mochila booleana (PD)}
+Exemplo: $n= 4$, $W = 5$
+
+\begin{tabular}{ccccc}
+                       & 1                        & 2                        & 3                        & 4                        \\ \cline{2-5} 
+\multicolumn{1}{c|}{w} & \multicolumn{1}{c|}{4}   & \multicolumn{1}{c|}{2}   & \multicolumn{1}{c|}{1}   & \multicolumn{1}{c|}{3}   \\ \cline{2-5} 
+\multicolumn{1}{c|}{v} & \multicolumn{1}{c|}{500} & \multicolumn{1}{c|}{400} & \multicolumn{1}{c|}{300} & \multicolumn{1}{c|}{450} \\ \cline{2-5} 
+\end{tabular}
+
+
+\begin{tabular}{cccccccc}
+                       & 0                      & 1                      & 2                      & 3                      & 4                      & 5                      & Y \\ \cline{2-7}
+\multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} &   \\ \cline{2-7}
+\multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{2} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{3} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{4} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+i                      &                        &                        &                        &                        &                        &                        &  
+\end{tabular}
+
+capacidade: $2$, objetos: $\{\}$
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da mochila booleana (PD)}
+Exemplo: $n= 4$, $W = 5$
+
+\begin{tabular}{ccccc}
+                       & 1                        & 2                        & 3                        & 4                        \\ \cline{2-5} 
+\multicolumn{1}{c|}{w} & \multicolumn{1}{c|}{4}   & \multicolumn{1}{c|}{2}   & \multicolumn{1}{c|}{1}   & \multicolumn{1}{c|}{3}   \\ \cline{2-5} 
+\multicolumn{1}{c|}{v} & \multicolumn{1}{c|}{500} & \multicolumn{1}{c|}{400} & \multicolumn{1}{c|}{300} & \multicolumn{1}{c|}{450} \\ \cline{2-5} 
+\end{tabular}
+
+
+\begin{tabular}{cccccccc}
+                       & 0                      & 1                      & 2                      & 3                      & 4                      & 5                      & Y \\ \cline{2-7}
+\multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} &   \\ \cline{2-7}
+\multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{2} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{3} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{4} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+i                      &                        &                        &                        &                        &                        &                        &  
+\end{tabular}
+
+capacidade: $3$, objetos: $\{\}$
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da mochila booleana (PD)}
+Exemplo: $n= 4$, $W = 5$
+
+\begin{tabular}{ccccc}
+                       & 1                        & 2                        & 3                        & 4                        \\ \cline{2-5} 
+\multicolumn{1}{c|}{w} & \multicolumn{1}{c|}{4}   & \multicolumn{1}{c|}{2}   & \multicolumn{1}{c|}{1}   & \multicolumn{1}{c|}{3}   \\ \cline{2-5} 
+\multicolumn{1}{c|}{v} & \multicolumn{1}{c|}{500} & \multicolumn{1}{c|}{400} & \multicolumn{1}{c|}{300} & \multicolumn{1}{c|}{450} \\ \cline{2-5} 
+\end{tabular}
+
+
+\begin{tabular}{cccccccc}
+                       & 0                      & 1                      & 2                      & 3                      & 4                      & 5                      & Y \\ \cline{2-7}
+\multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} &   \\ \cline{2-7}
+\multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{500}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{2} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{3} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{4} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+i                      &                        &                        &                        &                        &                        &                        &  
+\end{tabular}
+
+capacidade: $4$, objetos: $\{1\}$
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da mochila booleana (PD)}
+Exemplo: $n= 4$, $W = 5$
+
+\begin{tabular}{ccccc}
+                       & 1                        & 2                        & 3                        & 4                        \\ \cline{2-5} 
+\multicolumn{1}{c|}{w} & \multicolumn{1}{c|}{4}   & \multicolumn{1}{c|}{2}   & \multicolumn{1}{c|}{1}   & \multicolumn{1}{c|}{3}   \\ \cline{2-5} 
+\multicolumn{1}{c|}{v} & \multicolumn{1}{c|}{500} & \multicolumn{1}{c|}{400} & \multicolumn{1}{c|}{300} & \multicolumn{1}{c|}{450} \\ \cline{2-5} 
+\end{tabular}
+
+
+\begin{tabular}{cccccccc}
+                       & 0                      & 1                      & 2                      & 3                      & 4                      & 5                      & Y \\ \cline{2-7}
+\multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} &   \\ \cline{2-7}
+\multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{500}  & \multicolumn{1}{c|}{500}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{2} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{3} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{4} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+i                      &                        &                        &                        &                        &                        &                        &  
+\end{tabular}
+
+capacidade: $5$, objetos: $\{1\}$
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da mochila booleana (PD)}
+Exemplo: $n= 4$, $W = 5$
+
+\begin{tabular}{ccccc}
+                       & 1                        & 2                        & 3                        & 4                        \\ \cline{2-5} 
+\multicolumn{1}{c|}{w} & \multicolumn{1}{c|}{4}   & \multicolumn{1}{c|}{2}   & \multicolumn{1}{c|}{1}   & \multicolumn{1}{c|}{3}   \\ \cline{2-5} 
+\multicolumn{1}{c|}{v} & \multicolumn{1}{c|}{500} & \multicolumn{1}{c|}{400} & \multicolumn{1}{c|}{300} & \multicolumn{1}{c|}{450} \\ \cline{2-5} 
+\end{tabular}
+
+
+\begin{tabular}{cccccccc}
+                       & 0                      & 1                      & 2                      & 3                      & 4                      & 5                      & Y \\ \cline{2-7}
+\multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} &   \\ \cline{2-7}
+\multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{500}  & \multicolumn{1}{c|}{500}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{2} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{3} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{4} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+i                      &                        &                        &                        &                        &                        &                        &  
+\end{tabular}
+
+capacidade: $0$, objetos: $\{\}$
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da mochila booleana (PD)}
+Exemplo: $n= 4$, $W = 5$
+
+\begin{tabular}{ccccc}
+                       & 1                        & 2                        & 3                        & 4                        \\ \cline{2-5} 
+\multicolumn{1}{c|}{w} & \multicolumn{1}{c|}{4}   & \multicolumn{1}{c|}{2}   & \multicolumn{1}{c|}{1}   & \multicolumn{1}{c|}{3}   \\ \cline{2-5} 
+\multicolumn{1}{c|}{v} & \multicolumn{1}{c|}{500} & \multicolumn{1}{c|}{400} & \multicolumn{1}{c|}{300} & \multicolumn{1}{c|}{450} \\ \cline{2-5} 
+\end{tabular}
+
+
+\begin{tabular}{cccccccc}
+                       & 0                      & 1                      & 2                      & 3                      & 4                      & 5                      & Y \\ \cline{2-7}
+\multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} &   \\ \cline{2-7}
+\multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{500}  & \multicolumn{1}{c|}{500}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{2} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{3} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{4} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+i                      &                        &                        &                        &                        &                        &                        &  
+\end{tabular}
+
+capacidade: $1$, objetos: $\{\}$
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da mochila booleana (PD)}
+Exemplo: $n= 4$, $W = 5$
+
+\begin{tabular}{ccccc}
+                       & 1                        & 2                        & 3                        & 4                        \\ \cline{2-5} 
+\multicolumn{1}{c|}{w} & \multicolumn{1}{c|}{4}   & \multicolumn{1}{c|}{2}   & \multicolumn{1}{c|}{1}   & \multicolumn{1}{c|}{3}   \\ \cline{2-5} 
+\multicolumn{1}{c|}{v} & \multicolumn{1}{c|}{500} & \multicolumn{1}{c|}{400} & \multicolumn{1}{c|}{300} & \multicolumn{1}{c|}{450} \\ \cline{2-5} 
+\end{tabular}
+
+
+\begin{tabular}{cccccccc}
+                       & 0                      & 1                      & 2                      & 3                      & 4                      & 5                      & Y \\ \cline{2-7}
+\multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} &   \\ \cline{2-7}
+\multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{500}  & \multicolumn{1}{c|}{500}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{2} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{3} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{4} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+i                      &                        &                        &                        &                        &                        &                        &  
+\end{tabular}
+
+capacidade: $2$, objetos: $\{2\}$
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da mochila booleana (PD)}
+Exemplo: $n= 4$, $W = 5$
+
+\begin{tabular}{ccccc}
+                       & 1                        & 2                        & 3                        & 4                        \\ \cline{2-5} 
+\multicolumn{1}{c|}{w} & \multicolumn{1}{c|}{4}   & \multicolumn{1}{c|}{2}   & \multicolumn{1}{c|}{1}   & \multicolumn{1}{c|}{3}   \\ \cline{2-5} 
+\multicolumn{1}{c|}{v} & \multicolumn{1}{c|}{500} & \multicolumn{1}{c|}{400} & \multicolumn{1}{c|}{300} & \multicolumn{1}{c|}{450} \\ \cline{2-5} 
+\end{tabular}
+
+
+\begin{tabular}{cccccccc}
+                       & 0                      & 1                      & 2                      & 3                      & 4                      & 5                      & Y \\ \cline{2-7}
+\multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} &   \\ \cline{2-7}
+\multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{500}  & \multicolumn{1}{c|}{500}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{2} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{3} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{4} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+i                      &                        &                        &                        &                        &                        &                        &  
+\end{tabular}
+
+capacidade: $3$, objetos: $\{2\}$
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da mochila booleana (PD)}
+Exemplo: $n= 4$, $W = 5$
+
+\begin{tabular}{ccccc}
+                       & 1                        & 2                        & 3                        & 4                        \\ \cline{2-5} 
+\multicolumn{1}{c|}{w} & \multicolumn{1}{c|}{4}   & \multicolumn{1}{c|}{2}   & \multicolumn{1}{c|}{1}   & \multicolumn{1}{c|}{3}   \\ \cline{2-5} 
+\multicolumn{1}{c|}{v} & \multicolumn{1}{c|}{500} & \multicolumn{1}{c|}{400} & \multicolumn{1}{c|}{300} & \multicolumn{1}{c|}{450} \\ \cline{2-5} 
+\end{tabular}
+
+
+\begin{tabular}{cccccccc}
+                       & 0                      & 1                      & 2                      & 3                      & 4                      & 5                      & Y \\ \cline{2-7}
+\multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} &   \\ \cline{2-7}
+\multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{500}  & \multicolumn{1}{c|}{500}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{2} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{500}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{3} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{4} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+i                      &                        &                        &                        &                        &                        &                        &  
+\end{tabular}
+
+capacidade: $4$, objetos: $\{1\}$ \itemtrig\ {\darkgreen objeto 1 vale mais que objeto 2}
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da mochila booleana (PD)}
+Exemplo: $n= 4$, $W = 5$
+
+\begin{tabular}{ccccc}
+                       & 1                        & 2                        & 3                        & 4                        \\ \cline{2-5} 
+\multicolumn{1}{c|}{w} & \multicolumn{1}{c|}{4}   & \multicolumn{1}{c|}{2}   & \multicolumn{1}{c|}{1}   & \multicolumn{1}{c|}{3}   \\ \cline{2-5} 
+\multicolumn{1}{c|}{v} & \multicolumn{1}{c|}{500} & \multicolumn{1}{c|}{400} & \multicolumn{1}{c|}{300} & \multicolumn{1}{c|}{450} \\ \cline{2-5} 
+\end{tabular}
+
+
+\begin{tabular}{cccccccc}
+                       & 0                      & 1                      & 2                      & 3                      & 4                      & 5                      & Y \\ \cline{2-7}
+\multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} &   \\ \cline{2-7}
+\multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{500}  & \multicolumn{1}{c|}{500}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{2} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{500}  & \multicolumn{1}{c|}{500}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{3} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{4} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+i                      &                        &                        &                        &                        &                        &                        &  
+\end{tabular}
+
+capacidade: $5$, objetos: $\{1\}$ 
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Problema da mochila booleana (PD)}
+Exemplo: $n= 4$, $W = 5$
+
+\begin{tabular}{ccccc}
+                       & 1                        & 2                        & 3                        & 4                        \\ \cline{2-5} 
+\multicolumn{1}{c|}{w} & \multicolumn{1}{c|}{4}   & \multicolumn{1}{c|}{2}   & \multicolumn{1}{c|}{1}   & \multicolumn{1}{c|}{3}   \\ \cline{2-5} 
+\multicolumn{1}{c|}{v} & \multicolumn{1}{c|}{500} & \multicolumn{1}{c|}{400} & \multicolumn{1}{c|}{300} & \multicolumn{1}{c|}{450} \\ \cline{2-5} 
+\end{tabular}
+
+
+\begin{tabular}{cccccccc}
+                       & 0                      & 1                      & 2                      & 3                      & 4                      & 5                      & Y \\ \cline{2-7}
+\multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} &   \\ \cline{2-7}
+\multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{500}  & \multicolumn{1}{c|}{500}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{2} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{500}  & \multicolumn{1}{c|}{500}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{3} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{4} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+i                      &                        &                        &                        &                        &                        &                        &  
+\end{tabular}
+
+capacidade: $0$, objetos: $\{\}$ 
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da mochila booleana (PD)}
+Exemplo: $n= 4$, $W = 5$
+
+\begin{tabular}{ccccc}
+                       & 1                        & 2                        & 3                        & 4                        \\ \cline{2-5} 
+\multicolumn{1}{c|}{w} & \multicolumn{1}{c|}{4}   & \multicolumn{1}{c|}{2}   & \multicolumn{1}{c|}{1}   & \multicolumn{1}{c|}{3}   \\ \cline{2-5} 
+\multicolumn{1}{c|}{v} & \multicolumn{1}{c|}{500} & \multicolumn{1}{c|}{400} & \multicolumn{1}{c|}{300} & \multicolumn{1}{c|}{450} \\ \cline{2-5} 
+\end{tabular}
+
+
+\begin{tabular}{cccccccc}
+                       & 0                      & 1                      & 2                      & 3                      & 4                      & 5                      & Y \\ \cline{2-7}
+\multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} &   \\ \cline{2-7}
+\multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{500}  & \multicolumn{1}{c|}{500}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{2} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{500}  & \multicolumn{1}{c|}{500}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{3} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{300}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{4} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+i                      &                        &                        &                        &                        &                        &                        &  
+\end{tabular}
+
+capacidade: $1$, objetos: $\{3\}$ 
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da mochila booleana (PD)}
+Exemplo: $n= 4$, $W = 5$
+
+\begin{tabular}{ccccc}
+                       & 1                        & 2                        & 3                        & 4                        \\ \cline{2-5} 
+\multicolumn{1}{c|}{w} & \multicolumn{1}{c|}{4}   & \multicolumn{1}{c|}{2}   & \multicolumn{1}{c|}{1}   & \multicolumn{1}{c|}{3}   \\ \cline{2-5} 
+\multicolumn{1}{c|}{v} & \multicolumn{1}{c|}{500} & \multicolumn{1}{c|}{400} & \multicolumn{1}{c|}{300} & \multicolumn{1}{c|}{450} \\ \cline{2-5} 
+\end{tabular}
+
+
+\begin{tabular}{cccccccc}
+                       & 0                      & 1                      & 2                      & 3                      & 4                      & 5                      & Y \\ \cline{2-7}
+\multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} &   \\ \cline{2-7}
+\multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{500}  & \multicolumn{1}{c|}{500}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{2} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{500}  & \multicolumn{1}{c|}{500}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{3} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{300}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{4} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+i                      &                        &                        &                        &                        &                        &                        &  
+\end{tabular}
+
+capacidade: $2$, objetos: $\{2\}$ \itemtrig\ {\darkgreen objeto 2 vale mais que objeto 3}
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da mochila booleana (PD)}
+Exemplo: $n= 4$, $W = 5$
+
+\begin{tabular}{ccccc}
+                       & 1                        & 2                        & 3                        & 4                        \\ \cline{2-5} 
+\multicolumn{1}{c|}{w} & \multicolumn{1}{c|}{4}   & \multicolumn{1}{c|}{2}   & \multicolumn{1}{c|}{1}   & \multicolumn{1}{c|}{3}   \\ \cline{2-5} 
+\multicolumn{1}{c|}{v} & \multicolumn{1}{c|}{500} & \multicolumn{1}{c|}{400} & \multicolumn{1}{c|}{300} & \multicolumn{1}{c|}{450} \\ \cline{2-5} 
+\end{tabular}
+
+
+\begin{tabular}{cccccccc}
+                       & 0                      & 1                      & 2                      & 3                      & 4                      & 5                      & Y \\ \cline{2-7}
+\multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} &   \\ \cline{2-7}
+\multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{500}  & \multicolumn{1}{c|}{500}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{2} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{500}  & \multicolumn{1}{c|}{500}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{3} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{300}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{700}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{4} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+i                      &                        &                        &                        &                        &                        &                        &  
+\end{tabular}
+
+capacidade: $3$, objetos: $\{2, 3\}$ 
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da mochila booleana (PD)}
+Exemplo: $n= 4$, $W = 5$
+
+\begin{tabular}{ccccc}
+                       & 1                        & 2                        & 3                        & 4                        \\ \cline{2-5} 
+\multicolumn{1}{c|}{w} & \multicolumn{1}{c|}{4}   & \multicolumn{1}{c|}{2}   & \multicolumn{1}{c|}{1}   & \multicolumn{1}{c|}{3}   \\ \cline{2-5} 
+\multicolumn{1}{c|}{v} & \multicolumn{1}{c|}{500} & \multicolumn{1}{c|}{400} & \multicolumn{1}{c|}{300} & \multicolumn{1}{c|}{450} \\ \cline{2-5} 
+\end{tabular}
+
+
+\begin{tabular}{cccccccc}
+                       & 0                      & 1                      & 2                      & 3                      & 4                      & 5                      & Y \\ \cline{2-7}
+\multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} &   \\ \cline{2-7}
+\multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{500}  & \multicolumn{1}{c|}{500}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{2} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{500}  & \multicolumn{1}{c|}{500}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{3} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{300}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{700}  & \multicolumn{1}{c|}{700}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{4} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+i                      &                        &                        &                        &                        &                        &                        &  
+\end{tabular}
+
+capacidade: $4$, objetos: $\{2, 3\}$ 
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da mochila booleana (PD)}
+Exemplo: $n= 4$, $W = 5$
+
+\begin{tabular}{ccccc}
+                       & 1                        & 2                        & 3                        & 4                        \\ \cline{2-5} 
+\multicolumn{1}{c|}{w} & \multicolumn{1}{c|}{4}   & \multicolumn{1}{c|}{2}   & \multicolumn{1}{c|}{1}   & \multicolumn{1}{c|}{3}   \\ \cline{2-5} 
+\multicolumn{1}{c|}{v} & \multicolumn{1}{c|}{500} & \multicolumn{1}{c|}{400} & \multicolumn{1}{c|}{300} & \multicolumn{1}{c|}{450} \\ \cline{2-5} 
+\end{tabular}
+
+
+\begin{tabular}{cccccccc}
+                       & 0                      & 1                      & 2                      & 3                      & 4                      & 5                      & Y \\ \cline{2-7}
+\multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} &   \\ \cline{2-7}
+\multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{500}  & \multicolumn{1}{c|}{500}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{2} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{500}  & \multicolumn{1}{c|}{500}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{3} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{300}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{700}  & \multicolumn{1}{c|}{700}  & \multicolumn{1}{c|}{800}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{4} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+i                      &                        &                        &                        &                        &                        &                        &  
+\end{tabular}
+
+capacidade: $5$, objetos: $\{1, 3\}$ 
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da mochila booleana (PD)}
+Exemplo: $n= 4$, $W = 5$
+
+\begin{tabular}{ccccc}
+                       & 1                        & 2                        & 3                        & 4                        \\ \cline{2-5} 
+\multicolumn{1}{c|}{w} & \multicolumn{1}{c|}{4}   & \multicolumn{1}{c|}{2}   & \multicolumn{1}{c|}{1}   & \multicolumn{1}{c|}{3}   \\ \cline{2-5} 
+\multicolumn{1}{c|}{v} & \multicolumn{1}{c|}{500} & \multicolumn{1}{c|}{400} & \multicolumn{1}{c|}{300} & \multicolumn{1}{c|}{450} \\ \cline{2-5} 
+\end{tabular}
+
+
+\begin{tabular}{cccccccc}
+                       & 0                      & 1                      & 2                      & 3                      & 4                      & 5                      & Y \\ \cline{2-7}
+\multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} &   \\ \cline{2-7}
+\multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{500}  & \multicolumn{1}{c|}{500}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{2} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{500}  & \multicolumn{1}{c|}{500}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{3} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{300}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{700}  & \multicolumn{1}{c|}{700}  & \multicolumn{1}{c|}{800}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{4} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+i                      &                        &                        &                        &                        &                        &                        &  
+\end{tabular}
+
+capacidade: $0$, objetos: $\{\}$ 
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da mochila booleana (PD)}
+Exemplo: $n= 4$, $W = 5$
+
+\begin{tabular}{ccccc}
+                       & 1                        & 2                        & 3                        & 4                        \\ \cline{2-5} 
+\multicolumn{1}{c|}{w} & \multicolumn{1}{c|}{4}   & \multicolumn{1}{c|}{2}   & \multicolumn{1}{c|}{1}   & \multicolumn{1}{c|}{3}   \\ \cline{2-5} 
+\multicolumn{1}{c|}{v} & \multicolumn{1}{c|}{500} & \multicolumn{1}{c|}{400} & \multicolumn{1}{c|}{300} & \multicolumn{1}{c|}{450} \\ \cline{2-5} 
+\end{tabular}
+
+
+\begin{tabular}{cccccccc}
+                       & 0                      & 1                      & 2                      & 3                      & 4                      & 5                      & Y \\ \cline{2-7}
+\multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} &   \\ \cline{2-7}
+\multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{500}  & \multicolumn{1}{c|}{500}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{2} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{500}  & \multicolumn{1}{c|}{500}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{3} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{300}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{700}  & \multicolumn{1}{c|}{700}  & \multicolumn{1}{c|}{800}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{4} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{300}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+i                      &                        &                        &                        &                        &                        &                        &  
+\end{tabular}
+
+capacidade: $1$, objetos: $\{3\}$ 
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da mochila booleana (PD)}
+Exemplo: $n= 4$, $W = 5$
+
+\begin{tabular}{ccccc}
+                       & 1                        & 2                        & 3                        & 4                        \\ \cline{2-5} 
+\multicolumn{1}{c|}{w} & \multicolumn{1}{c|}{4}   & \multicolumn{1}{c|}{2}   & \multicolumn{1}{c|}{1}   & \multicolumn{1}{c|}{3}   \\ \cline{2-5} 
+\multicolumn{1}{c|}{v} & \multicolumn{1}{c|}{500} & \multicolumn{1}{c|}{400} & \multicolumn{1}{c|}{300} & \multicolumn{1}{c|}{450} \\ \cline{2-5} 
+\end{tabular}
+
+
+\begin{tabular}{cccccccc}
+                       & 0                      & 1                      & 2                      & 3                      & 4                      & 5                      & Y \\ \cline{2-7}
+\multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} &   \\ \cline{2-7}
+\multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{500}  & \multicolumn{1}{c|}{500}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{2} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{500}  & \multicolumn{1}{c|}{500}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{3} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{300}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{700}  & \multicolumn{1}{c|}{700}  & \multicolumn{1}{c|}{800}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{4} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{300}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+i                      &                        &                        &                        &                        &                        &                        &  
+\end{tabular}
+
+capacidade: $2$, objetos: $\{2\}$ 
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da mochila booleana (PD)}
+Exemplo: $n= 4$, $W = 5$
+
+\begin{tabular}{ccccc}
+                       & 1                        & 2                        & 3                        & 4                        \\ \cline{2-5} 
+\multicolumn{1}{c|}{w} & \multicolumn{1}{c|}{4}   & \multicolumn{1}{c|}{2}   & \multicolumn{1}{c|}{1}   & \multicolumn{1}{c|}{3}   \\ \cline{2-5} 
+\multicolumn{1}{c|}{v} & \multicolumn{1}{c|}{500} & \multicolumn{1}{c|}{400} & \multicolumn{1}{c|}{300} & \multicolumn{1}{c|}{450} \\ \cline{2-5} 
+\end{tabular}
+
+
+\begin{tabular}{cccccccc}
+                       & 0                      & 1                      & 2                      & 3                      & 4                      & 5                      & Y \\ \cline{2-7}
+\multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} &   \\ \cline{2-7}
+\multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{500}  & \multicolumn{1}{c|}{500}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{2} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{500}  & \multicolumn{1}{c|}{500}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{3} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{300}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{700}  & \multicolumn{1}{c|}{700}  & \multicolumn{1}{c|}{800}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{4} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{300}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{700}  & \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+i                      &                        &                        &                        &                        &                        &                        &  
+\end{tabular}
+
+capacidade: $3$, objetos: $\{2,3\}$ 
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da mochila booleana (PD)}
+Exemplo: $n= 4$, $W = 5$
+
+\begin{tabular}{ccccc}
+                       & 1                        & 2                        & 3                        & 4                        \\ \cline{2-5} 
+\multicolumn{1}{c|}{w} & \multicolumn{1}{c|}{4}   & \multicolumn{1}{c|}{2}   & \multicolumn{1}{c|}{1}   & \multicolumn{1}{c|}{3}   \\ \cline{2-5} 
+\multicolumn{1}{c|}{v} & \multicolumn{1}{c|}{500} & \multicolumn{1}{c|}{400} & \multicolumn{1}{c|}{300} & \multicolumn{1}{c|}{450} \\ \cline{2-5} 
+\end{tabular}
+
+
+\begin{tabular}{cccccccc}
+                       & 0                      & 1                      & 2                      & 3                      & 4                      & 5                      & Y \\ \cline{2-7}
+\multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} &   \\ \cline{2-7}
+\multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{500}  & \multicolumn{1}{c|}{500}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{2} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{500}  & \multicolumn{1}{c|}{500}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{3} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{300}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{700}  & \multicolumn{1}{c|}{700}  & \multicolumn{1}{c|}{800}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{4} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{300}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{700}  & \multicolumn{1}{c|}{750}  & \multicolumn{1}{c|}{}  &   \\ \cline{2-7}
+i                      &                        &                        &                        &                        &                        &                        &  
+\end{tabular}
+
+capacidade: $4$, objetos: $\{3, 4\}$ 
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da mochila booleana (PD)}
+Exemplo: $n= 4$, $W = 5$
+
+\begin{tabular}{ccccc}
+                       & 1                        & 2                        & 3                        & 4                        \\ \cline{2-5} 
+\multicolumn{1}{c|}{w} & \multicolumn{1}{c|}{4}   & \multicolumn{1}{c|}{2}   & \multicolumn{1}{c|}{1}   & \multicolumn{1}{c|}{3}   \\ \cline{2-5} 
+\multicolumn{1}{c|}{v} & \multicolumn{1}{c|}{500} & \multicolumn{1}{c|}{400} & \multicolumn{1}{c|}{300} & \multicolumn{1}{c|}{450} \\ \cline{2-5} 
+\end{tabular}
+
+
+\begin{tabular}{cccccccc}
+                       & 0                      & 1                      & 2                      & 3                      & 4                      & 5                      & Y \\ \cline{2-7}
+\multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} &   \\ \cline{2-7}
+\multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{500}  & \multicolumn{1}{c|}{500}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{2} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{500}  & \multicolumn{1}{c|}{500}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{3} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{300}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{700}  & \multicolumn{1}{c|}{700}  & \multicolumn{1}{c|}{800}  &   \\ \cline{2-7}
+\multicolumn{1}{c|}{4} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{300}  & \multicolumn{1}{c|}{400}  & \multicolumn{1}{c|}{700}  & \multicolumn{1}{c|}{750}  & \multicolumn{1}{c|}{850}  &   \\ \cline{2-7}
+i                      &                        &                        &                        &                        &                        &                        &  
+\end{tabular}
+
+capacidade: $5$, objetos: $\{2, 3\}$ 
+\end{slide}
+
+\begin{slide}
+  \stitle{Obtenção da mochila booleana (PD)}
+
+\vspace{-1cm}\begin{codebox}
+\Procname{$\proc{mochila}(w, v, n, W)$}
+\li $Y = W$
+\li \For $i = n$ \To $1$ \textbf{\blue faça}
+\li \> \If $(t[i,Y] = t[i-1, Y])$ \textbf{\blue então} $m[i] = 0$
+\li \> \> \hspace{6.5cm}\textbf{\blue senão} $m[i] = 1$
+\li \> $Y = Y - w[i]$
+\li \Return $m$
+\end{codebox}   
+
+Complexidade: $O(n)$    
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Obrigado}
+\end{slide}
+
+\end{document}
+
+% Local Variables: 
+% mode: latex
+% eval: (Portug-mode)
+% TeX-master: t
+% End: 
