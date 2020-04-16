@@ -1,0 +1,814 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% talk: prototype
+%%% 2002/10/16
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%
+%%% Erstellen eines Vortrags in PDF-Format wie folgt:
+%%%
+%%% 1) Uebersetzen der Datei mit 
+%%%    pdflatex asz
+%%% 2) Wenn Features von ppower4 gewuenscht werden, dann die eben
+%%%    entstandene Datei asz.pdf weiterverarbeiten mit
+%%%    ./ppower4 asz.pdf vortrag.pdf
+%%% 3) Die Datei vortrag.pdf kann nun mit dem Acrobat Reader angesehen
+%%%    werden
+%%%
+%%% Fuer Testzwecke ist auch ein "normales" Uebersetzen mit LaTeX
+%%% moeglich:
+%%% 1) latex asz
+%%% 2) dvips asz.dvi -o asz.ps -t a4 -t landscape
+%%% 3) Anschauen mit ghostview
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ifx\pdfoutput\undefined \documentclass[clock,landscape]{slides} \else
+\documentclass[clock,landscape]{slides} \fi
+%\documentclass[clock,pdftex,landscape]{slides} \fi
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Escrevendo em português:
+\usepackage[brazil]{babel}
+\usepackage[latin1]{inputenc} % isso é quase redundante
+\usepackage{textcomp}
+\usepackage[T1]{fontenc}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{epstopdf}
+\usepackage{psfrag}
+ 
+\usepackage[table,xcdraw]{xcolor}
+
+\usepackage{multicol}
+
+\usepackage{clrscode}
+%----------------------------
+\usepackage{tabularx}
+%%% Die Datei mit dem ASZ-Layout
+
+\usepackage{shi}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath,amssymb,amsthm} \usepackage{amsfonts}
+\usepackage[colorlinks,backref]{hyperref}
+%\usepackage{background}
+
+%\usepackage{picinpar}
+
+\hypersetup{pdftitle={Análise e projeto de algoritmos},
+  pdfsubject={Análise de algoritmos}, 
+  pdfauthor={Leonardo Takuno, Centro Universitário SENAC, 
+  <leonardo.takuno@gmail.com>},
+  pdfkeywords={acrobat, ppower4},
+%  pdfpagemode={FullScreen},
+  colorlinks={false},
+  linkcolor={red}
+}
+
+\usepackage{color}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Pauseneffekte mit ppower4 werden moeglich
+
+\usepackage{pause}
+\newcommand\plone{\pause\pauselevel{=1}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newtheoremstyle{mythm}% name
+  {40pt}%      Space above
+  {-15pt}%      Space below
+  {\sf\itshape\blue}%      Body font
+  {}%         Indent amount (empty = no indent, \parindent = para indent)
+  {\sf\bfseries\green}% Thm head \vspacefont
+  {.}%        Punctuation after thm head
+  { }%     Space after thm head: " " = normal interword space;
+        %       \newline = linebreak
+  {}%         Thm head spec (can be left empty, meaning `normal')
+
+\theoremstyle{mythm}
+\newtheorem{theorem}             {Theorem}       
+\newtheorem{claim}     [theorem] {Claim}         
+\newtheorem{lemma}     [theorem] {Lemma}         
+\newtheorem{corollary} [theorem] {Corollary}     
+\newtheorem{fact}      [theorem] {Fact}          
+\newtheorem{conjecture}[theorem] {Conjecture}    
+
+\newtheorem{problem}   [theorem] {Problema}       
+\newtheorem{propriedade}  [theorem] {Propriedade}       
+\newtheorem{corolario}  [theorem] {Corolário}       
+\newtheorem{definition}   [theorem] {Definição}       
+
+%%% Symbole
+
+\newcommand{\NN}{\mathbb{N}} \newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}} \newcommand{\1}{{{\mathchoice {\rm
+        1\mskip-4mu l} {\rm 1\mskip-4mu l} {\rm 1\mskip-4.5mu l} {\rm
+        1\mskip-5mu l}}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\let\phi\varphi
+\let\epsilon\varepsilon
+\let\rho\varrho
+\let\tilde\widetilde
+\let\approx\thickapprox
+\let\sim\thicksim
+
+\def\({\left(}
+\def\){\right)}
+\def\[{\left[}
+\def\]{\right]}
+\def\<{\langle}
+\def\>{\rangle}
+\let\:\colon
+\def\llfloor{\left\lfloor}
+\def\rrfloor{\right\rfloor}
+\def\llceil{\left\lceil}
+\def\rrceil{\right\rceil}
+
+%%% Textmakros
+\def\ex{\mathop{\text{\rm ex}}\nolimits} 
+\def\cB{{\mathcal B}} 
+\def\cG{{\mathcal G}}
+\def\cS{{\mathcal S}} 
+\def\cW{{\mathcal W}} 
+\def\cQ{{\mathcal Q}} 
+\def\PP{{\mathbb P}}
+\def\EE{{\mathbb E}} 
+\def\GG{{\mathbb G}} 
+\def\e{{\rm e}}
+\def\epsilon{{\varepsilon}} 
+\def\DISC{\mathop{\textrm{\rm DISC}}\nolimits} 
+\def\EIG{\mathop{\textrm{\rm EIG}}\nolimits}
+\def\CIRCUIT{\mathop{\textrm{\rm CIRCUIT}}\nolimits}
+\def\CYCLE{\mathop{\textrm{\rm CYCLE}}\nolimits}
+\def\SUB{\mathop{\textrm{\rm SUB}}\nolimits}
+\def\NSUB{\mathop{\textrm{\rm NSUB}}\nolimits}
+\def\PAIR{\mathop{\textrm{\rm PAIR}}\nolimits}
+\def\TFNSUB{\mathop{\textrm{\rm TFNSUB}}\nolimits}
+\def\BDD{\mathop{\textrm{\rm BDD}}\nolimits}
+\def\eps{\varepsilon}
+
+\def\rmd{\text{\rm d}}
+\def\wtc{\widetilde{c}\,}
+\def\whc{\widehat{c}}
+\def\bfb{{\bf b}}
+\def\bff{{\bf f}}
+\def\bft{{\bf t}}
+\def\bfx{{\bf x}}
+\def\bfz{{\bf z}}
+\def\cB{{\mathcal B}}
+\def\cD{{\mathcal D}}
+\def\cG{{\mathcal G}}
+\def\cM{{\mathcal M}}
+\def\cN{{\mathcal N}}
+\def\cR{{\mathcal R}}
+\def\cS{{\mathcal S}}
+\def\cW{{\mathcal W}}
+\def\PP{{\mathbb P}}
+\def\EE{{\mathbb E}}
+\def\FF{{\mathbb F}}
+\def\NN{{\mathbb N}}
+\def\RR{{\mathbb R}}
+\def\ZZ{{\mathbb Z}}
+\def\e{{\rm e}}
+\def\card{\mathop{\text{\rm card}}\nolimits}
+\def\rank{\mathop{\text{\rm rank}}\nolimits}
+\def\trace{\mathop{\text{\rm trace}}\nolimits}
+\def\Ave{\mathop{\text{\rm Ave}}\nolimits}
+\def\Bi{\mathop{\text{\rm Bi}}\nolimits}
+\def\im{\mathop{\text{\rm im}}\nolimits}
+\def\ind{\mathop{\text{\rm ind}}\nolimits}
+\def\dist{\mathop{\text{\rm dist}}\nolimits}
+\def\nDist{\mathop{\text{\rm \#Dist}}\nolimits}
+\let\Dist\nDist
+\def\De{D_{\rm e}}
+\def\sumL{\sum\nolimits_1}
+\def\sumS{\sum\nolimits_2}
+\def\GF{\mathop{\text{\rm GF}}\nolimits}
+\let\FF\GF
+\def\Bip{\mathop{\text{\rm Bip}}\nolimits}
+\def\adj{\mathop{\text{\rm adj}}\nolimits}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\nx}{{\hfill\vspace*{-2cm}\tiny +}}
+
+%\newcommand{\red}[1]{\textcolor{red}{#1}}
+%\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+%\newcommand{\yellow}[1]{\textcolor{yellow}{#1}}
+%\newcommand{\green}[1]{\textcolor{green}{#1}}
+%\newcommand{\darkgreen}[1]{\textcolor{darkgreen}{#1}}
+\def\red{\color[rgb]{0.7,0,0}}
+\def\green{\color[rgb]{0,.8,0}}
+\def\darkgreen{\color[rgb]{0.1,0.4,0.0}}
+\let\dgreen\darkgreen
+\def\blue{\color[rgb]{0,0,.8}}
+\def\yellow{\color[rgb]{1,1,0}}
+\def\black{\color[rgb]{0,0,0}}
+
+\def\pink{\color[rgb]{1,0,1}}
+\def\brown{\color[rgb]{.5,.1,.3}}
+\def\lilaz{\color[rgb]{.5,0,.5}}
+\def\hmmm{\color[rgb]{.3,.1,.5}}
+\def\magenta{\color[rgb]{.6,.05,.05}}
+
+\newcommand{\uc}[1]{\centerline{\underline{#1}}}
+\newcommand{\pic}[1]{\fbox{picture:{#1}}}
+%\renewcommand{\bf}{\mbox{}}
+\newcommand{\cP}{{\cal P}} \newcommand{\cT}{{\cal T}}
+\newcommand{\add}{\mbox{\rm add}} \newcommand{\pr}{\mbox{\rm Pr}}
+
+\def\stitle#1{\slidetitle{\red #1}\vspace{-0pt}}
+
+\def\itemtrig{$\vartriangleright$}
+\def\itemcirc{$\circ$}
+\def\itemT{\item[\itemtrig]}
+\def\itemC{\item[$\circ$]}
+
+\everymath={\blue}
+\everydisplay={\blue}
+
+\renewcommand{\For}{\textbf{\blue para} }
+\renewcommand{\To}{\textbf{\blue até} }
+\renewcommand{\Do}{\>\>\textbf{\blue faça}\hspace*{-0.7em}\'\addtocounter{indent}{1}}
+\renewcommand{\While}{\textbf{\blue enquanto} }
+\renewcommand{\If}{\textbf{\blue se} }
+\renewcommand{\Then}{\>\textbf{\blue então}\>\hspace*{0.5em}\addtocounter{indent}{1}}
+\renewcommand{\Else}{\kill\addtocounter{indent}{-1}\liprint\>\textbf{\blue senão}\>\hspace*{0.5em}\addtocounter{indent}{1}}
+\renewcommand{\ElseIf}{\kill\addtocounter{indent}{-1}\liprint\textbf{\blue senão se} }
+\renewcommand{\ElseNoIf}{\kill\addtocounter{indent}{-1}\liprint\textbf{\blue senão} \addtocounter{indent}{1}}
+\renewcommand{\Return}{\textbf{\blue retorne} }
+
+
+\newcommand{\TITLE}[1]{\item[#1]}
+
+% ugly hack for for/while
+\newbox\fixbox
+
+% end of hack
+\newcommand{\algcost}[2]{\strut\hfill\makebox[3.5cm][l]{#1}\makebox[4cm][l]{#2}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%%Anuschs Extras
+%
+%\def\enddiscard{}
+%\long\def\discard#1\enddiscard{}
+%
+%%%\vpagecolor{bgblue}
+%\hypersetup{pdfpagetransition=Dissolve}
+%\hypersetup{pdfpagetransition=R}
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Farben kann man hier definieren
+
+\definecolor{bgblue}{rgb}{0.04,0.39,0.53}
+
+\definecolor{darkyellow}{rgb}{0.94,0.820,0.058}
+\definecolor{orange}{rgb}{0.95,0.47,0.14}
+\definecolor{darkgreen}{rgb}{0.0,0.5,0.0}
+
+\definecolor{blue2}{rgb}{0.1,0.39,0.53}
+\definecolor{yellow1}{rgb}{1,1,0} \definecolor{pink}{rgb}{1,0,1}
+
+\definecolor{lightred}{rgb}{1,0.5,0.5}
+\definecolor{lightred2}{rgb}{1,0.7,0.7}
+\definecolor{lightred3}{rgb}{1,0.3,0.3}
+\definecolor{black}{rgb}{0,0,0} \definecolor{gray1}{rgb}{0.9,0.9,0.9}
+\definecolor{red1}{rgb}{1,1,0.9}
+
+\title{Análise e projeto de algoritmos} 
+\author{{\blue L.~Takuno} (SENAC)}
+\date{{\dgreen 1o. Semestre 2019}} 
+
+%%% Hier beginnt die Praesentation
+
+\begin{document}\def\proofname{{\bf\green Prova.}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Deckblatt
+%%%%%%%%%%%%%%%%%%%\usepackage{clrscode3e}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\maketitle
+
+%\slidesubhead{}  %% Teilvortrags-Titel (hier noch nicht)
+                 %% Dieser erscheint spaeter oben links unter
+                 %% dem ASZ Gesamt-Titel
+
+%%%%%%%%%%%%%%%%%%%%%%% TOC %%%%%%%%%%%%%%%%%%
+
+%\slidesubhead{Outline!!!}
+
+\begin{slide}
+  \stitle{Fontes principais}
+  \begin{enumerate}\makeatletter\itemsep\z@\makeatother
+  \item Cormem T. H.; Leiserson C. E.; Rivest R.: Stein C.. \textit{Introduction to Algorithms}, $3^a$ edição, MIT Press, 2009
+  \item Análise de algoritmo - IME/USP (prof. Paulo Feofiloff)
+    \verb|http://www.ime.usp.br/~pf/analise_de_algoritmos| 
+	
+  \end{enumerate}
+  \end{slide}
+ 
+ 
+\begin{slide}
+  \stitle{Algoritmos gulosos}  
+\end{slide}
+
+\begin{slide}
+  \stitle{Algoritmos gulosos}  
+  Normalmente aplicado a problemas de otimização, em que queremos computar a melhor solução.
+  
+  Em cada passo, o algoritmo sempre escolhe a melhor opção local viável, sem se preocupar com as conseqüências futuras (dizemos que ele é "míope")
+\end{slide}
+
+\begin{slide}
+  \stitle{Algoritmos gulosos}  
+\itemtrig\ Nem sempre produz a solução ótima
+
+\vspace{-1cm} \itemtrig\ Não existe backtracking envolvido
+
+\vspace{-1cm} \itemtrig\ Na maioria das vezes, projetar ou descrever um algoritmo guloso é "fácil", mas provar sua corretude é difícil.
+\end{slide}
+
+\begin{slide}
+  \stitle{Estratégia gulosa vs Programação dinâmica}  
+  Algoritmo guloso ("ganancioso"):
+  
+  \itemtrig\ "abocanha" a alternativa mais promissora, sem explorar outras
+  
+  \vspace{-1cm} \itemtrig\ a execução costuma a ser muito rápida
+  
+  \vspace{-1cm} \itemtrig\ nunca se arrepende da decisão tomada
+  
+  \vspace{-1cm} \itemtrig\ prova de corretude difícil  
+\end{slide}
+
+\begin{slide}
+  \stitle{Estratégia gulosa vs Programação dinâmica}  
+Algoritmo de programação dinâmica:
+
+  \itemtrig\ explora todas as alternativas, e faz isso de maneira eficiente
+  
+  \vspace{-1cm} \itemtrig\ a execução é um tanto "lenta"
+  
+  \vspace{-1cm} \itemtrig\ a cada iteração pode se arrepender de decisões tomadas anteriormente (pode rever o "ótimo corrente")
+  
+  \vspace{-1cm} \itemtrig\ prova de corretude fácil (explora todas as possibilidades)    
+\end{slide}
+
+\begin{slide}
+  \stitle{Exemplo: Máximo e Maximal}  
+  \itemtrig\ S é uma coleção de subconjuntos de $\{1 \cdots n\}$
+  
+  \vspace{-1cm} \itemtrig\ $X \subset S$ é \textbf{máximo} se não existe $Y \subset S$ tal que $|Y| > |X|$
+  
+    \vspace{-1cm} \itemtrig\ $X \subset S$ é \textbf{maximal} se não existe $Y \subset S$ tal que $X \subset Y$, ou seja, se nenhum elemento de $S$ é superconjunto próprio de $X$.
+\end{slide}
+
+\begin{slide}
+  \stitle{Exemplo: Máximo e Maximal} 
+  $S = \{\{1,2\}, \{2,3\}, \{4,5\}, \{1,2,3\}, \{1,2,4\}, \{2,3,4,5\}, \{1,3,4,5\}\}$
+  
+ \itemtrig\  Elementos máximos: $\{2,3,4,5\}$ e $\{1,3,4,5\}$
+ 
+ \vspace{-1cm} \itemtrig\ Elementos maximais: $\{1,2,3\}$, $\{1,2,4\}$, $\{2,3,4,5\}$ e $\{1,3,4,5\}$
+
+Note que todo máximo é maximal, mas a recíproca não é verdade.
+\end{slide}
+
+\begin{slide}
+  \stitle{Máximo e Maximal} 
+ \itemtrig\  Procurar um elemento máximo em $S$ é computacionalmente pesado (examinar todos os elementos)
+ 
+  \itemtrig\  Mas encontrar um elemento maximal de $S$ é muito fácil, aplicando a estratégia gulosa.
+\end{slide}
+
+\begin{slide}
+  \stitle{Máximo e Maximal} 
+Algoritmo guloso para o maximal:
+
+ \vspace{-1cm} \hspace{2cm} escolha algum $X$ em $S$
+ 
+ \vspace{-1cm} \hspace{2cm} \textbf{\blue enquanto} $X \subset Y$ para algum $Y$ em $S$ \textbf{\blue faça}
+ 
+ \vspace{-1cm} \hspace{4cm} $X \leftarrow Y$
+  
+ \vspace{-1cm} \hspace{2cm} \textbf{\blue devolva} $X$
+ 
+Verifique que o algoritmo funciona para o exemplo descrito anteriormente 
+\end{slide}
+
+\begin{slide}
+  \stitle{Máximo e Maximal} 
+É ainda mais fácil encontrar um elemento maximal se a coleção S tiver caráter hereditário, ou seja, se tiver a seguinte propriedade: para cada $X$ em $S$, todos os subconjuntos de $X$ também estão em $S$. Nesse caso, basta executar o algoritmo:
+
+\hspace{2cm} $X \leftarrow \{\}$
+
+\vspace{-1cm}\hspace{2cm} para cada $k$ em $\{1 \cdots n\}$ faça
+
+\vspace{-1cm}\hspace{4cm} $Y \leftarrow X \cup \{k\}$
+
+\vspace{-1cm}\hspace{4cm} se $Y$ está em $S$
+
+\vspace{-1cm}\hspace{5cm} então $Y \leftarrow X$
+
+\vspace{-1cm}\hspace{2cm} devolva $X$
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da seleção de atividades}   
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da seleção de atividades}   
+Considere um conjunto $\{1,2, \cdots, n\}$ de $n$ atividades que competem por um recurso, por exemplo uma sala de aula. 
+
+Cada atividade tem um início $s_i$ e um término $t_i$, com $s_i \leq t_i$.
+
+O intervalo requerido pela atividade é $(s_i, t_i]$.
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da seleção de atividades}   
+  Duas atividades $i$ e $j$ são compatíveis se os intervalos $[s_i, t_i)$ $[s_j, t_j)$ não se interceptam $(s_i \geq t_j \textrm{ ou } s_j \geq t_i)$.
+  
+  \textbf{\darkgreen Problema:} encontrar o conjunto de atividades mutuamente compatíveis de tamanho máximo.
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da seleção de atividades}
+
+Exemplo: Considerando 11 atividades em 14 unidades de tempo  
+
+Podemos verificar três estratégias:
+
+ \itemtrig\  $1^{a}$ tentativa: Escolher primeiro as atividades que começam primeiro.
+  
+\vspace{-1cm} \itemtrig\  $2^a$ tentativa: Escolher primeiro as atividades que demoram menos tempo.
+
+\vspace{-1cm} \itemtrig\  $3^a$ tentativa: Escolher primeiro as atividades que terminam primeiro.
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da seleção de atividades \\ \vspace{0.3cm} \small{$1^{a}$ tentativa: Escolher primeiro as atividades que começam primeiro.}}
+\end{slide}
+
+
+\begin{slide}
+\vspace{-1cm}  Exemplo: Considerando 11 atividades em 14 unidades de tempo
+ 
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+                         & 0                        & 1                        & 2                        & 3                        & 4                        & 5                        & 6                        & 7                        & 8                        & 9                        & 10                       & 11                       & 12                                            & 13                                           & 14 \\ \hline
+1                        &                          & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} &                          &                          &                          &                          &                          &                          &                          &                                               &  & \\ \hline
+2                        &                          &                          &                          & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} &                          &                          &                          &                          &                          &                          &                                               & &                                               \\ \hline
+3                        & \cellcolor[HTML]{FE0000} & \cellcolor[HTML]{FE0000} & \cellcolor[HTML]{FE0000} & \cellcolor[HTML]{FE0000} & \cellcolor[HTML]{FE0000} & \cellcolor[HTML]{FE0000} & \cellcolor[HTML]{FE0000} &                          &                          &                          &                          &                          &                                               &                                              & \\ \hline
+4                        &                          &                          &                          &                          &                          & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} &                          &                          &                          &                          &                                               &                                              & \\ \hline
+5                        &                          &                          &                          & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} &                          &                          &                          &                                               &                                               & \\ \hline
+6                        &                          &                          &                          &                          &                          & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} &                          &                          &                                               &                                              & \\ \hline
+7                        &                          &                          &                          &                          &                          &                          & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} &                          &                                               &                                              & \\ \hline
+8                        &                          &                          &                          &                          &                          &                          &                          &                          & \cellcolor[HTML]{FE0000} & \cellcolor[HTML]{FE0000} & \cellcolor[HTML]{FE0000} & \cellcolor[HTML]{FE0000} &                                               &                                              & \\ \hline
+9                        &                          &                          &                          &                          &                          &                          &                          &                          & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B}                      &                                              & \\ \hline
+10                       &                          &                          & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B}                      & \cellcolor[HTML]{00009B}                     & \\ \hline
+\multicolumn{1}{|l|}{11} & \multicolumn{1}{l|}{}    & \multicolumn{1}{l|}{}    & \multicolumn{1}{l|}{}    & \multicolumn{1}{l|}{}    & \multicolumn{1}{l|}{}    & \multicolumn{1}{l|}{}    & \multicolumn{1}{l|}{}    & \multicolumn{1}{l|}{}    & \multicolumn{1}{l|}{}    & \multicolumn{1}{l|}{}    & \multicolumn{1}{l|}{}    & \multicolumn{1}{l|}{}    & \multicolumn{1}{l|}{\cellcolor[HTML]{FE0000}} & \multicolumn{1}{l|}{\cellcolor[HTML]{FE0000}} & \multicolumn{1}{l|}{\cellcolor[HTML]{FE0000}}\\ \hline
+\end{tabular}
+\end{center}
+\vspace{-0.5cm}  $1^{a}$ tentativa: Escolher primeiro as atividades que começam primeiro. Escolhemos as atividades 3, 8 e 11.
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Problema da seleção de atividades \\ \vspace{0.3cm} \small{$2^a$ tentativa: Escolher primeiro as atividades que demoram menos tempo.}}
+\end{slide}
+
+
+\begin{slide}
+\vspace{-1cm}  Exemplo: Considerando 11 atividades em 14 unidades de tempo
+ 
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+                         & 0                        & 1                        & 2                        & 3                        & 4                        & 5                        & 6                        & 7                        & 8                        & 9                        & 10                       & 11                       & 12                                            & 13                                           & 14 \\ \hline
+1                        &                          & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} &                          &                          &                          &                          &                          &                          &                          &                                               &  & \\ \hline
+2                        &                          &                          &                          & \cellcolor[HTML]{FE0000} & \cellcolor[HTML]{FE0000} & \cellcolor[HTML]{FE0000} &                          &                          &                          &                          &                          &                          &                                               & &                                               \\ \hline
+3                        & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} &                          &                          &                          &                          &                          &                                               &                                              & \\ \hline
+4                        &                          &                          &                          &                          &                          & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} &                          &                          &                          &                          &                                               &                                              & \\ \hline
+5                        &                          &                          &                          & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} &                          &                          &                          &                                               &                                               & \\ \hline
+6                        &                          &                          &                          &                          &                          & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} &                          &                          &                                               &                                              & \\ \hline
+7                        &                          &                          &                          &                          &                          &                          & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} &                          &                                               &                                              & \\ \hline
+8                        &                          &                          &                          &                          &                          &                          &                          &                          & \cellcolor[HTML]{FE0000} & \cellcolor[HTML]{FE0000} & \cellcolor[HTML]{FE0000} & \cellcolor[HTML]{FE0000} &                                               &                                              & \\ \hline
+9                        &                          &                          &                          &                          &                          &                          &                          &                          & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B}                      &                                              & \\ \hline
+10                       &                          &                          & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B}                      & \cellcolor[HTML]{00009B}                     & \\ \hline
+\multicolumn{1}{|l|}{11} & \multicolumn{1}{l|}{}    & \multicolumn{1}{l|}{}    & \multicolumn{1}{l|}{}    & \multicolumn{1}{l|}{}    & \multicolumn{1}{l|}{}    & \multicolumn{1}{l|}{}    & \multicolumn{1}{l|}{}    & \multicolumn{1}{l|}{}    & \multicolumn{1}{l|}{}    & \multicolumn{1}{l|}{}    & \multicolumn{1}{l|}{}    & \multicolumn{1}{l|}{}    & \multicolumn{1}{l|}{\cellcolor[HTML]{FE0000}} & \multicolumn{1}{l|}{\cellcolor[HTML]{FE0000}} & \multicolumn{1}{l|}{\cellcolor[HTML]{FE0000}}\\ \hline
+\end{tabular}
+\end{center}
+\vspace{-0.5cm}  $2^a$ tentativa: Escolher primeiro as atividades que demoram menos tempo. Escolhemos as atividades 2, 8 e 11.
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da seleção de atividades \\ \vspace{0.3cm} \small{$3^a$ tentativa: Escolher primeiro as atividades que terminam primeiro.}}
+\end{slide}
+
+\begin{slide}
+\vspace{-1cm}  Exemplo: Considerando 11 atividades em 14 unidades de tempo
+ 
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+                         & 0                        & 1                        & 2                        & 3                        & 4                        & 5                        & 6                        & 7                        & 8                        & 9                        & 10                       & 11                       & 12                                            & 13                                           & 14 \\ \hline
+1                        &                          & \cellcolor[HTML]{FE0000} & \cellcolor[HTML]{FE0000} & \cellcolor[HTML]{FE0000} & \cellcolor[HTML]{FE0000} &                          &                          &                          &                          &                          &                          &                          &                                               &  & \\ \hline
+2                        &                          &                          &                          & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} &                          &                          &                          &                          &                          &                          &                                               & &                                               \\ \hline
+3                        & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} &                          &                          &                          &                          &                          &                                               &                                              & \\ \hline
+4                        &                          &                          &                          &                          &                          & \cellcolor[HTML]{FE0000} & \cellcolor[HTML]{FE0000} & \cellcolor[HTML]{FE0000} &                          &                          &                          &                          &                                               &                                              & \\ \hline
+5                        &                          &                          &                          & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} &                          &                          &                          &                                               &                                               & \\ \hline
+6                        &                          &                          &                          &                          &                          & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} &                          &                          &                                               &                                              & \\ \hline
+7                        &                          &                          &                          &                          &                          &                          & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} &                          &                                               &                                              & \\ \hline
+8                        &                          &                          &                          &                          &                          &                          &                          &                          & \cellcolor[HTML]{FE0000} & \cellcolor[HTML]{FE0000} & \cellcolor[HTML]{FE0000} & \cellcolor[HTML]{FE0000} &                                               &                                              & \\ \hline
+9                        &                          &                          &                          &                          &                          &                          &                          &                          & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B}                      &                                              & \\ \hline
+10                       &                          &                          & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B} & \cellcolor[HTML]{00009B}                      & \cellcolor[HTML]{00009B}                     & \\ \hline
+\multicolumn{1}{|l|}{11} & \multicolumn{1}{l|}{}    & \multicolumn{1}{l|}{}    & \multicolumn{1}{l|}{}    & \multicolumn{1}{l|}{}    & \multicolumn{1}{l|}{}    & \multicolumn{1}{l|}{}    & \multicolumn{1}{l|}{}    & \multicolumn{1}{l|}{}    & \multicolumn{1}{l|}{}    & \multicolumn{1}{l|}{}    & \multicolumn{1}{l|}{}    & \multicolumn{1}{l|}{}    & \multicolumn{1}{l|}{\cellcolor[HTML]{FE0000}} & \multicolumn{1}{l|}{\cellcolor[HTML]{FE0000}} & \multicolumn{1}{l|}{\cellcolor[HTML]{FE0000}}\\ \hline
+\end{tabular}
+\end{center}
+\vspace{-0.5cm}  $3^a$ tentativa: Escolher primeiro as atividades que terminam primeiro. Escolhemos as atividades 1, 4, 8 e 11.
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da seleção de atividades}
+
+Exemplo: Considerando 11 atividades em 14 unidades de tempo  
+
+\itemtrig\  $1^{a}$ tentativa: Escolher primeiro as atividades que começam primeiro.
+  
+\vspace{-1cm} \itemtrig\  $2^a$ tentativa: Escolher primeiro as atividades que demoram menos tempo.
+
+\vspace{-1cm} \itemtrig\  $3^a$ tentativa: Escolher primeiro as atividades que terminam primeiro.
+  
+  
+A $3^a$ tentativa apresentou a melhor estratégia de seleção de atividade. Dizemos que a solução é \textbf{\darkgreen ótima} para esta instância!
+  
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da seleção de atividades}
+  
+\begin{codebox}
+\Procname{$\proc{seleciona\_atividades\_guloso}(s,t,n)$}
+\li  {\blue ordene $s$ e $t$ de tal forma que  } \\
+   $t[1] \leq t[2] \leq \cdots \leq t[n]$
+\li  $A \leftarrow \{1\}$  \hspace{2cm}\itemtrig\ $t_1 \leq t_2 \leq \cdots \leq t_n$
+\li  $j \leftarrow 1$
+\li  \For $i=2$ \To $n$ 
+\li  \Do \If $s_i \geq t_j$ \hspace{1cm} \itemtrig\ {\blue $i$ e $j$ são incompatíveis}
+\li  \Then $A \leftarrow A \cup \{i\}$
+\li  $j \leftarrow i$ 
+\End
+\End
+\li \Return $A$
+\End
+\end{codebox}  
+
+Complexidade do algoritmo: $O(n \lg n)$
+\end{slide}
+
+\begin{slide}
+  \stitle{Estratégia gulosa}
+  Ingredientes chaves de um algoritmo guloso:
+  
+  \hspace{0.5cm} \itemtrig\ subestrutura ótima
+  
+\vspace{-1cm}\hspace{0.5cm} \itemtrig\ característica gulosa: Solução ótima global pode ser 
+
+\vspace{-1cm}\hspace{4cm}  produzida a partir de uma escolha ótima local.
+\end{slide}
+
+\begin{slide}
+  \stitle{O problema do troco}  
+\end{slide}
+
+\begin{slide}
+  \stitle{O problema do troco}  
+  
+Dados os valores de moedas (cédulas e moedas) de um país, determinar o mínimo de moedas para dar um valor de troco. 
+\end{slide}
+
+\begin{slide}
+  \stitle{O problema do troco}  
+  
+\textbf{Escolha gananciosa:} devolver o número mínimo de moedas de mais alto valor cuja soma total resulta no valor de determinado troco. O algoritmo guloso encontra a solução ótima, isto é, o troco com o menor número de moedas.
+\end{slide}
+
+\begin{slide}
+  \stitle{O problema do troco}  
+  \textbf{\darkgreen Exemplo:} Dadas as moedas $= \{100, 50, 25, 10, 1\}$ e o valor do troco = 37, qual o número mínimo de moedas necessárias para resultar o valor do troco ?
+  
+  \itemtrig\ \textbf{entrada:} conjunto $C = \{100, 50, 25, 10, 1\}$ de moedas em ordem decrescente e o valor do troco.
+  
+ \vspace{-1cm}\itemtrig\ \textbf{saída:} conjunto $S$ com as moedas utilizadas.
+\end{slide}
+
+\begin{slide}
+  \stitle{O problema do troco}  
+  \textbf{\darkgreen Exemplo:} Dadas as moedas $= \{100, 50, 25, 10, 1\}$ e o valor do troco = 37, qual o número mínimo de moedas necessárias para resultar o valor do troco ?
+  
+  \textbf{Idéia:} Em cada estágio adicionamos a moeda de maior valor possível, de forma a não ultrapassar a quantidade necessária para o valor do troco.
+    
+\end{slide}
+
+
+
+\begin{slide}
+  \stitle{O problema do troco}  
+  \textbf{\darkgreen Exemplo:} Dadas as moedas $= \{100, 50, 25, 10, 1\}$ e o valor do troco = 37, qual o número mínimo de moedas necessárias para resultar o valor do troco ?
+  
+Podemos fazer:
+
+\hspace{1cm}\itemtrig\ $37 - 25 = 12$
+
+\vspace{-1cm}\hspace{1cm}\itemtrig\ $12 - 10 = 2$
+
+\vspace{-1cm}\hspace{1cm}\itemtrig\ $2 - 1 = 1$
+
+\vspace{-1cm}\hspace{1cm}\itemtrig\ $1 - 1 = 0$
+
+O total de 4 moedas: $\{25,10,1,1\}$ \textbf{\darkgreen (solução ótima)}
+\end{slide}
+
+
+\begin{slide}
+  \stitle{O problema do troco}      
+\begin{codebox}
+\Procname{$\proc{troco}(C, valor)$}
+\li  $S \leftarrow \{\}$  \hspace{1cm} $soma \leftarrow 0$
+\li  \While $(soma < valor)$ \textbf{\blue e} $(C \textrm{ não vazio})$ \textbf{\blue faça}
+\li  \> $m \leftarrow$ {\blue moeda de maior valor em} $C$
+\li  \> \If $soma + m \leq valor$ \textbf{\blue então}
+\li  \> \> $soma \leftarrow soma + m$
+\li  \> \> $S \leftarrow S \cup \{m\}$
+\li  \> \textbf{\blue senão}
+\li  \> \> $C \leftarrow C - \{m\}$
+\li  \If $soma = valor$ \textbf{\blue então}
+\li  \> \Return $S$
+\li  \textbf{\blue senão}
+\li  \> \Return {\blue ``não encontrei a solução''}
+\End
+\end{codebox}    
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da mochila}
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da mochila}
+
+\textbf{Dados:}
+
+\itemtrig\ Uma {\blue mochila} que possui uma certa {\blue capacidade W} (admite um peso).
+
+\vspace{-1cm}\itemtrig\ Um {\blue conjunto de n objetos} distintos, enumerados de {\blue 1 a n}, cada um com um certo {\blue valor} $v_1, v_2, \cdots, v_n$ e {\blue peso} $w_1, w_2, \cdots, w_n$.
+
+
+\textbf{Objetivo:}
+
+\itemtrig\ {\blue Maximizar o valor} do conjunto de objetos dentro da mochila respeitando a capacidade.
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da mochila}
+Há duas variações para o problema da mochila
+
+\hspace{1cm}\itemtrig\ Mochila fracionária
+
+\vspace{-1cm}\hspace{1cm}\itemtrig\ Mochila binária ou $0-1$
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da mochila fracionária}
+
+Os objetos podem ser particionados, ou seja, você pode colocar uma fração do objeto na mochila.
+
+\hspace{2cm} \textbf{ex.}: ouro em pó
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da mochila binária}
+
+Os objetos não podem ser particionados, você só pode colocar itens inteiros e apenas uma vez.
+
+\hspace{2cm} \textbf{ex.}: ouro em barra
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da mochila}  
+  
+ 
+  \itemtrig\ Ambos tem sub-estrutura ótima.
+  
+  
+  \vspace{-1cm}\itemtrig\ O problema da mochila fracionária tem solução gulosa, 
+  
+    \vspace{-1cm}\hspace{1cm}o problema da mochila binária não.
+
+\begin{center}
+\includegraphics[width=.6\textwidth]{fig01}
+\end{center}
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da mochila fracionária}  
+  
+  \textbf{Ideia do algoritmo:}
+  
+  \itemtrig\ Ordene os itens por $valor/peso$ em ordem decrescente.
+  
+  \vspace{-1cm}\itemtrig\ Começando em $i=1$ coloque na mochila o máximo do 
+  
+  \vspace{-1cm}\hspace{1cm}item $i$ que estiver disponível e for possível.
+  
+  \vspace{-1cm}\itemtrig\ Se a capacidade da mochila permitir passe para o próximo 
+
+  \vspace{-1cm}\hspace{1cm}item.  
+\end{slide}
+
+\begin{slide}
+
+Problema da mochila fracionária
+
+\begin{center}
+\begin{tabular}{cccc} \hline
+Item & Valor & Peso & Valor/Peso \\ \hline
+1    & \$60  & 10   & 6          \\ 
+2    & \$100 & 20   & 5          \\
+3    & \$120 & 30   & 4         \\ \hline
+\end{tabular}
+
+\includegraphics[width=.7\textwidth]{fig02}
+\end{center}
+    
+\end{slide}
+
+\begin{slide}
+  \stitle{Problema da mochila fracionária}     
+\begin{codebox}
+\Procname{$\proc{mochila\_fracionaria}(w,v,n,W)$}
+\li  {\blue ordene $w$ e $v$ de tal forma que} \\
+$v[1]/w[1] \geq v[2]/w[2] \geq \cdots v[n]/w[n]$
+\li  \For $i=1$ \To $n$ \textbf{\blue faça}
+\li  \> \If $w[i] \leq W$ 
+\li  \> \> \textbf{\blue então} \> \> $x[i] \leftarrow 1$
+\li  \> \> \> \> $W \leftarrow W - w[i]$
+\li  \> \> \textbf{\blue senão}  \> \>  $x[i] \leftarrow W/w[i]$
+\li  \> \> \> \> $W \leftarrow 0$
+\li  \Return $x$
+\End
+\end{codebox}    
+
+\vspace{-0.7cm}Consumo de tempo na linha 1: $\Theta(n \lg n)$.
+
+\vspace{-0.7cm}Consumo de tempo nas linhas 2-8: $\Theta(n)$.
+\end{slide}
+
+\begin{slide}
+  \stitle{Invariante}
+No início de cada execução da linha 2 vale que 
+
+$x' = x[1 \cdots i-1]$ é mochila ótima para $(w', v', i-1, W)$
+
+onde 
+
+\hspace{1cm} $w' = w[1 \cdots i-1]$
+
+\vspace{-1cm}\hspace{1cm} $v' = v[1 \cdots i-1]$
+
+Na última iteração $i=n$ e portanto $x[1 \cdots n]$ é mochila ótima para $(w,v,n,W)$
+\end{slide}
+
+\begin{slide}
+  \stitle{Conclusão}
+  
+\begin{tabular}{|m{22.0cm}|}\hline
+\hspace{5cm}O consumo de tempo do algoritmo \\
+\hspace{6cm}$\proc{mochila\_fracionaria}$ é $\Theta(n \lg n)$.\\
+\hline
+\end{tabular}
+
+\end{slide}
+
+
+
+\begin{slide}
+  \stitle{Obrigado}
+\end{slide}
+
+\end{document}
+
+% Local Variables: 
+% mode: latex
+% eval: (Portug-mode)
+% TeX-master: t
+% End: 
