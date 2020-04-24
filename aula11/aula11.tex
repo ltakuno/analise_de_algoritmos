@@ -413,7 +413,7 @@ Verifique que o algoritmo funciona para o exemplo descrito anteriormente
 
 \vspace{-1cm}\hspace{4cm} se $Y$ está em $S$
 
-\vspace{-1cm}\hspace{5cm} então $Y \leftarrow X$
+\vspace{-1cm}\hspace{5cm} então $X \leftarrow Y$
 
 \vspace{-1cm}\hspace{2cm} devolva $X$
 \end{slide}
@@ -428,7 +428,7 @@ Considere um conjunto $\{1,2, \cdots, n\}$ de $n$ atividades que competem por um
 
 Cada atividade tem um início $s_i$ e um término $t_i$, com $s_i \leq t_i$.
 
-O intervalo requerido pela atividade é $(s_i, t_i]$.
+O intervalo requerido pela atividade é $[s_i, t_i)$.
 \end{slide}
 
 \begin{slide}
@@ -562,7 +562,7 @@ A $3^a$ tentativa apresentou a melhor estratégia de seleção de atividade. Dizemo
 \li  $A \leftarrow \{1\}$  \hspace{2cm}\itemtrig\ $t_1 \leq t_2 \leq \cdots \leq t_n$
 \li  $j \leftarrow 1$
 \li  \For $i=2$ \To $n$ 
-\li  \Do \If $s_i \geq t_j$ \hspace{1cm} \itemtrig\ {\blue $i$ e $j$ são incompatíveis}
+\li  \Do \If $s_i \geq t_j$ \hspace{1cm} \itemtrig\ {\blue $i$ e $j$ são compatíveis}
 \li  \Then $A \leftarrow A \cup \{i\}$
 \li  $j \leftarrow i$ 
 \End
