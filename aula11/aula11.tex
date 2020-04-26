@@ -66,7 +66,9 @@
 }
 
 \usepackage{color}
-
+\usepackage{tikz}
+\usetikzlibrary{shapes}
+\usetikzlibrary{plotmarks}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%% Pauseneffekte mit ppower4 werden moeglich
@@ -98,6 +100,8 @@
 \newtheorem{propriedade}  [theorem] {Propriedade}       
 \newtheorem{corolario}  [theorem] {Corolário}       
 \newtheorem{definition}   [theorem] {Definição}       
+\newtheorem{lema}   [theorem] {Lema}       
+\newtheorem*{prova}{Prova}       
 
 %%% Symbole
 
@@ -796,10 +800,884 @@ Na última iteração $i=n$ e portanto $x[1 \cdots n]$ é mochila ótima para $(w,v,n
 \hspace{6cm}$\proc{mochila\_fracionaria}$ é $\Theta(n \lg n)$.\\
 \hline
 \end{tabular}
+\end{slide}
+
+\begin{slide}
+  \stitle{Salto do Sapo}
+\end{slide}
+
+\begin{slide}
+  \stitle{Salto do Sapo}
+  
+ Existem $n$ pedras numa reta numérica, em posições distintas
+ $p_1, p_2, \cdots , p_n$. Dizemos que um sapo pode saltar de uma pedra
+ $p_i$ para outra pedra $p_j$ desde que a distância entre elas seja
+ menor ou igual a $delta$.   
+\end{slide}
+
+\begin{slide}
+  \stitle{Salto do Sapo}
+  Considere um sapo localizado inicialmente na pedra $p_1$. Qual é o menor número de saltos que ele precisa dar para chegar na pedra $p_n$?
+  
+    Ou seja, é dado um vetor de $n$ números distintos ordenados $p = \{p_1, p_2, \cdots, p_n\}$ e um número $delta$.
+    \end{slide}
+
+\begin{slide}
+  \stitle{Salto do Sapo}
+
+\includegraphics[width=1.0\textwidth]{fig05}
 
 \end{slide}
 
+\begin{slide}
+  \stitle{Salto do Sapo}
+  
+  Uma sequência $u = {u_1, u_2, \cdots, u_k}$ é solução se:
 
+  \vspace{-1cm}\hspace{1cm}\itemtrig\ $u_1 = p_1$
+
+  \vspace{-1cm}\hspace{1cm}\itemtrig\ $u_k = p_n$
+
+  \vspace{-1cm}\hspace{1cm}\itemtrig\ $u_i = p_j$ para todo $i \in [1, k]$ e algum  $j \in [1,n]$
+  
+   \vspace{-1cm}\hspace{1cm}\itemtrig\ $|u_i - u_{i+1}| \leq delta$ para $i \in [1, k-1]$
+
+Queremos uma sequência $u$ que satisfaça as propriedades acima e que o tamanho $k$ de $u$ seja o mínimo possível. Vamos assumir que sempre existe pelo menos uma solução.
+\end{slide}
+
+\begin{slide}
+  \stitle{Salto do Sapo}
+  
+\textbf{Exemplo 1:} entrada $n = 4$, $p = \{1,2,3,4\}$, $delta = 1$.
+
+\itemtrig\ existem diversas soluções possíveis entre elas 
+
+\vspace{-1cm}$\{1,2,3,4\}$, $\{1,2,1,2,3,4\}, \{1,2,1,2,3,2,3,4\}$  
+
+A sequência de menor $k = 4$ é $ u = \{1,2,3,4\}$
+\end{slide}
+
+\begin{slide}
+  \stitle{Salto do Sapo}
+  
+\textbf{Exemplo 2:} entrada $n = 6$, $p = \{1,2,3,5,6,7\}$, $delta = 2$.
+
+
+tem como solução ótima $ u = \{1,3,5,7\}$
+\end{slide}
+
+\begin{slide}
+  \stitle{Salto do Sapo}
+  
+\textbf{Exemplo 3:} entrada $n = 3$, $p = \{1,3,4\}$, $delta = 1$.
+
+
+não admite solução, já que a partir de 1 não é possível alcançar 3 ou 4. 
+
+Vamos desconsiderar este caso.
+\end{slide}
+
+\begin{slide}
+  \stitle{Salto do Sapo}
+  Observe que:
+  
+\vspace{-1cm} \itemtrig\ nunca vale "voltar", pois isso aumentaria a sequência de números
+
+\vspace{-1cm} \itemtrig\ O sapo deve pular o mais longe possível.
+\end{slide}
+
+\begin{slide}
+  \stitle{Salto do Sapo}
+  
+\begin{codebox}
+\Procname{$\proc{salto\_sapo}(p, n, delta)$}
+\li  $u \leftarrow \{p[1]\}$ 
+\li  $ultima\_pos \leftarrow p[1]$
+\li  \For $i=2$ \To $n$ \textbf{\blue faça}
+\li  \> \If $p[i] - ultima\_pos >= delta$ \textbf{\blue então} 
+\li  \> \> $ultima\_pos \leftarrow p[i]$
+\li  \> \> $u \leftarrow u \cup p[i]$
+\li $u \leftarrow u \cup p[n]$
+\li  \Return $u$
+\End
+\end{codebox}    
+
+complexidade: $O(n)$
+  
+\end{slide}
+
+\begin{slide}
+  \stitle{Seleção de paradas}
+\end{slide}
+
+\begin{slide}
+  \stitle{Seleção de paradas}
+\textbf{\pink Problema:}
+
+\vspace{-1cm}\hspace{1cm}\itemtrig\ Viagem da cidade A para a cidade B ao longo
+
+\vspace{-1cm}\hspace{2cm} de uma rodovia.
+
+\vspace{-1cm}\hspace{1cm}\itemtrig\ Tanque de combustível tem capacidade suficiente 
+
+\vspace{-1cm}\hspace{2cm} para cobrir $n$ quilômetros.
+
+\vspace{-1cm}\hspace{1cm}\itemtrig\ Mapa indica a localização dos postos de 
+
+\vspace{-1cm}\hspace{2cm} combustível ao longo do caminho.
+
+\textbf{\darkgreen Objetivo:} minimizar a quantidade de paradas ao longo da viagem.
+\end{slide}
+
+\begin{slide}
+  \stitle{Seleção de paradas}
+
+\textbf{\darkgreen solução gulosa:} Avançar a viagem o máximo que puder antes de reabastecer
+\end{slide}
+
+\begin{slide}
+  \stitle{Seleção de paradas}
+
+\begin{codebox}
+\Procname{$\proc{algoritmo do caminhoneiro}(p, n, C)$}
+\li Ordene as paradas de modo que\\
+   $p_0 \leq p_1 \leq \cdots \leq p_n$
+\li  $S \leftarrow \{\}$  \itemtrig\ paradas selecionadas 
+\li  $ultima\_parada = 0$ 
+\li  \For $i = 0$ \To $n$ \textbf{\blue faça}
+\li  \> \If $p_i - ultima\_parada >= C$ \textbf{\blue então}
+\li  \> \> $ultima\_parada = p_i$
+\li  \> \> $S \leftarrow S \cup i$
+\li  \Return $S$
+\End
+\end{codebox}    
+
+complexidade: $O(n \lg n)$    
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Escalonamento (Schedule)}
+\end{slide}
+
+\begin{slide}
+  \stitle{Escalonamento (Schedule)}
+  
+  \textbf{\darkgreen Problema:} Ordenar tarefas de tal forma que o tempo médio que cada tarefa fica no sistema é minimizado.
+\end{slide}
+
+\begin{slide}
+  \stitle{Escalonamento (Schedule)}
+  \textbf{Exemplo:} Sistema é o caixa de banco, e a tarefa é o cliente na fila de atendimento. 
+  
+  Queremos minimizar o tempo que cada cliente espera desde quando entra no banco até o momento em que termina de ser atendido.
+  \end{slide}
+
+\begin{slide}
+  \stitle{Escalonamento (Schedule)}
+ Formalizando um pouco, temos $n$ clientes, sendo que cada cliente $i$ irá exigir um tempo de serviço $t_i$, $1 \leq i \leq n$, e queremos minimizar o tempo médio que cada cliente gasta no sistema.
+\end{slide}
+
+\begin{slide}
+  \stitle{Escalonamento (Schedule)}
+  Como $n$ (número de clientes) é fixo, temos que minimizar o tempo total gasto no sistema para todos os clientes, isto é:
+  
+  $$T = \sum_{i = 1}^n (\textrm{tempo no sistema gasto pelo cliente }i)$$
+\end{slide}
+
+\begin{slide}
+  \stitle{Escalonamento (Schedule)}
+Exemplo:
+
+ Suponha três clientes, com $t1 = 5$, $t2 = 10$ e $t3 = 3$
+ 
+ Para a ordem de atendimento:  
+ 
+\begin{tabular}{|c|c|c|} \hline
+tarefa & tempo      & tempo de \\
+       & de chegada & atendimento\\ \hline
+ 1     & 0          & 5\\
+ 2     & 5          & 15\\
+ 3     & 15         & 18\\ \hline
+\end{tabular}
+
+O cliente 1 foi atendido imediatamente.       
+    
+\end{slide}
+
+\begin{slide}
+  \stitle{Escalonamento (Schedule)}
+Exemplo:
+
+ Suponha três clientes, com $t1 = 5$, $t2 = 10$ e $t3 = 3$
+ 
+ Para a ordem de atendimento:  
+ 
+\begin{tabular}{|c|c|c|} \hline
+tarefa & tempo      & tempo de \\
+       & de chegada & atendimento\\ \hline
+ 1     & 0          & 5\\
+ 2     & 5          & 15\\
+ 3     & 15         & 18\\ \hline
+\end{tabular}
+
+O cliente 2 precisou esperar o cliente 1 ser atendido.
+    
+\end{slide}
+
+\begin{slide}
+  \stitle{Escalonamento (Schedule)}
+Exemplo:
+
+ Suponha três clientes, com $t1 = 5$, $t2 = 10$ e $t3 = 3$
+ 
+ Para a ordem de atendimento:  
+ 
+\begin{tabular}{|c|c|c|} \hline
+tarefa & tempo      & tempo de \\
+       & de chegada & atendimento\\ \hline
+ 1     & 0          & 5\\
+ 2     & 5          & 15\\
+ 3     & 15         & 18\\ \hline
+\end{tabular}
+
+O cliente 3 precisou esperar os dois anteriores serem atendidos.
+\end{slide}
+
+\begin{slide}
+  \stitle{Escalonamento (Schedule)}
+Exemplo:
+
+ Suponha três clientes, com $t1 = 5$, $t2 = 10$ e $t3 = 3$
+ 
+ Para a ordem de atendimento:  
+ 
+\begin{tabular}{|c|c|c|} \hline
+tarefa & tempo      & tempo de \\
+       & de chegada & atendimento\\ \hline
+ 1     & 0          & 5\\
+ 2     & 5          & 15\\
+ 3     & 15         & 18\\ \hline
+\end{tabular}
+
+Tempo total de atendimento: $5+15+18 = 38$
+\end{slide}
+
+\begin{slide}
+  \stitle{Escalonamento (Schedule)}
+
+
+\itemtrig\ Para a ordem de atendimento $123$ o tempo total de atendimento é $38$.
+
+\itemtrig\ Mas será que está é a melhor ordem de atendimento?
+
+\vspace{-1cm}\hspace{2cm}Vamos analisar todas as combinações.
+\end{slide}
+
+\begin{slide}
+  \stitle{Escalonamento (Schedule)}
+
+\itemcirc\ Três clientes, com $t1 = 5$, $t2 = 10$ e $t3 = 3$  
+  
+As possíveis ordens de atendimento:
+
+\begin{tabular}{|c|c|} \hline
+ordem & tempo total de atendimento \\ \hline
+$123$ & $5 + (5+10) + (5+10+3) = 38$ \\
+$132$ & $5 + (5+3) + (5+3+10) = 31$ \\
+$213$ & $10 + (10+5) + (10+5+3) = 43$ \\
+$231$ & $10 + (10+3) + (10+3+5) = 41$ \\
+$312$ & $3 + (3+5) + (3+5+10) = 29$ \\
+$321$ & $3 + (3+10) + (3+10+5) = 34$ \\ \hline
+\end{tabular}
+\end{slide}
+
+\begin{slide}
+  \stitle{Escalonamento (Schedule)}
+
+\itemcirc\ Três clientes, com $t1 = 5$, $t2 = 10$ e $t3 = 3$  
+  
+As possíveis ordens de atendimento:
+
+\begin{tabular}{|c|c|} \hline
+ordem & tempo total de atendimento \\ \hline
+$123$ & $5 + (5+10) + (5+10+3) = 38$ \\
+$132$ & $5 + (5+3) + (5+3+10) = 31$ \\
+$213$ & $10 + (10+5) + (10+5+3) = 43$ \\
+$231$ & $10 + (10+3) + (10+3+5) = 41$ \\
+$312$ & $3 + (3+5) + (3+5+10) = 29$ (solução ótima)\\
+$321$ & $3 + (3+10) + (3+10+5) = 34$ \\ \hline
+\end{tabular}
+
+solução ótima: atender primeiro os clientes que gastam menos tempo.
+\end{slide}
+
+\begin{slide}
+  \stitle{Escalonamento (Schedule)}
+
+Idéia do algoritmo:
+
+\vspace{-1cm}\hspace{1cm}1. Ordenar os $n$ clientes pelos tempos 
+
+\vspace{-1cm}\hspace{1cm}2. Realizar o atendimento dos clientes 
+
+
+Complexidade: $O(n \log n)$
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Código de Huffman}
+\end{slide}
+
+\begin{slide}
+  \stitle{Código de Huffman}
+  
+\itemtrig\ Técnica de compressão de dados (economia de $20\%$ a $90\%$, dependendo do arquivo a ser comprimido).
+
+\itemtrig\ O algoritmo guloso de Huffman usa uma \textbf{tabela de frequência de caracteres} para obter um código binário único (\textbf{código prefixo}) de cada caracter encontrado no arquivo de entrada.
+\end{slide}
+
+\begin{slide}
+  \stitle{Código de Huffman}
+  Suponha um arquivo texto contendo 100000 caracteres no alfabeto $\Sigma = \{a, b, c, d, e, f\}$. As frequências de cada caracter no arquivo são indicadas na tabela abaixo.
+  
+  \begin{tabular}{l|cccccc} 
+                             &   a & b   &   c &   d  &    e  &    f \\ \hline
+(1) Frequência (em milhares)    &  45 & 13  &  12 &  16  &    9  &    5 \\ 
+(2) Código de tamanho fixo      & 000 & 001 & 010 & 011  &  100  &  101 \\  
+(3) Código de tamanho variável  &   0 & 101 & 100 & 111  & 1101  & 1100 \\ 
+  \end{tabular}
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Código de Huffman}
+  Suponha um arquivo texto contendo 100000 caracteres no alfabeto $\Sigma = \{a, b, c, d, e, f\}$. As frequências de cada caracter no arquivo são indicadas na tabela abaixo.
+    
+  \begin{tabular}{l|cccccc} 
+                             &   a & b   &   c &   d  &    e  &    f \\ \hline
+(1) Frequência (em milhares)    &  45 & 13  &  12 &  16  &    9  &    5 \\ 
+(2) Código de tamanho fixo      & 000 & 001 & 010 & 011  &  100  &  101 \\  
+(3) Código de tamanho variável  &   0 & 101 & 100 & 111  & 1101  & 1100 \\ 
+  \end{tabular}
+
+Tamanho em bits do arquivo:
+
+
+\vspace{-1cm}\hspace{1cm}(1) codifica 800000 bits
+
+\vspace{-1cm}\hspace{1cm}(2) codifica 300000 bits
+
+\vspace{-1cm}\hspace{1cm}(3) codifica 224000 bits {\darkgreen (melhor)}
+\end{slide}
+
+\begin{slide}
+  \stitle{Código de Huffman}
+  
+  \textbf{\darkgreen Problema da codificação:} Dadas as frequências de ocorrências dos caracteres de um arquivo, encontrar a sequência de bits (códigos) para representá-los de modo que o arquivo comprimido tenha tamanho mínimo.
+\end{slide}
+
+\begin{slide}
+  \stitle{Código de Huffman}
+  
+  \textbf{\darkgreen Códigos livres de prefixos:} o código de um símbolo não é prefixo do código de nenhum outro símbolo. 
+  
+\end{slide}
+
+\begin{slide}
+  \stitle{Código de Huffman}
+  
+  \textbf{\darkgreen Códigos livres de prefixos:} o código de um símbolo não é prefixo do código de nenhum outro símbolo. 
+
+Códigos livres de prefixos são fáceis de decodificar.  
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Código de Huffman}
+  \begin{multicols}{2}
+\begin{tabular}{|c|c|c|} \hline
+letra & freq & código \\ \hline
+ a    & 45   &  0     \\
+ b    & 13   &  101   \\
+ c    & 12   &  100   \\
+ d    & 16   &  111   \\
+ e    &  9   &  1101  \\
+ f    &  5   &  1100  \\ \hline
+\end{tabular}  
+   
+
+\begin{tikzpicture}
+ \draw node[draw, circle](no1) at (-3, 4) {100};
+ \draw node[draw](no2) at (-6, 2) {a:45};
+ \draw node[draw, circle](no3) at (0, 2) {55};
+ \draw node[draw, circle](no4) at (-3, -1) {25};
+ \draw node[draw, circle](no5) at (3, -1) {30};
+ \draw node[draw](no6) at (-5, -4) {c:12};
+ \draw node[draw](no7) at (-1, -4) {b:13};
+ \draw node[draw, circle](no8) at (2, -4) {14};
+ \draw node[draw](no9) at (5, -4) {d:16};
+ \draw node[draw](no10) at (1, -7) {f:5};
+ \draw node[draw](no11) at (4, -7) {e:9};
+
+ \draw[-] (no1) to node[above left]{0}  (no2);
+ \draw[-] (no1) to node[above right]{1} (no3);
+ \draw[-] (no3) to node[above left]{0}  (no4);
+ \draw[-] (no3) to node[above right]{1} (no5);
+ \draw[-] (no4) to node[above left]{0} (no6);
+ \draw[-] (no4) to node[above right]{1} (no7);
+ \draw[-] (no5) to node[above left]{0} (no8);
+ \draw[-] (no5) to node[above right]{1} (no9);
+ \draw[-] (no8) to node[above left]{0} (no10);
+ \draw[-] (no8) to node[above right]{1} (no11);
+
+\end{tikzpicture}
+ 
+ \end{multicols}
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Código de Huffman} 
+ Uma codificação ótima sempre pode ser representada por uma árvore binária \textbf{\pink cheia}, na qual cada vértice interno tem exatamente dois filhos.
+ 
+ Assim, podemos dizer que, seja $C$ o alfabeto em questão, então a árvore para um código livre de prefixos ótimo terá $|C|$ folhas e $|C|-1$ nós internos.
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Código de Huffman} 
+  O número de bits requeridos para codificar um arquivo é 
+  
+  $$B(T) = \sum_{c \in C} f(c) \cdot d_{T}(c)   \Rightarrow \textrm{ custo da árvore }T$$
+  
+  onde $T$ é uma árvore binária, $f(c)$ é frequência do caracter $c$ no arquivo e $d_T(c)$ é a profundidade da folha na árvore $T$.
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Código de Huffman} 
+Observando a árvore anterior, vamos calcular o número de bits requeridos para codificar em arquivo contituído pelos caracteres da árvore.
+
+$\begin{array}{ll}
+a = 45 \cdot 1 &= 45 \\
+b = 13 \cdot 3 &= 39 \\
+c = 12 \cdot 3 &= 36 \\
+d = 16 \cdot 3 &= 48 \\
+e =  9 \cdot 4 &= 36 \\
+f =  5 \cdot 4 &= 20 \\
+\end{array} $
+
+\textbf{Custo total:} $B(T) = 254 \textrm{ bits}$
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Construindo o código de Huffman}   
+\textbf{algoritmo de Huffman}  
+
+\vspace{-1cm} \itemtrig\ \textbf{\darkgreen Entrada:} Conjunto de caracteres $C$ com as frequências $f$ dos caracteres em C.
+
+\vspace{-1cm} \itemtrig\ \textbf{\darkgreen Saída:} raíz da árvore binária representando uma codificação ótima livre de prefixos.
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Construindo o código de Huffman}  
+\begin{codebox}
+\Procname{$\proc{Huffman}(C)$}
+\li  $Q \leftarrow C$
+\li  \For $i=1$ \To $|C|-1$ \textbf{\blue faça}
+\li  \> $x \leftarrow \proc{Extrai-Min}(Q)$ 
+\li  \> $y \leftarrow \proc{Extrai-Min}(Q)$ 
+\li  \> $z \leftarrow \proc{Alocar-No}()$ 
+\li  \> $esq[z] \leftarrow x$ 
+\li  \> $dir[z] \leftarrow y$ 
+\li  \> $f[z] \leftarrow f[x] + f[y]$
+\li  \> $\proc{Insere}(Q,z)$
+\li  \Return $\proc{Extrai-min}(Q)$
+\End
+\end{codebox}  
+\end{slide}
+
+\begin{slide}
+  \stitle{Desempenho de $\proc{Huffman}$}   
+
+\itemtrig\ $Q$ é fila de prioridades
+
+\vspace{-0.7cm}\itemtrig\ $\proc{Extrai-min}$ retira de $Q$ um nó $q$ com $f[q]$
+ mínima.
+ 
+\vspace{-0.7cm}\itemtrig\ Tamanho da instância: $n = |C|$ 
+
+\vspace{-0.7cm}\itemtrig\ $n-1$ vezes: $\proc{Extrai-Min}$, $\proc{Extrai-Min}$, $\proc{Insere}$
+
+\vspace{-0.7cm}\itemtrig\ Cada $\proc{Extrai-Min}$ e cada $\proc{Insere}$ consome $O(\lg n)$
+ 
+total: $O(n \lg n)$
+\end{slide}
+
+\begin{slide}
+  \stitle{Construindo o código de Huffman}   
+Podemos ilustrar a execução deste algoritmo com o seguinte conjunto de caracteres e suas frequências
+
+\begin{center}
+\begin{tabular}{|c|c|} \hline
+letra & freq \\ \hline
+a & 45 \\
+b & 13 \\
+c & 12 \\
+d & 16 \\
+e &  9 \\
+f &  5 \\ \hline
+\end{tabular}
+\end{center}
+\end{slide}
+
+\begin{slide}
+  \stitle{Construindo o código de Huffman (1)}   
+
+\begin{center}
+\begin{tikzpicture}
+ \draw node[draw](no1) at ( 0, 0)  {f:5};
+ \draw node[draw](no2) at ( 3, 0)  {e:9};
+ \draw node[draw](no3) at ( 6, 0)  {c:12};
+ \draw node[draw](no4) at ( 9, 0)  {b:13};
+ \draw node[draw](no5) at (12, 0)  {d:16};
+ \draw node[draw](no6) at (15, 0)  {a:45};
+\end{tikzpicture}
+\end{center}
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Construindo o código de Huffman (2)}   
+\begin{center}
+\begin{tikzpicture}
+ \draw node[draw](no1) at ( 4, -3)  {f:5};
+ \draw node[draw](no2) at ( 8, -3)  {e:9};
+ \draw node[draw](no3) at ( 0,  0)  {c:12};
+ \draw node[draw](no4) at ( 3,  0)  {b:13};
+ \draw node[draw, circle](no7) at (6, 0) {14};
+ \draw node[draw](no5) at ( 9,  0)  {d:16};
+ \draw node[draw](no6) at (12,  0)  {a:45};
+
+ \draw[-] (no7) to (no1);
+ \draw[-] (no7) to (no2);
+ 
+\end{tikzpicture}
+\end{center}
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Construindo o código de Huffman (3)}   
+\begin{center}
+\begin{tikzpicture}
+ \draw node[draw](no1) at (-2, -3)  {f:5};
+ \draw node[draw](no2) at ( 2, -3)  {e:9};
+ \draw node[draw](no3) at ( 5, -3)  {c:12};
+ \draw node[draw](no4) at ( 9, -3)  {b:13};
+ \draw node[draw, circle](no7) at (0, 0) {14};
+ \draw node[draw](no5) at ( 4, 0)  {d:16};
+ \draw node[draw, circle](no8) at (7, 0) {25};
+ \draw node[draw](no6) at (10, 0)  {a:45};
+
+ \draw[-] (no7) to (no1);
+ \draw[-] (no7) to (no2);
+ \draw[-] (no8) to (no3);
+ \draw[-] (no8) to (no4);
+ 
+\end{tikzpicture}
+\end{center}
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Construindo o código de Huffman (4)}   
+\begin{center}
+\begin{tikzpicture}
+ \draw node[draw, circle](no8) at (2, 0) {25};
+ \draw node[draw](no3) at ( 0, -3)  {c:12};
+ \draw node[draw](no4) at ( 4, -3)  {b:13};
+ 
+ 
+ \draw node[draw, circle](no9) at (10, 0) {30};
+ \draw node[draw, circle](no7) at (8, -3) {14};
+ \draw node[draw](no1) at (6, -6)  {f:5};
+ \draw node[draw](no2) at (11, -6)  {e:9};
+ \draw node[draw](no5) at (12, -3)  {d:16};
+ \draw node[draw](no6) at (15, 0)  {a:45};
+
+ \draw[-] (no7) to (no1);
+ \draw[-] (no7) to (no2);
+ \draw[-] (no8) to (no3);
+ \draw[-] (no8) to (no4);
+ \draw[-] (no9) to (no7);
+ \draw[-] (no9) to (no5);
+ 
+\end{tikzpicture}
+\end{center}
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Construindo o código de Huffman (5)}   
+\begin{center}
+\begin{tikzpicture}
+ \draw node[draw](no6) at (0, 0)  {a:45};
+ \draw node[draw, circle](no10) at (8, 0){55};
+ 
+ 
+ \draw node[draw, circle](no8) at (4, -3) {25};
+ \draw node[draw](no3) at ( 2, -6)  {c:12};
+ \draw node[draw](no4) at ( 6, -6)  {b:13};
+ 
+ 
+ \draw node[draw, circle](no9) at (12, -3){30};
+ \draw node[draw, circle](no7) at (10, -6) {14};
+ \draw node[draw](no1) at (8, -9)  {f:5};
+ \draw node[draw](no2) at (12, -9)  {e:9};
+ \draw node[draw](no5) at (14, -6)  {d:16};
+
+
+ \draw[-] (no7) to (no1);
+ \draw[-] (no7) to (no2);
+ \draw[-] (no8) to (no3);
+ \draw[-] (no8) to (no4);
+ \draw[-] (no9) to (no7);
+ \draw[-] (no9) to (no5);
+ \draw[-] (no10) to (no8);
+ \draw[-] (no10) to (no9);
+ 
+\end{tikzpicture}
+\end{center}
+\end{slide}
+
+\begin{slide}
+  \stitle{Construindo o código de Huffman (6)} 
+
+\begin{center}
+\begin{tikzpicture}
+ \draw node[draw, circle](no11) at (5, 0){100};
+ \draw node[draw](no6) at (0, -2)  {a:45};
+ \draw node[draw, circle](no10) at (10, -2){55};
+ \draw node[draw, circle](no8)  at (6, -5) {25};
+ \draw node[draw](no3) at ( 4, -8)  {c:12};
+ \draw node[draw](no4) at ( 8, -8)  {b:13};
+ \draw node[draw, circle](no9) at (14, -5){30};
+ \draw node[draw, circle](no7) at (12, -8) {14};
+ \draw node[draw](no1) at (10, -11)  {f:5};
+ \draw node[draw](no2) at (14, -11)  {e:9};
+ \draw node[draw](no5) at (16, -8)  {d:16};
+ \draw[-] (no7) to (no1);
+ \draw[-] (no7) to (no2);
+ \draw[-] (no8) to (no3);
+ \draw[-] (no8) to (no4);
+ \draw[-] (no9) to (no7);
+ \draw[-] (no9) to (no5);
+ \draw[-] (no10) to (no8);
+ \draw[-] (no10) to (no9);
+ \draw[-] (no11) to (no6);
+ \draw[-] (no11) to (no10); 
+\end{tikzpicture}
+\end{center}
+\end{slide}
+
+\begin{slide}
+  \stitle{Código de Huffman}   
+  Como obter o código a partir da da árvore?
+
+Associe a cada símbolo um código binário assim:
+
+\hspace{1cm}\itemtrig\ Rotule com 0 as arestas da árvore que ligam um nó com seu filho esquerdo e com 1 as arestas que ligam um nó com seu filho direito.
+  
+\end{slide}
+\begin{slide}
+  \stitle{Código de Huffman}  
+\begin{center}
+\begin{tikzpicture}
+ \draw node[draw, circle](no11) at (5, 0){100};
+ \draw node[draw](no6) at (0, -2)  {a:45};
+ \draw node[draw, circle](no10) at (10, -2){55};
+ \draw node[draw, circle](no8)  at (6, -5) {25};
+ \draw node[draw](no3) at ( 4, -8)  {c:12};
+ \draw node[draw](no4) at ( 8, -8)  {b:13};
+ \draw node[draw, circle](no9) at (14, -5){30};
+ \draw node[draw, circle](no7) at (12, -8) {14};
+ \draw node[draw](no1) at (10, -11)  {f:5};
+ \draw node[draw](no2) at (14, -11)  {e:9};
+ \draw node[draw](no5) at (16, -8)  {d:16};
+ \draw[-] (no7)  to node[above left]{0}  (no1);
+ \draw[-] (no7)  to node[above right]{1} (no2);
+ \draw[-] (no8)  to node[above left]{0}  (no3);
+ \draw[-] (no8)  to node[above right]{1} (no4);
+ \draw[-] (no9)  to node[above left]{0}  (no7);
+ \draw[-] (no9)  to node[above right]{1} (no5);
+ \draw[-] (no10) to node[above left]{0}  (no8);
+ \draw[-] (no10) to node[above right]{1} (no9);
+ \draw[-] (no11) to node[above left]{0}  (no6);
+ \draw[-] (no11) to node[above right]{1} (no10); 
+\end{tikzpicture}
+\end{center}
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Código de Huffman} 
+Como obter os códigos a partir da árvore?
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Código de Huffman} 
+Como obter os códigos a partir da árvore?
+
+O código correspondente a cada símbolo é a concatenação dos bits associados às arestas do caminho da raiz até a folha correspondente ao símbolo.
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Código de Huffman} 
+
+
+\begin{center}
+\includegraphics[width=.7\textwidth]{fig03}
+\end{center}
+
+
+  \vspace{-1cm}{\green Exemplo:} O código $b$ é $101$
+
+\end{slide}
+
+\begin{slide}
+  \stitle{O problema do caminho mínimo}   
+\end{slide}
+
+\begin{slide}
+  \stitle{O problema do caminho mínimo}   
+  
+  Seja $G$ um grafo simples tal que a cada aresta $(u,v)$ associamos um custo $w(u,v) \geq 0$. 
+  
+  Dados dois vértices $s$ e $t$, o problema do caminho mínimo consiste em encontrar um caminho de menor custo entre $s$ e $t$
+  \end{slide}
+
+\begin{slide}
+  \stitle{O problema do caminho mínimo}   
+  Para resolver este problema, vamos estudar o algoritmo de Djikstra (1959). Como veremos, este algoritmo não só encontra o caminho mínimo de $s$ a $t$, mas de $s$ a qualquer outro vértice do grafo.
+  
+ O algoritmo de Djikstra pode ser visto como uma generalização da busca em largura. 
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Inicialização}
+  
+\begin{codebox}
+\Procname{$\proc{inicializa}(G, s)$}
+\li  \textbf{\blue para cada vértice} $v \in V[G]$ \textbf{\blue faça}
+\li  \> $d[v] \leftarrow \infty$
+\li  \> $\pi[v] \leftarrow NIL$
+\li  $d[s] \leftarrow 0$
+\end{codebox}      
+
+Os algoritmos de caminhos mínimos associam a cada $v \in V[G]$ um valor $d[v]$ que é uma {\pink estimativa de distância} $\proc{dist}(s,v)$.
+
+O caminho pode ser recuperado por meio dos predecessores $\pi[]$
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Relaxação}
+  
+Tenta melhorar a estimativa $d[v]$ examinando $(u,v)$
+
+\begin{codebox}
+\Procname{$\proc{relaxa}(u, v, w)$}
+\li  \If $d[v] > d[u] + w(u, v)$ 
+\li  \Then $d[v] \leftarrow d[u] + w(u, v)$
+\li  \> $\pi[v] \leftarrow u$
+\end{codebox}     
+ 
+Vamos assumir que $w(x,y) = \infty$ se $(x,y) \notin E(G)$
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Relaxação dos vizinhos}
+  
+\begin{center}
+\begin{tikzpicture}
+ \draw node[draw, fill=blue!21, circle](no1) at (0, 0){5};
+ \node[above left] at (-0.5,0){u};
+ \draw node[draw, fill=blue!21, circle](no2) at (4, 0){9};
+ \node[above right] at (4.5,0){v};
+ 
+ \draw node[draw, fill=blue!21, circle](no3) at (0, -4){5};
+ \node[above left] at (-0.5,-4){u};
+ \draw node[draw, fill=blue!21, circle](no4) at (4, -4){7};
+ \node[above right] at (4.5,-4){v};
+ 
+ \draw[->] (no1) to node[above]{2}  (no2);
+ \draw[->] (no3) to node[above]{2}  (no4);
+ \draw[->, dashed] (2,-1) -- (2,-2.5); 
+ \node[right]  at (2,-2){relaxa};
+\end{tikzpicture}
+
+\end{center}
+Em cada passo o algoritmo seleciona um vértice $u$ para cada vizinho $v$ e aplica $\proc{relaxa}(u,v,w)$
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Algoritmo de Djikstra}  
+ \begin{codebox}
+\Procname{$\proc{Djikstra}(G, w, s)$}
+\li  $\proc{inicializa}(G, s)$
+\li  $S \leftarrow \emptyset$
+\li  $Q \leftarrow V[G]$
+\li  \textbf{enquanto} $Q \neq \emptyset$ \textbf{faça}
+\li  \> $u \leftarrow \proc{Extrai-min}(Q)$
+\li  \> $S \leftarrow S \cup \{u\}$
+\li  \> \textbf{para cada} vértice $v \in Adj[u]$ \textbf{faça}
+\li  \> \> $\proc{relaxa}(u, v, w)$
+\end{codebox}   
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Análise do algoritmo Djikstra}  
+
+\itemtrig\ A complexidade de tempo de $\proc{inicializa}()$ é $O(V)$. Mas a complexidade do $\proc{Djikstra}$ depende da implementação de $Q$.
+
+\vspace{-1cm}\hspace{1cm} \textbf{Usando vetor:} $O(V^2)$
+
+\vspace{-1cm}\hspace{1cm} \textbf{Usando heap:} 
+
+\vspace{-1cm}\hspace{2cm} \itemcirc\ passo 3: construir o heap $O(V)$   
+
+\vspace{-1cm}\hspace{2cm} \itemcirc\ passo 5: $\proc{Extrai-min}()$ é $O(\lg |V|)$ executada $|V|$ vezes, 
+
+\vspace{-1cm}\hspace{6cm} i.e., $O(|V| \lg |V|)$
+  
+\vspace{-1cm}\hspace{2cm} \itemcirc\ passo 8: É preciso descer o valor no heap (passo 2 da 
+
+\vspace{-1cm}\hspace{6cm} rotina $\proc{relaxa}()$) com tempo $O(\lg V)$. Pode 
+
+\vspace{-1cm}\hspace{6cm} haver $|E|$ chamadas de $\proc{relaxa}()$. 
+
+\vspace{-1cm}\hspace{2cm} \itemcirc\ \textbf{\darkgreen tempo total:} $O((|V| + |E|) \lg V)$
+\end{slide}
+
+
+\begin{slide}
+\begin{center}
+\includegraphics[width=1.0\textwidth]{fig06}
+\end{center}
+
+
+\end{slide}
 
 \begin{slide}
   \stitle{Obrigado}
