@@ -1208,7 +1208,7 @@ letra & freq & código \\ \hline
 \end{tabular}  
    
 
-\begin{tikzpicture}
+\begin{tikzpicture}[scale=0.8, transform shape]
  \draw node[draw, circle](no1) at (-3, 4) {100};
  \draw node[draw](no2) at (-6, 2) {a:45};
  \draw node[draw, circle](no3) at (0, 2) {55};
@@ -1497,7 +1497,7 @@ Associe a cada símbolo um código binário assim:
 \begin{slide}
   \stitle{Código de Huffman}  
 \begin{center}
-\begin{tikzpicture}
+\begin{tikzpicture}[scale=1.0, transform shape]
  \draw node[draw, circle](no11) at (5, 0){100};
  \draw node[draw](no6) at (0, -2)  {a:45};
  \draw node[draw, circle](no10) at (10, -2){55};
@@ -1608,7 +1608,7 @@ Vamos assumir que $w(x,y) = \infty$ se $(x,y) \notin E(G)$
   \stitle{Relaxação dos vizinhos}
   
 \begin{center}
-\begin{tikzpicture}
+\begin{tikzpicture}[scale=0.7, transform shape]
  \draw node[draw, fill=blue!21, circle](no1) at (0, 0){5};
  \node[above left] at (-0.5,0){u};
  \draw node[draw, fill=blue!21, circle](no2) at (4, 0){9};
@@ -1626,6 +1626,7 @@ Vamos assumir que $w(x,y) = \infty$ se $(x,y) \notin E(G)$
 \end{tikzpicture}
 
 \end{center}
+
 Em cada passo o algoritmo seleciona um vértice $u$ para cada vizinho $v$ e aplica $\proc{relaxa}(u,v,w)$
 \end{slide}
 
