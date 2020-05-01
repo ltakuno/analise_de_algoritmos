@@ -15,10 +15,12 @@ def solve(v, n, delta):
     u = [v[0]]
     ultima_pos = v[0] 
     for i in range(1, n):
-        if v[i] - ultima_pos >= delta:
-            u.append(v[i])
-            ultima_pos = v[i]
+        if v[i] - ultima_pos > delta:
+            u.append(v[i-1])
+            ultima_pos = v[i-1]
+
+    u.append(v[n-1])
     return u
 
-u = solve(v = [1,2,3,5,6,7], n = 6, delta = 2)
+u = solve(v = [1,2,4,5,6,7], n = 6, delta = 2)
 print(u)

@@ -22,5 +22,5 @@ def solve(v, n, delta):
     u.append(v[n-1])
     return u
 
-u = solve(v = [1,2,3,5,6,7], n = 6, delta = 2)
+u = solve(v = [1,2,3,4,6,7,8], n = 7, delta = 2)
 print(u)

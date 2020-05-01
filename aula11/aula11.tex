@@ -894,9 +894,9 @@ Vamos desconsiderar este caso.
 \li  $u \leftarrow \{p[1]\}$ 
 \li  $ultima\_pos \leftarrow p[1]$
 \li  \For $i=2$ \To $n$ \textbf{\blue faça}
-\li  \> \If $p[i] - ultima\_pos >= delta$ \textbf{\blue então} 
-\li  \> \> $ultima\_pos \leftarrow p[i]$
-\li  \> \> $u \leftarrow u \cup p[i]$
+\li  \> \If $p[i] - ultima\_pos > delta$ \textbf{\blue então} 
+\li  \> \> $ultima\_pos \leftarrow p[i-1]$
+\li  \> \> $u \leftarrow u \cup p[i-1]$
 \li $u \leftarrow u \cup p[n]$
 \li  \Return $u$
 \End
@@ -945,9 +945,9 @@ complexidade: $O(n)$
 \li  $S \leftarrow \{\}$  \itemtrig\ paradas selecionadas 
 \li  $ultima\_parada = 0$ 
 \li  \For $i = 0$ \To $n$ \textbf{\blue faça}
-\li  \> \If $p_i - ultima\_parada >= C$ \textbf{\blue então}
-\li  \> \> $ultima\_parada = p_i$
-\li  \> \> $S \leftarrow S \cup i$
+\li  \> \If $p_i - ultima\_parada > C$ \textbf{\blue então}
+\li  \> \> $ultima\_parada = p_{i-1}$
+\li  \> \> $S \leftarrow S \cup {(i-1)}$
 \li  \Return $S$
 \End
 \end{codebox}    
