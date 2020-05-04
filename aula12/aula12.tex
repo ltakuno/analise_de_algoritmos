@@ -1,0 +1,556 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% talk: prototype
+%%% 2002/10/16
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%
+%%% Erstellen eines Vortrags in PDF-Format wie folgt:
+%%%
+%%% 1) Uebersetzen der Datei mit 
+%%%    pdflatex asz
+%%% 2) Wenn Features von ppower4 gewuenscht werden, dann die eben
+%%%    entstandene Datei asz.pdf weiterverarbeiten mit
+%%%    ./ppower4 asz.pdf vortrag.pdf
+%%% 3) Die Datei vortrag.pdf kann nun mit dem Acrobat Reader angesehen
+%%%    werden
+%%%
+%%% Fuer Testzwecke ist auch ein "normales" Uebersetzen mit LaTeX
+%%% moeglich:
+%%% 1) latex asz
+%%% 2) dvips asz.dvi -o asz.ps -t a4 -t landscape
+%%% 3) Anschauen mit ghostview
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ifx\pdfoutput\undefined \documentclass[clock,landscape]{slides} \else
+\documentclass[clock,landscape]{slides} \fi
+%\documentclass[clock,pdftex,landscape]{slides} \fi
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Escrevendo em português:
+\usepackage[brazil]{babel}
+\usepackage[latin1]{inputenc} % isso é quase redundante
+\usepackage{textcomp}
+\usepackage[T1]{fontenc}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{epstopdf}
+\usepackage{psfrag}
+ 
+\usepackage[table,xcdraw]{xcolor}
+
+\usepackage{multicol}
+
+\usepackage{clrscode}
+%----------------------------
+\usepackage{tabularx}
+%%% Die Datei mit dem ASZ-Layout
+
+\usepackage{shi}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath,amssymb,amsthm} \usepackage{amsfonts}
+\usepackage[colorlinks,backref]{hyperref}
+%\usepackage{background}
+
+%\usepackage{picinpar}
+
+\hypersetup{pdftitle={Análise e projeto de algoritmos},
+  pdfsubject={Análise de algoritmos}, 
+  pdfauthor={Leonardo Takuno, Centro Universitário SENAC, 
+  <leonardo.takuno@gmail.com>},
+  pdfkeywords={acrobat, ppower4},
+%  pdfpagemode={FullScreen},
+  colorlinks={false},
+  linkcolor={red}
+}
+
+\usepackage{color}
+\usepackage{tikz}
+\usetikzlibrary{shapes}
+\usetikzlibrary{plotmarks}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Pauseneffekte mit ppower4 werden moeglich
+
+\usepackage{pause}
+\newcommand\plone{\pause\pauselevel{=1}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newtheoremstyle{mythm}% name
+  {40pt}%      Space above
+  {-15pt}%      Space below
+  {\sf\itshape\blue}%      Body font
+  {}%         Indent amount (empty = no indent, \parindent = para indent)
+  {\sf\bfseries\green}% Thm head \vspacefont
+  {.}%        Punctuation after thm head
+  { }%     Space after thm head: " " = normal interword space;
+        %       \newline = linebreak
+  {}%         Thm head spec (can be left empty, meaning `normal')
+
+\theoremstyle{mythm}
+\newtheorem{theorem}             {Theorem}       
+\newtheorem{claim}     [theorem] {Claim}         
+\newtheorem{lemma}     [theorem] {Lemma}         
+\newtheorem{corollary} [theorem] {Corollary}     
+\newtheorem{fact}      [theorem] {Fact}          
+\newtheorem{conjecture}[theorem] {Conjecture}    
+
+\newtheorem{problem}   [theorem] {Problema}       
+\newtheorem{propriedade}  [theorem] {Propriedade}       
+\newtheorem{corolario}  [theorem] {Corolário}       
+\newtheorem{definition}   [theorem] {Definição}       
+\newtheorem{lema}   [theorem] {Lema}       
+\newtheorem*{prova}{Prova}       
+
+%%% Symbole
+
+\newcommand{\NN}{\mathbb{N}} \newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}} \newcommand{\1}{{{\mathchoice {\rm
+        1\mskip-4mu l} {\rm 1\mskip-4mu l} {\rm 1\mskip-4.5mu l} {\rm
+        1\mskip-5mu l}}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\let\phi\varphi
+\let\epsilon\varepsilon
+\let\rho\varrho
+\let\tilde\widetilde
+\let\approx\thickapprox
+\let\sim\thicksim
+
+\def\({\left(}
+\def\){\right)}
+\def\[{\left[}
+\def\]{\right]}
+\def\<{\langle}
+\def\>{\rangle}
+\let\:\colon
+\def\llfloor{\left\lfloor}
+\def\rrfloor{\right\rfloor}
+\def\llceil{\left\lceil}
+\def\rrceil{\right\rceil}
+
+%%% Textmakros
+\def\ex{\mathop{\text{\rm ex}}\nolimits} 
+\def\cB{{\mathcal B}} 
+\def\cG{{\mathcal G}}
+\def\cS{{\mathcal S}} 
+\def\cW{{\mathcal W}} 
+\def\cQ{{\mathcal Q}} 
+\def\PP{{\mathbb P}}
+\def\EE{{\mathbb E}} 
+\def\GG{{\mathbb G}} 
+\def\e{{\rm e}}
+\def\epsilon{{\varepsilon}} 
+\def\DISC{\mathop{\textrm{\rm DISC}}\nolimits} 
+\def\EIG{\mathop{\textrm{\rm EIG}}\nolimits}
+\def\CIRCUIT{\mathop{\textrm{\rm CIRCUIT}}\nolimits}
+\def\CYCLE{\mathop{\textrm{\rm CYCLE}}\nolimits}
+\def\SUB{\mathop{\textrm{\rm SUB}}\nolimits}
+\def\NSUB{\mathop{\textrm{\rm NSUB}}\nolimits}
+\def\PAIR{\mathop{\textrm{\rm PAIR}}\nolimits}
+\def\TFNSUB{\mathop{\textrm{\rm TFNSUB}}\nolimits}
+\def\BDD{\mathop{\textrm{\rm BDD}}\nolimits}
+\def\eps{\varepsilon}
+
+\def\rmd{\text{\rm d}}
+\def\wtc{\widetilde{c}\,}
+\def\whc{\widehat{c}}
+\def\bfb{{\bf b}}
+\def\bff{{\bf f}}
+\def\bft{{\bf t}}
+\def\bfx{{\bf x}}
+\def\bfz{{\bf z}}
+\def\cB{{\mathcal B}}
+\def\cD{{\mathcal D}}
+\def\cG{{\mathcal G}}
+\def\cM{{\mathcal M}}
+\def\cN{{\mathcal N}}
+\def\cR{{\mathcal R}}
+\def\cS{{\mathcal S}}
+\def\cW{{\mathcal W}}
+\def\PP{{\mathbb P}}
+\def\EE{{\mathbb E}}
+\def\FF{{\mathbb F}}
+\def\NN{{\mathbb N}}
+\def\RR{{\mathbb R}}
+\def\ZZ{{\mathbb Z}}
+\def\e{{\rm e}}
+\def\card{\mathop{\text{\rm card}}\nolimits}
+\def\rank{\mathop{\text{\rm rank}}\nolimits}
+\def\trace{\mathop{\text{\rm trace}}\nolimits}
+\def\Ave{\mathop{\text{\rm Ave}}\nolimits}
+\def\Bi{\mathop{\text{\rm Bi}}\nolimits}
+\def\im{\mathop{\text{\rm im}}\nolimits}
+\def\ind{\mathop{\text{\rm ind}}\nolimits}
+\def\dist{\mathop{\text{\rm dist}}\nolimits}
+\def\nDist{\mathop{\text{\rm \#Dist}}\nolimits}
+\let\Dist\nDist
+\def\De{D_{\rm e}}
+\def\sumL{\sum\nolimits_1}
+\def\sumS{\sum\nolimits_2}
+\def\GF{\mathop{\text{\rm GF}}\nolimits}
+\let\FF\GF
+\def\Bip{\mathop{\text{\rm Bip}}\nolimits}
+\def\adj{\mathop{\text{\rm adj}}\nolimits}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\nx}{{\hfill\vspace*{-2cm}\tiny +}}
+
+%\newcommand{\red}[1]{\textcolor{red}{#1}}
+%\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+%\newcommand{\yellow}[1]{\textcolor{yellow}{#1}}
+%\newcommand{\green}[1]{\textcolor{green}{#1}}
+%\newcommand{\darkgreen}[1]{\textcolor{darkgreen}{#1}}
+\def\red{\color[rgb]{0.7,0,0}}
+\def\green{\color[rgb]{0,.8,0}}
+\def\darkgreen{\color[rgb]{0.1,0.4,0.0}}
+\let\dgreen\darkgreen
+\def\blue{\color[rgb]{0,0,.8}}
+\def\yellow{\color[rgb]{1,1,0}}
+\def\black{\color[rgb]{0,0,0}}
+
+\def\pink{\color[rgb]{1,0,1}}
+\def\brown{\color[rgb]{.5,.1,.3}}
+\def\lilaz{\color[rgb]{.5,0,.5}}
+\def\hmmm{\color[rgb]{.3,.1,.5}}
+\def\magenta{\color[rgb]{.6,.05,.05}}
+
+\newcommand{\uc}[1]{\centerline{\underline{#1}}}
+\newcommand{\pic}[1]{\fbox{picture:{#1}}}
+%\renewcommand{\bf}{\mbox{}}
+\newcommand{\cP}{{\cal P}} \newcommand{\cT}{{\cal T}}
+\newcommand{\add}{\mbox{\rm add}} \newcommand{\pr}{\mbox{\rm Pr}}
+
+\def\stitle#1{\slidetitle{\red #1}\vspace{-0pt}}
+
+\def\itemtrig{$\vartriangleright$}
+\def\itemcirc{$\circ$}
+\def\itemT{\item[\itemtrig]}
+\def\itemC{\item[$\circ$]}
+
+\everymath={\blue}
+\everydisplay={\blue}
+
+\renewcommand{\For}{\textbf{\blue para} }
+\renewcommand{\To}{\textbf{\blue até} }
+\renewcommand{\Do}{\>\>\textbf{\blue faça}\hspace*{-0.7em}\'\addtocounter{indent}{1}}
+\renewcommand{\While}{\textbf{\blue enquanto} }
+\renewcommand{\If}{\textbf{\blue se} }
+\renewcommand{\Then}{\>\textbf{\blue então}\>\hspace*{0.5em}\addtocounter{indent}{1}}
+\renewcommand{\Else}{\kill\addtocounter{indent}{-1}\liprint\>\textbf{\blue senão}\>\hspace*{0.5em}\addtocounter{indent}{1}}
+\renewcommand{\ElseIf}{\kill\addtocounter{indent}{-1}\liprint\textbf{\blue senão se} }
+\renewcommand{\ElseNoIf}{\kill\addtocounter{indent}{-1}\liprint\textbf{\blue senão} \addtocounter{indent}{1}}
+\renewcommand{\Return}{\textbf{\blue retorne} }
+
+
+\newcommand{\TITLE}[1]{\item[#1]}
+
+% ugly hack for for/while
+\newbox\fixbox
+
+% end of hack
+\newcommand{\algcost}[2]{\strut\hfill\makebox[3.5cm][l]{#1}\makebox[4cm][l]{#2}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%%Anuschs Extras
+%
+%\def\enddiscard{}
+%\long\def\discard#1\enddiscard{}
+%
+%%%\vpagecolor{bgblue}
+%\hypersetup{pdfpagetransition=Dissolve}
+%\hypersetup{pdfpagetransition=R}
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Farben kann man hier definieren
+
+\definecolor{bgblue}{rgb}{0.04,0.39,0.53}
+
+\definecolor{darkyellow}{rgb}{0.94,0.820,0.058}
+\definecolor{orange}{rgb}{0.95,0.47,0.14}
+\definecolor{darkgreen}{rgb}{0.0,0.5,0.0}
+
+\definecolor{blue2}{rgb}{0.1,0.39,0.53}
+\definecolor{yellow1}{rgb}{1,1,0} \definecolor{pink}{rgb}{1,0,1}
+
+\definecolor{lightred}{rgb}{1,0.5,0.5}
+\definecolor{lightred2}{rgb}{1,0.7,0.7}
+\definecolor{lightred3}{rgb}{1,0.3,0.3}
+\definecolor{black}{rgb}{0,0,0} \definecolor{gray1}{rgb}{0.9,0.9,0.9}
+\definecolor{red1}{rgb}{1,1,0.9}
+
+\title{Análise e projeto de algoritmos} 
+\author{{\blue L.~Takuno} (SENAC)}
+\date{{\dgreen 1o. Semestre 2019}} 
+
+%%% Hier beginnt die Praesentation
+
+\begin{document}\def\proofname{{\bf\green Prova.}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Deckblatt
+%%%%%%%%%%%%%%%%%%%\usepackage{clrscode3e}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\maketitle
+
+%\slidesubhead{}  %% Teilvortrags-Titel (hier noch nicht)
+                 %% Dieser erscheint spaeter oben links unter
+                 %% dem ASZ Gesamt-Titel
+
+%%%%%%%%%%%%%%%%%%%%%%% TOC %%%%%%%%%%%%%%%%%%
+
+%\slidesubhead{Outline!!!}
+
+\begin{slide}
+  \stitle{Fontes principais}
+  \begin{enumerate}\makeatletter\itemsep\z@\makeatother
+  \item Cormem T. H.; Leiserson C. E.; Rivest R.: Stein C.. \textit{Introduction to Algorithms}, $3^a$ edição, MIT Press, 2009
+  \item Análise de algoritmo - IME/USP (prof. Paulo Feofiloff)
+    \verb|http://www.ime.usp.br/~pf/analise_de_algoritmos| 
+	
+  \end{enumerate}
+  \end{slide}
+ 
+ 
+\begin{slide}
+  \stitle{Backtracking} 
+
+\vspace{-1cm}\center{\tiny \darkgreen algoritmos de enumeração}  
+   
+\end{slide}
+
+\begin{slide}
+  \stitle{Backtracking}  
+  É um refinamento da técnica de força bruta.
+  
+\vspace{-1cm}Considera uma série de tomadas de decisões entre várias opções.
+
+\vspace{-1cm}Algumas consequências de decisões podem conduzir a uma solução do problema.
+\end{slide}
+
+\begin{slide}
+  \stitle{Backtracking}  
+\textbf{Ideia geral:}
+\begin{enumerate}
+\item[(1)] Soluções representadas por $n$ tuplas ou vetores de solução
+$(s_1, s_2, \cdots, s_n)$ de maneira que cada $s_i$ é escolhido a partir de um conjunto finito de opções $v_i$;
+\item[(2)] Inicia um vetor vazio;
+\end{enumerate}
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Backtracking}  
+  
+\begin{enumerate}
+\item[(3)] Em cada nova etapa do vetor é extendido com um novo valor;
+\item[(4)] O novo valor deve ser avaliado: se não for solução parcial, então o último valor do vetor é eliminado e outro candidato é considerado.
+\end{enumerate}
+Note que em (4) pode ou não ocorrer retrocesso (backtracking).
+\end{slide}
+
+\begin{slide}
+  \stitle{Backtracking}
+  \textbf{Restrições}
+  
+\itemcirc\  Restrições explícitas:
+  
+\vspace{-1cm}\hspace{1cm}Correspondem às regras que restringem cada $s_i$ em tomar 
+
+\vspace{-1cm}\hspace{1cm}valores de um determinado conjunto (relacionado ao problema 
+
+\vspace{-1cm}\hspace{1cm}e escolhas possíveis).
+  
+\itemcirc\  Restrições implícitas:
+
+\vspace{-1cm}\hspace{1cm} Determinam como os $s_i$'s se relacionam entre si.
+\end{slide}
+
+\begin{slide}
+  \stitle{Algoritmo de backtracking genérico}  
+  
+\begin{codebox}
+\Procname{$\proc{backtrack}(s[1 \cdot\cdot\; k])$}
+\li  \itemtrig\ $s$ é um vetor promissor de tamanho $k$
+\li  \If $s$ é a solução \textbf{\blue então}
+\li  \> $\proc{escreva}(s)$
+\li  \textbf{\blue senão}
+\li  \>\For cada vetor promissor $w$ de tamanho $k+1$ \textbf{\blue faça}
+\li  \>\> $\proc{backtracking}(w[1 \cdot\cdot\; k+1])$    
+\li  \>\itemtrig\ $w[1 \cdot\cdot\; k] = s[1 \cdot\cdot\; k]$
+\End
+\End
+\End
+\end{codebox}  
+\end{slide}
+
+\begin{slide}
+  \stitle{Sequências} 
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Sequências}    
+  
+ Suponha o seguinte problema: 
+ 
+ Gerar todas as sequências possíveis de 3 dígitos com os dígitos 1,2 e 3 armazenados no vetor $v[0 \cdot\cdot\; n]$, onde $n=3$
+ 
+Solução: 111, 112, 113, 121, 122, 123, 131, 132, 133, 211, 212, 213, 221, 222, 223, 231, 232, 233, 311, 312, 313, 321, 322, 323, 331, 332, 333
+
+A quantidade é de $3^3 = 27$ sequências.
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Sequências}   
+  \textbf{algoritmo} $\proc{mostra\_sequencias}(s, i, v, n)$
+  
+\textbf{\darkgreen entrada:} vetor solução: $s[0 \cdot\cdot\; n-1]$ 
+  
+\vspace{-1cm}\hspace{3.7cm}inteiro $i = 0$ que controla a profundidade da recursão, 
+
+\vspace{-1cm}\hspace{3.7cm}vetor de entrada: $v[0 \cdot\cdot\; n-1]$
+
+\vspace{-1cm}\hspace{3.7cm}inteiro $n$ o tamanho do vetor $a$
+
+  \textbf{\darkgreen saída:} apresenta todas as sequências de $n$ elemntos de $a$   
+  
+\end{slide}
+
+\begin{slide}
+  \stitle{Sequências}    
+\begin{codebox}
+\Procname{$\proc{mostra\_sequencias}(s, i, v, n)$}
+\li  \If $i = n$  \textbf{\blue então}
+\li  \> $\proc{escreva}(s, n)$
+\li  \textbf{\blue senão}
+\li  \>\For $j = 0$ \To $n-1$ \textbf{\blue faça}
+\li  \>\>\> $s[i] = v[j]$    
+\li  \>\>\> $\proc{mostra\_sequencias}(s, i+1, v, n)$
+\End
+\End
+\End
+\end{codebox}  
+\end{slide}
+
+\begin{slide}
+  \stitle{Sequências}    
+\begin{center}
+\includegraphics[width=.9\textwidth]{fig01}
+\end{center}
+\end{slide}
+
+\begin{slide}
+  \stitle{Sequências}  
+  
+  Suponha que agora queremos gerar todas as combinações de tamanho 3 utilizando os dígitos $a = \{1, 2, 3, 4\}$. Nesta caso, temos que definir $s[0 \cdot\cdot\; m-1]$, com $m=3$, e o vetor $a[0 \cdot\cdot\; n-1]$, com $n=4$.
+  
+\end{slide}
+
+\begin{slide}
+  \stitle{Sequências}    
+\begin{center}
+\includegraphics[width=.8\textwidth]{fig03}
+\end{center}
+
+Complexidade do algoritmo: $O(n^m)$  
+
+\end{slide}
+
+
+
+\begin{slide}
+  \stitle{Permutações}    
+\end{slide}
+
+\begin{slide}
+  \stitle{Permutações}    
+Uma permutação da sequência $1 \cdot\cdot\; n$ é qualquer rearranjo dos termos dessa sequência. Em outras palavras, uma permutação da sequência $1 \cdot\cdot\; n$ troca os elementos de lugar gerando uma nova sequência com estes mesmos elementos.
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Permutações - Exemplo}    
+  
+Dado uma vetor $v$, escreva um programa que imprima todas as permutações. Se $v$ tem $n$ elementos, então o programa deve imprimir $n!$ permutações.  
+  
+\textbf{\darkgreen entrada:} $v=\{1,2,3\}$
+
+\vspace{-1cm}\textbf{\darkgreen saída:} $\{1, 2, 3\}$, $\{1,3,2\}$, $\{2,1,3\}$, 
+
+\vspace{-1cm}\hspace{2.6cm}$\{2,3,1\}$, $\{3,1,2\}$, $\{3,2,1\}$.
+\end{slide}
+
+\begin{slide}
+  \stitle{Permutações} 
+  
+  \textbf{algoritmo} $\proc{permuta}(s, i, v, n, x)$
+  
+  \textbf{\darkgreen entrada:} vetor solução: $s[0 \cdot\cdot\; n-1]$ 
+  
+\vspace{-1cm}\hspace{3.7cm}inteiro $i = 0$ que controla a profundidade da recursão, 
+
+\vspace{-1cm}\hspace{3.7cm}vetor de entrada: $v[0 \cdot\cdot\; n-1]$
+
+\vspace{-1cm}\hspace{3.7cm}inteiro $n$ o tamanho do vetor $a$
+
+\vspace{-1cm}\hspace{3.7cm}vetor de marcação: $x[0 \cdot\cdot\; n-1]$ marca os elementos 
+
+\vspace{-1cm}\hspace{3.7cm}que já foram inseridos no conjunto solução. 
+
+  \textbf{\darkgreen saída:} apresenta a permutação dos elementos do vetor $a$ 
+\end{slide}
+
+\begin{slide}
+  \stitle{Permutações}  
+\begin{codebox}
+\Procname{$\proc{permuta}(s, i, v, n, x)$}
+\li  \If $i = n$  \textbf{\blue então}
+\li  \> $\proc{escreva}(s, n)$
+\li  \textbf{\blue senão}
+\li  \>\For $j = 0$ \To $n-1$ \textbf{\blue faça}
+\li  \>\> \itemtrig\ verifica se a solução é promissora
+\li  \>\> \If $x[j] == 0$ \textbf{\blue então} 
+\li  \>\>\> $x[j] = 1$  \itemtrig\ inclui na solução
+\li  \>\>\> $s[i] = v[j]$    
+\li  \>\>\> $\proc{permuta}(s, i+1, v, n, x)$
+\li  \>\>\> $x[j] = 0$ 
+\End
+\End
+\End
+\end{codebox}  
+\end{slide}
+
+\begin{slide}
+  \stitle{Permutações}  
+\begin{center}
+\includegraphics[width=.8\textwidth]{fig02}
+\end{center}
+\end{slide}
+
+\begin{slide}
+  \stitle{Permutações} 
+  
+ Restrições explícitas: O conjunto solução $s$ tem uma permutação ao chegar ao caso base. 
+  
+ Restrições explícitas: Na permutação não há repetição de elementos.
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Obrigado}
+\end{slide}
+
+\end{document}
+
+% Local Variables: 
+% mode: latex
+% eval: (Portug-mode)
+% TeX-master: t
+% End: 
