@@ -1034,16 +1034,14 @@ Utilizamos a técnica de backtracking, que consiste em, a cada passo, caso a solu
 \begin{slide}
   \stitle{Oito rainhas} 
 \begin{codebox}
-\Procname{$\proc{coloca\_coluna}(i)$}
-\li \textbf{\blue repita}
-\li  \> selecione uma posição
-\li  \> \textbf{\blue se} "rainha está salva" \textbf{\blue então}
-\li  \> \>posicione a rainha
-\li  \> \>\textbf{\blue se} i < 7 \textbf{\blue então}
-\li  \> \> \>$\proc{coloca\_coluna}(i+1)$
-\li  \> \> \>\textbf{\blue se} "sem sucesso" \textbf{\blue então}
-\li  \> \> \> \>remova rainha
-\li \textbf{\blue até que} "ocorra sucesso" ou "não há mais pos"
+\Procname{$\proc{posiciona\_rainha}(tabuleiro, coluna)$}
+\li  \> \textbf{\blue se} $coluna == N$ então $\proc{mostra\_matriz}(tabuleiro)$
+\li  \> \textbf{\blue senão}
+\li  \>\> \For $i = 0$ \To $N$ \textbf{faça}
+\li  \>\>\> \textbf{\blue se} "rainha está salva" \textbf{\blue então}
+\li  \>\>\>\> $tabuleiro[i][coluna] = 'Q'$
+\li  \>\>\>\> $\proc{posiciona\_rainha}(tabuleiro, i+1)$
+\li  \>\>\>\> $tabuleiro[i][coluna] = '-'$
 \end{codebox}  
 \end{slide}
 
@@ -1482,87 +1480,41 @@ Mais importante, num determinado passo do que saber a exata posição das rainhas 
 \end{slide}
 
 \begin{slide}
-  \stitle{Oito rainhas} 
-Vamos utilizar as seguintes estruturas:
+  \stitle{Oito rainhas - implementação} 
+\begin{verbatim}
+bool esta_salva(char tabuleiro[][N], int linha, int coluna){
+   int i, j;
+   for (i = 0; i < coluna; i++) // verifica a linha
+      if (tabuleiro[linha][i] == 'Q') return false;
 
-\itemtrig\ Um vetor $x$ tal que $x[i] = j$ onde $j$ é a posição da rainha 
+   // verifica as diagonais 
+   for (i = linha, j = coluna; i >= 0 && j >= 0; i--, j--) 
+      if (tabuleiro[i][j] == 'Q') return false;
 
-\vspace{-1cm}\hspace{1cm}na coluna $i$, $0 \leq i \leq 7$ 
+   for (i = linha, j = coluna; i < N && j > 0; i++, j--) 
+      if (tabuleiro[i][j] == 'Q') return false;
 
-\vspace{-1cm}\itemtrig\ Um vetor a tal que:
+   return true;
+}
+ \end{verbatim}  
   
-\hspace{2cm}$
-   a[j] = \quad \left\{ \begin{array}{ll} 
-                                 1, & \mbox{se a linha j encontra-se livre} \\
-                                 0, & \mbox{caso contrário}
-                     \end{array} \right.
-$
-
-\hspace{2cm}$0 \leq j \leq 7$ 
-\end{slide}
-
-\begin{slide}
-  \stitle{Oito rainhas} 
-
-\itemtrig\ Um vetor b tal que:
-
-\hspace{2cm}$
-   b[i+j] = \quad \left\{ \begin{array}{ll} 
-                                 1, & \mbox{se a diagonal ``/'' encontra-se livre} \\
-                                 0, & \mbox{caso contrário}
-                     \end{array} \right.
-$
-
-\hspace{2cm}$0 \leq i+j \leq 14$  
-
-\itemtrig\ Um vetor c tal que 
-
-\hspace{2cm}$
-   c[i-j+7] = \quad \left\{ \begin{array}{ll} 
-                                 1, & \mbox{se a diagonal ``$\backslash$''  encontra-se livre} \\
-                                 0, & \mbox{caso contrário}
-                     \end{array} \right.
-$
-
-\hspace{2cm}$0 \leq i-j+7 \leq 14$
-\end{slide}
-
-\begin{slide}
-  \stitle{Oito rainhas} 
-Executar o comando ``posicionar rainha'' é o mesmo que executar
-
-$\begin{array}{l}
-    x[i] = j  \\
-    a[j] = 0  \\
-    b[i+j] = 0 \\
-    c[i-j+7] = 0  \\
-\end{array}$
-
-Para testar se a rainha está salva na linha j e na coluna i basta testar se:
-
-$\begin{array}{l}
-    a[j] \neq 0  \\
-    b[i+j] \neq 0  \\
-    c[i-j+7] \neq 0  \\
-\end{array}$
 \end{slide}
 
 \begin{slide}
   \stitle{Oito rainhas - implementação} 
 
 \begin{verbatim}
-// variáveis globais
-int a[8], b[15], c[15], x[8];
-
-void rainhas(){
-   int i, ok;
-   for( i = 0; i < 8; i++)  a[i] = 1;
-   for( i = 0; i < 15; i++) b[i] = c[i] = 1;
-   
-   coloca_rainha(0, &ok);
-
-   for( i = 0; i < 8; i++)
-      cout << " x[ " << i+1 << " ] = " << x[i] + 1 << endl; 
+void posiciona_rainha(char tabuleiro[][N], int coluna) {
+   if (coluna == N) mostra_matriz(tabuleiro);
+   else {
+      for (int i = 0; i < N; i++) {
+          if (esta_salva(tabuleiro, i, coluna)){
+             tabuleiro[i][coluna] = 'Q';
+             posiciona_rainha(tabuleiro, coluna + 1);
+             tabuleiro[i][coluna] = '-';
+          }
+      }
+   }
 }
 \end{verbatim}
 \end{slide}
@@ -1570,42 +1522,14 @@ void rainhas(){
 \begin{slide}
 
 \begin{verbatim}
-void posicione_rainha(int i, int j){
-   x[i] = j;
-   a[j] = 0;   b[i+j] = 0;   c[i-j+7] = 0;
-}
-
-void remova_rainha(int i, int j){
-   a[j] = 1;   b[i+j] = 1;   c[i-j+7] = 1;
-}
-
-bool rainha_salva(int i, int j){
-   return (a[j] && b[i+j] && c[i-j+7]);
+int main(int argc, char *argv[]) {
+   char tabuleiro[N][N];
+   memset(tabuleiro, '-', sizeof tabuleiro);
+   oito_rainhas(tabuleiro, 0);
+   return 0;
 }
 \end{verbatim}
 
-\end{slide}
-
-\begin{slide}
-  \begin{verbatim}
-void coloca_rainha(int i, int *ok){
-   int j = 0;
-   do{
-      *ok = 0;
-      if (rainha_salva(i, j)){
-         posicione_rainha(i, j);
-         if (i < 7){
-            coloca_rainha(i+1, ok);
-            if (!*ok) remove_rainha(i, j);
-         }
-         else *ok = 1; 
-      }
-      j++;
-   } while (!*ok && j <= 7);
-}
-  
-\end{verbatim}
-  
 \end{slide}
 
 
