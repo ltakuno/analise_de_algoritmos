@@ -941,10 +941,10 @@ complexidade: $O(n)$
 \begin{codebox}
 \Procname{$\proc{algoritmo do caminhoneiro}(p, n, C)$}
 \li Ordene as paradas de modo que\\
-   $p_0 \leq p_1 \leq \cdots \leq p_n$
+   $p_1 \leq p_2\leq \cdots \leq p_n$
 \li  $S \leftarrow \{\}$  \itemtrig\ paradas selecionadas 
 \li  $ultima\_parada = 0$ 
-\li  \For $i = 0$ \To $n$ \textbf{\blue faça}
+\li  \For $i = 2$ \To $n$ \textbf{\blue faça}
 \li  \> \If $p_i - ultima\_parada > C$ \textbf{\blue então}
 \li  \> \> $ultima\_parada = p_{i-1}$
 \li  \> \> $S \leftarrow S \cup {(i-1)}$
