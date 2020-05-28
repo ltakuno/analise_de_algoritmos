@@ -1,0 +1,141 @@
+\documentclass{article}
+
+\usepackage[brazil]{babel}     % Definição-padrão língua portuguesa
+\usepackage[latin1]{inputenc}  % Para traduzir acentos
+\usepackage{graphicx}
+\usepackage{indentfirst}
+\usepackage{float}
+
+\usepackage{clrscode}
+
+\usepackage{amsmath,amssymb,amsthm} \usepackage{amsfonts}
+\usepackage[colorlinks,backref]{hyperref}
+
+\setlength{\topmargin}{-0.5in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{-.125in}
+\setlength{\evensidemargin}{-.125in}
+\setlength{\textwidth}{6.75in}
+
+
+\newcommand{\CWEB}{\texttt{CWEB} }
+\newtheorem{definicao}{Definição}[section]
+\newtheorem{exemplo}{Exemplo}[section]
+\newtheorem{teorema}{Teorema}[section]
+\newtheorem{corolario}{Corolário}[section]
+
+\def\red{\color[rgb]{0.7,0,0}}
+\def\green{\color[rgb]{0,.8,0}}
+\def\darkgreen{\color[rgb]{0.1,0.4,0.0}}
+\let\dgreen\darkgreen
+\def\blue{\color[rgb]{0,0,.8}}
+\def\yellow{\color[rgb]{1,1,0}}
+\def\black{\color[rgb]{0,0,0}}
+
+\def\pink{\color[rgb]{1,0,1}}
+\def\brown{\color[rgb]{.5,.1,.3}}
+\def\lilaz{\color[rgb]{.5,0,.5}}
+\def\hmmm{\color[rgb]{.3,.1,.5}}
+\def\magenta{\color[rgb]{.6,.05,.05}}
+
+\newcommand{\uc}[1]{\centerline{\underline{#1}}}
+\newcommand{\pic}[1]{\fbox{picture:{#1}}}
+%\renewcommand{\bf}{\mbox{}}
+\newcommand{\cP}{{\cal P}} \newcommand{\cT}{{\cal T}}
+\newcommand{\add}{\mbox{\rm add}} \newcommand{\pr}{\mbox{\rm Pr}}
+
+\def\stitle#1{\slidetitle{\red #1}\vspace{-0pt}}
+\everymath={\blue}
+\everydisplay={\blue}
+
+\def\itemtrig{$\vartriangleright$}
+\def\itemcirc{$\circ$}
+\def\itemT{\item[\itemtrig]}
+\def\itemC{\item[$\circ$]}
+
+\renewcommand{\For}{\textbf{\blue for} }
+\renewcommand{\To}{\textbf{\blue to} }
+\renewcommand{\Do}{\>\>\textbf{\blue do}\hspace*{-0.7em}\'\addtocounter{indent}{1}}
+\renewcommand{\While}{\textbf{\blue while} }
+\renewcommand{\If}{\textbf{\blue if} }
+\renewcommand{\Then}{\>\textbf{\blue then}\>\addtocounter{indent}{1}}
+\renewcommand{\Else}{\kill\addtocounter{indent}{-1}\liprint\>\textbf{\blue else}\>\addtocounter{indent}{1}}
+\renewcommand{\ElseIf}{\kill\addtocounter{indent}{-1}\liprint\textbf{\blue elseif} }
+\renewcommand{\ElseNoIf}{\kill\addtocounter{indent}{-1}\liprint\textbf{\blue else} \addtocounter{indent}{1}}
+\renewcommand{\Return}{\textbf{\blue return} }
+
+
+
+\begin{document}
+
+
+\bibliographystyle{plain}       % estilo de bibliografia
+
+\title{Centro Universitário Senac\\ Bacharelado em Ciência da Computação \\ Análise e projeto de algoritmos}
+\author{Professor: Leonardo Takuno \\
+\texttt{\{leonardo.takuno@gmail.com\}}}
+\maketitle
+
+Algoritmos gulosos
+
+\begin{enumerate}
+\item Determine os códigos e as árvores de Huffman para um texto com os seguintes caracteres e frequências:
+\begin{enumerate}
+\item[a)] $a = 7, b = 5, c = 10, d = 21, e = 90, f = 11, g = 7 e h = 2$;
+\item[b)] $a = 1, b = 1, c = 2, d = 3, e = 5, f = 8, g = 13 e h = 21$.
+\end{enumerate}
+
+\item Descreva a árvore de Huffman quando as frequências são os primeiros n números de Fibonacci.
+
+\item Escreva um algoritmo que tendo como entrada uma sequência de caracteres, o seu algoritmo gera uma tabela de frequência de caracteres gastando tempo $O(n)$.
+
+\item Escreva um algoritmo que tendo como entrada a raiz da árvore de Huffman, apresenta o código prefixo de cada um dos caracteres na árvore.
+
+\item Escreva um algoritmo que tendo como entrada a raiz da árvore de Huffman e um código prefixo, o método retorna o caractere correspondente ao código prefixo.
+
+\item Dado uma String contendo uma sequência de caracteres e a raiz de uma árvore de Huffman, escreva um algoritmo que ``compacta" a sequencia retornando uma String com os códigos prefixos da sequência. 
+
+\item Dado uma String contendo uma sequência de códigos prefixos e a raiz de uma árvore de Huffman, escreva um algoritmo que ``decompacta" a sequência retornando uma String com os caracteres baseado nos códigos prefixo. 
+
+\item (Partition - Education Codeforces Round 39 [Rated div. 2]) 
+
+Dada uma sequência $a$ consistindo de $n$ inteiros. É possível particionar esta sequência em duas sequências $b$ e $c$ de tal maneira que todo elemento pertence a exatamente a uma destas sequências.
+
+Seja $B$ a soma dos elementos de $b$, e $C$ a soma dos elementos de $c$ (Se alguma dessas sequências é vazia então a soma é 0). Qual é o valor máximo de $B - C$?
+
+\textbf{Entrada:} A primeira linha contém um inteiro $n$ ($1 \leq n \leq 100$) - o número de elementos de $a$.
+
+A segunda linha contém $n$ inteiros $a_1, a_2, \cdots, a_n$ $(-100 \leq a_i \leq 100)$ os elementos da sequência $a$.
+
+\textbf{Saída:} a impressão do valor máximo de $B-C$, onde $B$ é a soma dos elementos de $b$, e $C$ é a soma dos elementos de $c$.
+
+Exemplo1:
+
+\begin{verbatim}
+Entrada:
+3
+1 -2 0
+
+Saída
+3
+\end{verbatim}
+
+Exemplo2:
+
+\begin{verbatim}
+Entrada:
+6
+16 23 16 15 42 8
+
+Saída
+120
+\end{verbatim}
+
+\textbf{Nota:}
+
+No primeiro exemplo podemos escolher $b = \{1,0\}, c = \{-2\}$. Então $B=1$, $C=-2$, $B-C = 3$.
+
+No segundo exemplo podemos escolher $b = \{16, 23, 16, 15, 42, 8\}, c = \{\}$. Então $B=120$, $C=0$, $B-C = 120$.
+
+\end{enumerate}
+\end{document}

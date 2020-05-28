@@ -400,7 +400,7 @@ Note que em (4) pode ou não ocorrer retrocesso (backtracking).
   
  Suponha o seguinte problema: 
  
- Gerar todas as sequências possíveis de 3 dígitos com os dígitos 1,2 e 3 armazenados no vetor $v[0 \cdot\cdot\; n]$, onde $n=3$
+ Gerar todas as sequências possíveis de 3 dígitos com os dígitos 1,2 e 3 armazenados no vetor $v[0 \cdot\cdot\; n-1]$, onde $n=3$
  
 Solução: 111, 112, 113, 121, 122, 123, 131, 132, 133, 211, 212, 213, 221, 222, 223, 231, 232, 233, 311, 312, 313, 321, 322, 323, 331, 332, 333
 
@@ -418,9 +418,9 @@ A quantidade é de $3^3 = 27$ sequências.
 
 \vspace{-1cm}\hspace{3.7cm}vetor de entrada: $v[0 \cdot\cdot\; n-1]$
 
-\vspace{-1cm}\hspace{3.7cm}inteiro $n$ o tamanho do vetor $a$
+\vspace{-1cm}\hspace{3.7cm}inteiro $n$ o tamanho do vetor $v$
 
-  \textbf{\darkgreen saída:} apresenta todas as sequências de $n$ elemntos de $a$   
+  \textbf{\darkgreen saída:} apresenta todas as sequências de $n$ elemntos de $v$   
   
 \end{slide}
 
@@ -443,14 +443,14 @@ A quantidade é de $3^3 = 27$ sequências.
 \begin{slide}
   \stitle{Sequências}    
 \begin{center}
-\includegraphics[width=.9\textwidth]{fig01}
+\includegraphics[width=1.1\textwidth]{fig01}
 \end{center}
 \end{slide}
 
 \begin{slide}
   \stitle{Sequências}  
   
-  Suponha que agora queremos gerar todas as combinações de tamanho 3 utilizando os dígitos $a = \{1, 2, 3, 4\}$. Nesta caso, temos que definir $s[0 \cdot\cdot\; m-1]$, com $m=3$, e o vetor $a[0 \cdot\cdot\; n-1]$, com $n=4$.
+  Suponha que agora queremos gerar todas as combinações de tamanho 3 utilizando os dígitos $v = \{1, 2, 3, 4\}$. Nesta caso, temos que definir $s[0 \cdot\cdot\; m-1]$, com $m=3$, e o vetor $v[0 \cdot\cdot\; n-1]$, com $n=4$.
   
 \end{slide}
 
