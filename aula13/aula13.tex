@@ -1,0 +1,591 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% talk: prototype
+%%% 2002/10/16
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%
+%%% Erstellen eines Vortrags in PDF-Format wie folgt:
+%%%
+%%% 1) Uebersetzen der Datei mit 
+%%%    pdflatex asz
+%%% 2) Wenn Features von ppower4 gewuenscht werden, dann die eben
+%%%    entstandene Datei asz.pdf weiterverarbeiten mit
+%%%    ./ppower4 asz.pdf vortrag.pdf
+%%% 3) Die Datei vortrag.pdf kann nun mit dem Acrobat Reader angesehen
+%%%    werden
+%%%
+%%% Fuer Testzwecke ist auch ein "normales" Uebersetzen mit LaTeX
+%%% moeglich:
+%%% 1) latex asz
+%%% 2) dvips asz.dvi -o asz.ps -t a4 -t landscape
+%%% 3) Anschauen mit ghostview
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ifx\pdfoutput\undefined \documentclass[clock,landscape]{slides} \else
+\documentclass[clock,landscape]{slides} \fi
+%\documentclass[clock,pdftex,landscape]{slides} \fi
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Escrevendo em português:
+\usepackage[brazil]{babel}
+\usepackage[latin1]{inputenc} % isso é quase redundante
+\usepackage{textcomp}
+\usepackage[T1]{fontenc}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{epstopdf}
+\usepackage{psfrag}
+\usepackage{upgreek}
+ 
+\usepackage[table,xcdraw]{xcolor}
+
+\usepackage{multicol}
+
+\usepackage{clrscode}
+%----------------------------
+\usepackage{tabularx}
+%%% Die Datei mit dem ASZ-Layout
+
+\usepackage{shi}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath,amssymb,amsthm} \usepackage{amsfonts}
+\usepackage[colorlinks,backref]{hyperref}
+%\usepackage{background}
+
+%\usepackage{picinpar}
+
+\hypersetup{pdftitle={Análise e projeto de algoritmos},
+  pdfsubject={Análise de algoritmos}, 
+  pdfauthor={Leonardo Takuno, Centro Universitário SENAC, 
+  <leonardo.takuno@gmail.com>},
+  pdfkeywords={acrobat, ppower4},
+%  pdfpagemode={FullScreen},
+  colorlinks={false},
+  linkcolor={red}
+}
+
+\usepackage{color}
+\usepackage{tikz}
+\usetikzlibrary{shapes}
+\usetikzlibrary{plotmarks}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Pauseneffekte mit ppower4 werden moeglich
+
+\usepackage{pause}
+\newcommand\plone{\pause\pauselevel{=1}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newtheoremstyle{mythm}% name
+  {40pt}%      Space above
+  {-15pt}%      Space below
+  {\sf\itshape\blue}%      Body font
+  {}%         Indent amount (empty = no indent, \parindent = para indent)
+  {\sf\bfseries\green}% Thm head \vspacefont
+  {.}%        Punctuation after thm head
+  { }%     Space after thm head: " " = normal interword space;
+        %       \newline = linebreak
+  {}%         Thm head spec (can be left empty, meaning `normal')
+
+\theoremstyle{mythm}
+\newtheorem{theorem}             {Theorem}       
+\newtheorem{claim}     [theorem] {Claim}         
+\newtheorem{lemma}     [theorem] {Lemma}         
+\newtheorem{corollary} [theorem] {Corollary}     
+\newtheorem{fact}      [theorem] {Fact}          
+\newtheorem{conjecture}[theorem] {Conjecture}    
+
+\newtheorem{problem}   [theorem] {Problema}       
+\newtheorem{propriedade}  [theorem] {Propriedade}       
+\newtheorem{corolario}  [theorem] {Corolário}       
+\newtheorem{definition}   [theorem] {Definição}       
+\newtheorem{lema}   [theorem] {Lema}       
+\newtheorem*{prova}{Prova}       
+
+%%% Symbole
+
+\newcommand{\NN}{\mathbb{N}} \newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}} \newcommand{\1}{{{\mathchoice {\rm
+        1\mskip-4mu l} {\rm 1\mskip-4mu l} {\rm 1\mskip-4.5mu l} {\rm
+        1\mskip-5mu l}}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\let\phi\varphi
+\let\epsilon\varepsilon
+\let\rho\varrho
+\let\tilde\widetilde
+\let\approx\thickapprox
+\let\sim\thicksim
+
+\def\({\left(}
+\def\){\right)}
+\def\[{\left[}
+\def\]{\right]}
+\def\<{\langle}
+\def\>{\rangle}
+\let\:\colon
+\def\llfloor{\left\lfloor}
+\def\rrfloor{\right\rfloor}
+\def\llceil{\left\lceil}
+\def\rrceil{\right\rceil}
+
+%%% Textmakros
+\def\ex{\mathop{\text{\rm ex}}\nolimits} 
+\def\cB{{\mathcal B}} 
+\def\cG{{\mathcal G}}
+\def\cS{{\mathcal S}} 
+\def\cW{{\mathcal W}} 
+\def\cQ{{\mathcal Q}} 
+\def\PP{{\mathbb P}}
+\def\EE{{\mathbb E}} 
+\def\GG{{\mathbb G}} 
+\def\e{{\rm e}}
+\def\epsilon{{\varepsilon}} 
+\def\DISC{\mathop{\textrm{\rm DISC}}\nolimits} 
+\def\EIG{\mathop{\textrm{\rm EIG}}\nolimits}
+\def\CIRCUIT{\mathop{\textrm{\rm CIRCUIT}}\nolimits}
+\def\CYCLE{\mathop{\textrm{\rm CYCLE}}\nolimits}
+\def\SUB{\mathop{\textrm{\rm SUB}}\nolimits}
+\def\NSUB{\mathop{\textrm{\rm NSUB}}\nolimits}
+\def\PAIR{\mathop{\textrm{\rm PAIR}}\nolimits}
+\def\TFNSUB{\mathop{\textrm{\rm TFNSUB}}\nolimits}
+\def\BDD{\mathop{\textrm{\rm BDD}}\nolimits}
+\def\eps{\varepsilon}
+
+\def\rmd{\text{\rm d}}
+\def\wtc{\widetilde{c}\,}
+\def\whc{\widehat{c}}
+\def\bfb{{\bf b}}
+\def\bff{{\bf f}}
+\def\bft{{\bf t}}
+\def\bfx{{\bf x}}
+\def\bfz{{\bf z}}
+\def\cB{{\mathcal B}}
+\def\cD{{\mathcal D}}
+\def\cG{{\mathcal G}}
+\def\cM{{\mathcal M}}
+\def\cN{{\mathcal N}}
+\def\cR{{\mathcal R}}
+\def\cS{{\mathcal S}}
+\def\cW{{\mathcal W}}
+\def\PP{{\mathbb P}}
+\def\EE{{\mathbb E}}
+\def\FF{{\mathbb F}}
+\def\NN{{\mathbb N}}
+\def\RR{{\mathbb R}}
+\def\ZZ{{\mathbb Z}}
+\def\e{{\rm e}}
+\def\card{\mathop{\text{\rm card}}\nolimits}
+\def\rank{\mathop{\text{\rm rank}}\nolimits}
+\def\trace{\mathop{\text{\rm trace}}\nolimits}
+\def\Ave{\mathop{\text{\rm Ave}}\nolimits}
+\def\Bi{\mathop{\text{\rm Bi}}\nolimits}
+\def\im{\mathop{\text{\rm im}}\nolimits}
+\def\ind{\mathop{\text{\rm ind}}\nolimits}
+\def\dist{\mathop{\text{\rm dist}}\nolimits}
+\def\nDist{\mathop{\text{\rm \#Dist}}\nolimits}
+\let\Dist\nDist
+\def\De{D_{\rm e}}
+\def\sumL{\sum\nolimits_1}
+\def\sumS{\sum\nolimits_2}
+\def\GF{\mathop{\text{\rm GF}}\nolimits}
+\let\FF\GF
+\def\Bip{\mathop{\text{\rm Bip}}\nolimits}
+\def\adj{\mathop{\text{\rm adj}}\nolimits}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\nx}{{\hfill\vspace*{-2cm}\tiny +}}
+
+%\newcommand{\red}[1]{\textcolor{red}{#1}}
+%\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+%\newcommand{\yellow}[1]{\textcolor{yellow}{#1}}
+%\newcommand{\green}[1]{\textcolor{green}{#1}}
+%\newcommand{\darkgreen}[1]{\textcolor{darkgreen}{#1}}
+\def\red{\color[rgb]{0.7,0,0}}
+\def\green{\color[rgb]{0,.8,0}}
+\def\darkgreen{\color[rgb]{0.1,0.4,0.0}}
+\let\dgreen\darkgreen
+\def\blue{\color[rgb]{0,0,.8}}
+\def\yellow{\color[rgb]{1,1,0}}
+\def\black{\color[rgb]{0,0,0}}
+
+\def\pink{\color[rgb]{1,0,1}}
+\def\brown{\color[rgb]{.5,.1,.3}}
+\def\lilaz{\color[rgb]{.5,0,.5}}
+\def\hmmm{\color[rgb]{.3,.1,.5}}
+\def\magenta{\color[rgb]{.6,.05,.05}}
+
+\newcommand{\uc}[1]{\centerline{\underline{#1}}}
+\newcommand{\pic}[1]{\fbox{picture:{#1}}}
+%\renewcommand{\bf}{\mbox{}}
+\newcommand{\cP}{{\cal P}} \newcommand{\cT}{{\cal T}}
+\newcommand{\add}{\mbox{\rm add}} \newcommand{\pr}{\mbox{\rm Pr}}
+
+\def\stitle#1{\slidetitle{\red #1}\vspace{-0pt}}
+
+\def\itemtrig{$\vartriangleright$}
+\def\itemcirc{$\circ$}
+\def\itemT{\item[\itemtrig]}
+\def\itemC{\item[$\circ$]}
+
+\everymath={\blue}
+\everydisplay={\blue}
+
+\renewcommand{\For}{\textbf{\blue para} }
+\renewcommand{\To}{\textbf{\blue até} }
+\renewcommand{\Do}{\>\>\textbf{\blue faça}\hspace*{-0.7em}\'\addtocounter{indent}{1}}
+\renewcommand{\While}{\textbf{\blue enquanto} }
+\renewcommand{\If}{\textbf{\blue se} }
+\renewcommand{\Then}{\>\textbf{\blue então}\>\hspace*{0.5em}\addtocounter{indent}{1}}
+\renewcommand{\Else}{\kill\addtocounter{indent}{-1}\liprint\>\textbf{\blue senão}\>\hspace*{0.5em}\addtocounter{indent}{1}}
+\renewcommand{\ElseIf}{\kill\addtocounter{indent}{-1}\liprint\textbf{\blue senão se} }
+\renewcommand{\ElseNoIf}{\kill\addtocounter{indent}{-1}\liprint\textbf{\blue senão} \addtocounter{indent}{1}}
+\renewcommand{\Return}{\textbf{\blue retorne} }
+
+
+\newcommand{\TITLE}[1]{\item[#1]}
+
+% ugly hack for for/while
+\newbox\fixbox
+
+% end of hack
+\newcommand{\algcost}[2]{\strut\hfill\makebox[3.5cm][l]{#1}\makebox[4cm][l]{#2}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%%Anuschs Extras
+%
+%\def\enddiscard{}
+%\long\def\discard#1\enddiscard{}
+%
+%%%\vpagecolor{bgblue}
+%\hypersetup{pdfpagetransition=Dissolve}
+%\hypersetup{pdfpagetransition=R}
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Farben kann man hier definieren
+
+\definecolor{bgblue}{rgb}{0.04,0.39,0.53}
+
+\definecolor{darkyellow}{rgb}{0.94,0.820,0.058}
+\definecolor{orange}{rgb}{0.95,0.47,0.14}
+\definecolor{darkgreen}{rgb}{0.0,0.5,0.0}
+
+\definecolor{blue2}{rgb}{0.1,0.39,0.53}
+\definecolor{yellow1}{rgb}{1,1,0} \definecolor{pink}{rgb}{1,0,1}
+
+\definecolor{lightred}{rgb}{1,0.5,0.5}
+\definecolor{lightred2}{rgb}{1,0.7,0.7}
+\definecolor{lightred3}{rgb}{1,0.3,0.3}
+\definecolor{black}{rgb}{0,0,0} \definecolor{gray1}{rgb}{0.9,0.9,0.9}
+\definecolor{red1}{rgb}{1,1,0.9}
+
+\title{Análise e projeto de algoritmos} 
+\author{{\blue L.~Takuno} (SENAC)}
+\date{{\dgreen 1o. Semestre 2019}} 
+
+%%% Hier beginnt die Praesentation
+
+\begin{document}\def\proofname{{\bf\green Prova.}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Deckblatt
+%%%%%%%%%%%%%%%%%%%\usepackage{clrscode3e}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\maketitle
+
+%\slidesubhead{}  %% Teilvortrags-Titel (hier noch nicht)
+                 %% Dieser erscheint spaeter oben links unter
+                 %% dem ASZ Gesamt-Titel
+
+%%%%%%%%%%%%%%%%%%%%%%% TOC %%%%%%%%%%%%%%%%%%
+
+%\slidesubhead{Outline!!!}
+
+\begin{slide}
+  \stitle{Fontes principais}
+  \begin{enumerate}\makeatletter\itemsep\z@\makeatother
+  \item Cormem T. H.; Leiserson C. E.; Rivest R.: Stein C.. \textit{Introduction to Algorithms}, $3^a$ edição, MIT Press, 2009
+  \item Análise de algoritmo - IME/USP (prof. Paulo Feofiloff)
+    \verb|http://www.ime.usp.br/~pf/analise_de_algoritmos| 
+	
+  \end{enumerate}
+  \end{slide}
+ 
+ 
+\begin{slide}
+  \stitle{Análise amortizada} 
+   
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Análise amortizada} 
+Útil para analisar sequências de operações ou iterações, que normalmente envolve estruturas de dados.
+
+Serve para melhorar análises de pior caso que baseiam-se no pior caso de uma operação ou iteração.
+
+Diferente de análise de caso médio.
+\end{slide}
+
+\begin{slide}
+  \stitle{Técnicas de análise amortizada} 
+  
+  \itemtrig\ Agregado
+  
+  \vspace{-1cm}\itemtrig\  Contábil
+  
+  \vspace{-1cm}\itemtrig\  Potencial
+  
+  Lembre-se que análise amortizada não envolve probabilidade!   
+\end{slide}
+
+\begin{slide}
+  \stitle{Método agregado} 
+  \itemtrig\ $T(n)$ é o custo de uma sequência de $n$ operações.
+  
+  \vspace{-1cm}\itemtrig\ Custo amortizado é dado por $\displaystyle \frac{T(n)}{n}$.
+  
+  \vspace{-1cm}\itemtrig\ Cada operação recebe o mesmo custo amortizado, mesmo se são diferentes.
+\end{slide}
+
+\begin{slide}
+  \stitle{Exemplo da pilha} 
+  Considere uma pilha com operações usuais 
+  
+  \hspace{1cm}$\proc{push}(x, S)$ = empilha x em S
+
+  \vspace{-1cm}\hspace{1cm}$\proc{pop}(S)$ = desempilha do topo de S
+  
+  Cada operação executa em $O(1)$
+  
+  O custo de uma sequência de $n$ operações $\proc{push}(x, S)$ e $\proc{pop}(S)$ é $T(n) = n$
+\end{slide}
+
+\begin{slide}
+Consideremos uma operação $\proc{multipop}(k, S)$
+
+\begin{codebox}
+\Procname{$\proc{multipop}(k,S)$}
+\li  \While (!$\proc{pilha\_vazia}(S)$ {\blue e} $k \neq 0$) {\blue \textbf{faça}}
+\li  \>  $\proc{pop}(S)$
+\li  \>    $k = k - 1$
+\End
+\end{codebox}  
+
+Qual é o tempo de execução do $\proc{multipop()}$?
+\end{slide}
+
+\begin{slide}
+\itemtrig\ Número de iterações do $\proc{multipop()}$ é $min\{k, |S|\}$
+
+\itemtrig\ Como o custo do $\proc{pop}(S)$ é $1$, então o custo total do $\proc{multipop()}$ é $min\{k, |S|\}$.
+
+\itemtrig\ Portanto, o tempo de execução é $O(min\{k, |S|\})$.
+\end{slide}
+
+\begin{slide}
+  \stitle{Análise ingênua}  
+\itemtrig\  Considere uma sequência de $n$ operações $\proc{push}$, $\proc{pop}$ e $\proc{multipop}$ em uma pilha inicialmente vazia.
+
+$$\underbrace{\proc{push} \quad \proc{push} \quad \proc{multipop} \quad \cdots  \quad \proc{pop} \quad \proc{pop} \quad \proc{multipop}}_{n}$$
+
+ 
+\itemtrig\ Consumo de tempo?  
+\end{slide}
+
+\begin{slide}
+  \stitle{Análise ingênua}  
+\itemtrig\  Considere uma sequência de $n$ operações $\proc{push}$, $\proc{pop}$ e $\proc{multipop}$ em uma pilha inicialmente vazia.
+
+$$\underbrace{\proc{push} \quad \proc{push} \quad \proc{multipop} \quad \cdots  \quad \proc{pop} \quad \proc{pop} \quad \proc{multipop}}_{n}$$
+
+ 
+\itemtrig\ Custo do pior caso $\proc{push}$ e $\proc{pop}$ é $n$.
+\end{slide}
+
+\begin{slide}
+  \stitle{Análise ingênua}  
+\itemtrig\  Considere uma sequência de $n$ operações $\proc{push}$, $\proc{pop}$ e $\proc{multipop}$ em uma pilha inicialmente vazia.
+
+$$\underbrace{\proc{push} \quad \proc{push} \quad \proc{multipop} \quad \cdots  \quad \proc{pop} \quad \proc{pop} \quad \proc{multipop}}_{n}$$
+
+ 
+\itemtrig\ Custo do pior caso $\proc{multipop}$ é $n$, pois a pilha tem no máximo $n$ elementos.
+\end{slide}
+
+\begin{slide}
+  \stitle{Análise ingênua}  
+\itemtrig\  Considere uma sequência de $n$ operações $\proc{push}$, $\proc{pop}$ e $\proc{multipop}$ em uma pilha inicialmente vazia.
+
+$$\underbrace{\proc{push} \quad \proc{push} \quad \proc{multipop} \quad \cdots  \quad \proc{pop} \quad \proc{pop} \quad \proc{multipop}}_{n}$$
+
+ 
+\itemtrig\ Podemos ter $n$ operações $\proc{multipop}$'s na sequência, então o custo total é $O(n^2)$.
+\end{slide}
+
+\begin{slide}
+  \stitle{Aplicando o método agregado}  
+\end{slide}
+
+\begin{slide}
+  \stitle{Aplicando o método agregado}  
+Embora uma operação $\proc{multipop}$ possa ser ``cara'', qualquer sequência de $n$ operações $\proc{push}$, $\proc{pop}$ e $\proc{multipop}$ executa no máximo em $O(n)$.
+
+\hspace{2cm}\itemtrig\ $n$ $\proc{push}$'s $\Rightarrow$ $n$ $\proc{pop}$'s
+
+\hspace{2cm}\itemtrig\ Custo total é $2n = O(n)$
+
+\hspace{2cm}\itemtrig\ Custo amortizado para cada operação da sequência é: 
+$$\displaystyle \frac{2n}{n} = 2 = O(1).$$
+\end{slide}
+
+\begin{slide}
+  \stitle{Método contábil} 
+\end{slide}
+
+\begin{slide}
+  \stitle{Método contábil}  
+  \itemtrig\ Atribui cobranças diferentes à operações diferentes.
+  
+  \itemtrig\ Custo amortizado igual a preço cobrado.
+  
+  \itemtrig\ Se custo amortizado maior que custo atual, então armazena a diferença como crédito.
+  
+  \itemtrig\ Use o crédito depois para pagar por operações cujo custo atual é maior que o custo amortizado.
+\end{slide}
+
+\begin{slide}
+  \stitle{Método contábil}  
+  
+ \itemtrig\ $c_i$ é o custo atual da $i-$ésima operação.
+ 
+ \itemtrig\ $\hat{c}_i$ é o custo amortizado da $i-$ésima operação.
+ 
+ \itemtrig\ Então, $\displaystyle \sum^n_{i=1} \hat{c}_i \geq \sum^n_{i=1} c_i$  
+ 
+ \itemtrig\ Crédito armazenado:  $\displaystyle \sum^n_{i=1} \hat{c}_i - \sum^n_{i=1} c_i \geq 0$
+ \end{slide}
+
+\begin{slide}
+  \stitle{Método contábil} 
+  \begin{center}
+  \begin{tabular}{ccc} \hline
+  operação      & custo atual & custo amortizado \\ \hline
+  $\proc{push}$ &  1          & 2  \\
+  $\proc{pop}$ &  1          & 0  \\
+  $\proc{multipop}$ &  $min\{k, |S|\}$          & 0  \\ \hline
+  \end{tabular}
+  \end{center}
+
+  Intuição envolvida: Cobra $R\$ 2,00$ para empilhar.
+
+\hspace{1cm}\itemtrig\  $R\$ 1,00$ para o $\proc{push}$
+
+\vspace{-1cm}\hspace{1cm}\itemtrig\  $R\$ 1,00$ é pré-pagamento para desempilhar com $\proc{pop}$ ou $\proc{multipop}$.
+\end{slide}
+
+\begin{slide}
+  \stitle{Método contábil}  
+Como cada objeto tem  $R\$ 1,00$, que é crédito, o crédito armazenado nunca fica negativo.
+
+Portanto, para $n$ operações o custo é $2n = O(n)$.
+\end{slide}
+
+\begin{slide}
+  \stitle{Método potencial}  
+\end{slide}
+
+\begin{slide}
+  \stitle{Método potencial}  
+\itemtrig\ Estrutura inicial $D_0$, onde $n$ operações são realizadas, resultando em uma sequência $D_0, D_1, D_2, \cdots D_n$.
+
+\itemtrig\ $c_i$ é o custo real (atual) da $i$-ésima operação.
+
+\itemtrig\ Uma função potencial $\Upphi$, atribui a cada estrutura $D_i$ um número real $\Upphi(D_i)$.
+\end{slide}
+
+\begin{slide}
+  \stitle{Método potencial}  
+O custo amortizado da $i$-ésima operação é definida por:
+
+\vspace{-1cm}$$\hat{c}_i = c_i + \underbrace{\Upphi(D_i) - \Upphi(D_{i-1})}_{\textrm{''energia potencial´´}}$$
+ 
+\vspace{-1cm} O custo amortizado total é:
+
+\vspace{-1cm}$$\displaystyle \sum^n_{i=1}\hat{c}_i = \left(\sum^n_{i=1} c_i\right) + \Upphi(D_i) - \Upphi(D_{i-1})$$
+
+Se $\Upphi(D_n) - \Upphi(D_0) \geq 0$, então $\displaystyle \sum^n_{i=1}\hat{c}_i$ é um limitante superior para o custo real (atual).
+\end{slide}
+
+\begin{slide}
+  \stitle{Método potencial} 
+Exemplo da pilha:
+
+\itemtrig\ $\Upphi(D_i)$ = número de elementos na pilha ($|D_i|$)
+
+\vspace{-0.7cm}\itemtrig\ $\Upphi(D_0)$ = 0 (início)
+  
+\vspace{-0.7cm}\itemtrig\ $\Upphi(D_n)$ = $|D_n|$ (final)
+
+\vspace{-0.7cm}\itemtrig\ Note que $\Upphi(D_n) - \Upphi(D_0) \geq 0$
+
+Quando uma operação $\proc{push}$ é executada em uma pilha com $|D_{i-1}| = s$ elementos, a variação de energia potencial é:
+
+\vspace{-1.5cm}$$\Upphi(D_i) - \Upphi(D_{i-1}) = (s+1)-s = 1$$
+\end{slide}
+
+\begin{slide}
+  \stitle{Método potencial} 
+  Lembremos que o custo real (atual) da operação é $c_i=1$  
+  
+  Custo amortizado da operação $\proc{push}$:
+
+$$\hat{c}_i = c_i + \underbrace{\Upphi(D_i) - \Upphi(D_{i-1})}_{1} = 1 + 1 = 2$$  
+  
+  Custo amortizado da operação $\proc{pop}$: $0$ (zero)
+\end{slide}
+
+\begin{slide}
+  \stitle{Método potencial} 
+  Suponha que a $i$-ésima operação executa $\proc{multipop}(k, S)$ e assim $\bar{K} = min\{k , |S|\}$ são desempilhados.
+  
+  Custo real(atual) da operação é $c_i = \bar{K}$
+  
+  A variação de energia potencial é:
+
+\vspace{-1.5cm}$$\Upphi(D_i) - \Upphi(D_{i-1}) = (|S|-\bar{K})-|S| = -\bar{K}$$
+
+Custo amortizado:
+
+\vspace{-1.5cm}$$\hat{c}_i =  c_i + \Upphi(D_i) - \Upphi(D_{i-1}) = \bar{K} - \bar{K}$$
+\end{slide}
+
+\begin{slide}
+  \stitle{Método potencial} 
+  O custo amortizado total de $n$ operações é $O(n)$.
+  
+  Portanto, o custo real de $n$ operações no pior caso é $O(n)$.
+  
+  Lembre-se que o custo amortizado é um limite superior de custo real.  
+\end{slide}
+
+
+
+\begin{slide}
+  \stitle{Obrigado}
+\end{slide}
+
+\end{document}
+
+% Local Variables: 
+% mode: latex
+% eval: (Portug-mode)
+% TeX-master: t
+% End: 
