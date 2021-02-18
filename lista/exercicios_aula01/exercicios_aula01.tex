@@ -1,0 +1,172 @@
+\documentclass{article}
+
+\usepackage[brazil]{babel}     % Definição-padrão língua portuguesa
+\usepackage[latin1]{inputenc}  % Para traduzir acentos
+\usepackage{graphicx}
+\usepackage{indentfirst}
+\usepackage{float}
+
+\usepackage{clrscode}
+
+\usepackage{amsmath,amssymb,amsthm} \usepackage{amsfonts}
+\usepackage[colorlinks,backref]{hyperref}
+
+\setlength{\topmargin}{-0.5in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{-.125in}
+\setlength{\evensidemargin}{-.125in}
+\setlength{\textwidth}{6.75in}
+
+
+\newcommand{\CWEB}{\texttt{CWEB} }
+\newtheorem{definicao}{Definição}[section]
+\newtheorem{exemplo}{Exemplo}[section]
+\newtheorem{teorema}{Teorema}[section]
+\newtheorem{corolario}{Corolário}[section]
+
+\def\red{\color[rgb]{0.7,0,0}}
+\def\green{\color[rgb]{0,.8,0}}
+\def\darkgreen{\color[rgb]{0.1,0.4,0.0}}
+\let\dgreen\darkgreen
+\def\blue{\color[rgb]{0,0,.8}}
+\def\yellow{\color[rgb]{1,1,0}}
+\def\black{\color[rgb]{0,0,0}}
+
+\def\pink{\color[rgb]{1,0,1}}
+\def\brown{\color[rgb]{.5,.1,.3}}
+\def\lilaz{\color[rgb]{.5,0,.5}}
+\def\hmmm{\color[rgb]{.3,.1,.5}}
+\def\magenta{\color[rgb]{.6,.05,.05}}
+
+\newcommand{\uc}[1]{\centerline{\underline{#1}}}
+\newcommand{\pic}[1]{\fbox{picture:{#1}}}
+%\renewcommand{\bf}{\mbox{}}
+\newcommand{\cP}{{\cal P}} \newcommand{\cT}{{\cal T}}
+\newcommand{\add}{\mbox{\rm add}} \newcommand{\pr}{\mbox{\rm Pr}}
+
+\def\stitle#1{\slidetitle{\red #1}\vspace{-0pt}}
+\everymath={\blue}
+\everydisplay={\blue}
+
+\def\itemtrig{$\vartriangleright$}
+\def\itemcirc{$\circ$}
+\def\itemT{\item[\itemtrig]}
+\def\itemC{\item[$\circ$]}
+
+\renewcommand{\For}{\textbf{\blue for} }
+\renewcommand{\To}{\textbf{\blue to} }
+\renewcommand{\Do}{\>\>\textbf{\blue do}\hspace*{-0.7em}\'\addtocounter{indent}{1}}
+\renewcommand{\While}{\textbf{\blue while} }
+\renewcommand{\If}{\textbf{\blue if} }
+\renewcommand{\Then}{\>\textbf{\blue then}\>\addtocounter{indent}{1}}
+\renewcommand{\Else}{\kill\addtocounter{indent}{-1}\liprint\>\textbf{\blue else}\>\addtocounter{indent}{1}}
+\renewcommand{\ElseIf}{\kill\addtocounter{indent}{-1}\liprint\textbf{\blue elseif} }
+\renewcommand{\ElseNoIf}{\kill\addtocounter{indent}{-1}\liprint\textbf{\blue else} \addtocounter{indent}{1}}
+\renewcommand{\Return}{\textbf{\blue return} }
+
+
+
+\begin{document}
+
+
+\bibliographystyle{plain}       % estilo de bibliografia
+
+\title{Centro Universitário Senac\\ Bacharelado em Ciência da Computação \\ Análise e projeto de algoritmos - Exercícios aula 01}
+\author{Professor: Leonardo Takuno \\
+\texttt{\{leonardo.takuno@gmail.com\}}}
+\maketitle
+
+\begin{enumerate}
+\item Dado $f(n)$ determine a notação assintótica
+\begin{enumerate}
+\item[(a)] $f(n) = 10^{80}$
+
+Resposta: $\Theta(1)$
+
+\item[(b)] $f(n) = (20n)^7$
+
+Resposta: $\Theta(n^7)$
+
+\item[(c)] $f(n) = (\log n)^{100}$
+
+Resposta: $(\log n)^{100} = 100 \log n = \Theta(\log n)$
+
+\item[(d)] $f(n) = \log_{\ln (5)} (\log n^{100})$
+
+Resposta:
+$\log_{\ln (5)} (\log n^{100}) = \frac{1}{\log \ln(5)} \log(\log n^{100}) = \frac{1}{\log \ln(5)} \log(100 \log n) = \frac{1}{\log \ln(5)} (\log(100) + \log \log n))$
+
+$\therefore f(n) = \Theta(\log \log n)$
+
+
+\item[(e)] $f(n) = \log \left(\left( \begin{array}{c} n \\ n/2 \end{array} \right)\right)$
+
+Obs. 1:  $\left( \begin{array}{c} n \\ n/2 \end{array} \right) = \displaystyle \frac{n!}{\frac{n!}{2} \cdot \frac{n!}{2}}$
+
+
+Obs. 2:
+
+Fórmula de Stirling: $\displaystyle n! \approx \sqrt{2 \pi n} \left( \frac{n}{e} \right)^n, e = 2,718$
+ 
+Resposta:
+
+
+\begin{tabular}{ll}
+$=\log \left(\left( \begin{array}{c} n \\ n/2 \end{array} \right)\right)$ & $=$ \\
+$=\log \left( \frac{\sqrt{2 \pi n} \left( \frac{n}{e} \right)^n}{\left(\sqrt{2 \pi \frac{n}{2}} \left( \frac{n}{2e} \right)^{\frac{n}{2}} \right)^2} \right)$ & $=$ \\
+$=\log \left( \frac{\sqrt{2 \pi n} \left( \frac{n}{e} \right)^n}{\left(\sqrt{\pi n} \left( \frac{n}{2e} \right)^{\frac{n}{2}} \right)^2} \right)$ & $=$ \\
+$=\log \left( \frac{\sqrt{2 \pi n} \left( \frac{n}{e} \right)^n}{\left(\pi n \left( \frac{n}{2e} \right)^{n} \right)} \right)$ & $=$ \\
+$=\log \left( \frac{\sqrt{2 \pi n} 2^n}{\left(\pi n \right)} \right)$ & $=$ \\
+$=\log \left( \frac{\sqrt{2 \pi } 2^n}{\pi \sqrt{n} } \right)$ & $=$ \\
+$=\log \left( \frac{ 2^n}{ \sqrt{n} } \right)$ & $=$ \\ 
+$=\log 2^n - \log \sqrt{n}  $ & $=$ \\ 
+$= \Theta(n) - \frac{1}{2} \log n  $ &  \\
+\end{tabular}
+
+\end{enumerate}
+
+\item Demonstrar que 
+\begin{enumerate}
+\item[(a)] $n^2 + 800 = O(n^2)$ 
+
+Prova:
+
+$n^2 + 800 \leq n^2 + 800n^2 = 801n^2 \forall n \geq 1 \Rightarrow c = 801$ e $n_0 = 1$
+
+
+Prova alternativa:
+
+$n^2 + 800 \leq n^2 + n*n = 2 n^2 \forall n \geq 800 \Rightarrow c = 2$ e $n_0 = 800$
+
+\item[(b)] $100n^2 = O(n^3)$
+
+Prova:
+
+$100n^2 \leq n*n^2 \forall n \geq 100 \Rightarrow c = 1$ e $n_0 = 100$
+
+\item[(c)] $10n^3-3n^2 + 27 = O(n^3)$
+
+Prova:
+
+$10n^3-3n^2 + 27 = \leq 10n^3$ se $(3n^2 - 27) \geq 0$ ou seja
+
+$10n^3-3n^2 + 27 = \leq 10n^3 \forall n \geq 3 \Rightarrow c = 10, n_0 = 3$
+
+\item[(d)] $n = O(2^n)$
+
+Prova por indução: 
+
+Devemos mostrar que $n \leq 2^n \forall n \geq 1 \Rightarrow c=1$ e $n_0 = 1$.
+
+\textbf{Base: }Se $n=1$ temos $1 \leq 2$.
+
+\textbf{Hipótese de indução:} Para $n \geq 2$ temos $(n-1) \leq 2^{n-1}$
+
+\textbf{Passo de indução:} Então $n \leq n + (n-2) = (n-1) + (n-1) \leq 2^{n-1} + 2^{n-1} = 2(2^{n-1}) = 2^n$.
+
+
+
+\end{enumerate}
+
+\end{enumerate}
+\end{document}

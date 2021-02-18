@@ -391,6 +391,8 @@ Dada uma sequência de $n$ números $\langle a_1, a_2, \cdots, a_n \rangle$, deter
 
  \vspace{-1cm} \hspace{1cm} \itemcirc\ do tamanho da instância a ser ordenada;
 
+ \vspace{-1cm} \hspace{1cm} \itemcirc\ quantidade de itens a serem ordenados
+
  \vspace{-1cm} \hspace{1cm} \itemcirc\ tipo de dispositivo é utilizado
 
 \end{slide}
@@ -698,11 +700,11 @@ $f(n) = \Omega(g(n))$
   \begin{itemize}
   \item[(a)] $\frac{1}{3}n^2 - 3n  = \Omega(n^2)$?
 
-  Sim, tome $c = \frac{1}{4}$ e $n_0 = 7$
+  Sim, tome $c = \frac{1}{4}$ e $n_0 = 12$
   
   \item[(b)] $n^2 - 2n = \Omega(n)$? 
   
-  Sim , tome $c = 10$ e $n_0 = 8$
+  Sim , tome $c = 10$ e $n_0 = 18$
   \end{itemize}
   \end{slide}
 
@@ -850,15 +852,15 @@ $$\displaystyle \lim_{n \rightarrow \infty} \frac{f(n)}{g(n)} = \infty$$
   \stitle{Analogia entre notação assintótica e números reais}        
   Sejam $f$, $g$ funções e $a, b \in R$
   
-    \hspace{1cm} $f(n) = O(f(n)) \approx a\leq b $
+    \hspace{1cm} $f(n) = O(g(n)) \approx a\leq b $
 
-    \vspace{-1cm} \hspace{1cm} $f(n) = \Omega(f(n)) \approx a \geq b$
+    \vspace{-1cm} \hspace{1cm} $f(n) = \Omega(g(n)) \approx a \geq b$
     
-    \vspace{-1cm} \hspace{1cm} $f(n) = \Theta(f(n)) \approx a = b$
+    \vspace{-1cm} \hspace{1cm} $f(n) = \Theta(g(n)) \approx a = b$
 
-    \vspace{-1cm} \hspace{1cm} $f(n) = o(f(n)) \approx a < b$
+    \vspace{-1cm} \hspace{1cm} $f(n) = o(g(n)) \approx a < b$
 
-    \vspace{-1cm} \hspace{1cm} $f(n) = \omega(f(n)) \approx a > b$
+    \vspace{-1cm} \hspace{1cm} $f(n) = \omega(g(n)) \approx a > b$
 \end{slide}
 
 \begin{slide}
