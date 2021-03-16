@@ -1,0 +1,1777 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% talk: prototype
+%%% 2002/10/16
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%
+%%% Erstellen eines Vortrags in PDF-Format wie folgt:
+%%%
+%%% 1) Uebersetzen der Datei mit 
+%%%    pdflatex asz
+%%% 2) Wenn Features von ppower4 gewuenscht werden, dann die eben
+%%%    entstandene Datei asz.pdf weiterverarbeiten mit
+%%%    ./ppower4 asz.pdf vortrag.pdf
+%%% 3) Die Datei vortrag.pdf kann nun mit dem Acrobat Reader angesehen
+%%%    werden
+%%%
+%%% Fuer Testzwecke ist auch ein "normales" Uebersetzen mit LaTeX
+%%% moeglich:
+%%% 1) latex asz
+%%% 2) dvips asz.dvi -o asz.ps -t a4 -t landscape
+%%% 3) Anschauen mit ghostview
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ifx\pdfoutput\undefined \documentclass[clock,landscape]{slides} \else
+\documentclass[clock,landscape]{slides} \fi
+%\documentclass[clock,pdftex,landscape]{slides} \fi
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Escrevendo em português:
+\usepackage[brazil]{babel}
+\usepackage[latin1]{inputenc} % isso é quase redundante
+\usepackage{textcomp}
+\usepackage[T1]{fontenc}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{epstopdf}
+\usepackage{psfrag}
+
+
+\usepackage{multicol}
+
+\usepackage{clrscode}
+%----------------------------
+\usepackage{tabularx}
+%%% Die Datei mit dem ASZ-Layout
+
+\usepackage{shi}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath,amssymb,amsthm} \usepackage{amsfonts}
+\usepackage[colorlinks,backref]{hyperref}
+%\usepackage{background}
+
+%\usepackage{picinpar}
+
+\hypersetup{pdftitle={Análise e projeto de algoritmos},
+  pdfsubject={Análise de algoritmos}, 
+  pdfauthor={Leonardo Takuno, Centro Universitário SENAC, 
+  <leonardo.takuno@gmail.com>},
+  pdfkeywords={acrobat, ppower4},
+%  pdfpagemode={FullScreen},
+  colorlinks={false},
+  linkcolor={red}
+}
+
+\usepackage{color}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Pauseneffekte mit ppower4 werden moeglich
+
+\usepackage{pause}
+\newcommand\plone{\pause\pauselevel{=1}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newtheoremstyle{mythm}% name
+  {40pt}%      Space above
+  {-15pt}%      Space below
+  {\sf\itshape\blue}%      Body font
+  {}%         Indent amount (empty = no indent, \parindent = para indent)
+  {\sf\bfseries\green}% Thm head \vspacefont
+  {.}%        Punctuation after thm head
+  { }%     Space after thm head: " " = normal interword space;
+        %       \newline = linebreak
+  {}%         Thm head spec (can be left empty, meaning `normal')
+
+\theoremstyle{mythm}
+\newtheorem{theorem}             {Theorem}       
+\newtheorem{claim}     [theorem] {Claim}         
+\newtheorem{lemma}     [theorem] {Lemma}         
+\newtheorem{corollary} [theorem] {Corollary}     
+\newtheorem{fact}      [theorem] {Fact}          
+\newtheorem{conjecture}[theorem] {Conjecture}    
+
+\newtheorem{problem}   [theorem] {Problema}       
+\newtheorem{propriedade}  [theorem] {Propriedade}       
+\newtheorem{corolario}  [theorem] {Corolário}       
+\newtheorem{definition}   [theorem] {Definição}       
+
+%%% Symbole
+
+\newcommand{\NN}{\mathbb{N}} \newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}} \newcommand{\1}{{{\mathchoice {\rm
+        1\mskip-4mu l} {\rm 1\mskip-4mu l} {\rm 1\mskip-4.5mu l} {\rm
+        1\mskip-5mu l}}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\let\phi\varphi
+\let\epsilon\varepsilon
+\let\rho\varrho
+\let\tilde\widetilde
+\let\approx\thickapprox
+\let\sim\thicksim
+
+\def\({\left(}
+\def\){\right)}
+\def\[{\left[}
+\def\]{\right]}
+\def\<{\langle}
+\def\>{\rangle}
+\let\:\colon
+\def\llfloor{\left\lfloor}
+\def\rrfloor{\right\rfloor}
+\def\llceil{\left\lceil}
+\def\rrceil{\right\rceil}
+
+%%% Textmakros
+\def\ex{\mathop{\text{\rm ex}}\nolimits} 
+\def\cB{{\mathcal B}} 
+\def\cG{{\mathcal G}}
+\def\cS{{\mathcal S}} 
+\def\cW{{\mathcal W}} 
+\def\cQ{{\mathcal Q}} 
+\def\PP{{\mathbb P}}
+\def\EE{{\mathbb E}} 
+\def\GG{{\mathbb G}} 
+\def\e{{\rm e}}
+\def\epsilon{{\varepsilon}} 
+\def\DISC{\mathop{\textrm{\rm DISC}}\nolimits} 
+\def\EIG{\mathop{\textrm{\rm EIG}}\nolimits}
+\def\CIRCUIT{\mathop{\textrm{\rm CIRCUIT}}\nolimits}
+\def\CYCLE{\mathop{\textrm{\rm CYCLE}}\nolimits}
+\def\SUB{\mathop{\textrm{\rm SUB}}\nolimits}
+\def\NSUB{\mathop{\textrm{\rm NSUB}}\nolimits}
+\def\PAIR{\mathop{\textrm{\rm PAIR}}\nolimits}
+\def\TFNSUB{\mathop{\textrm{\rm TFNSUB}}\nolimits}
+\def\BDD{\mathop{\textrm{\rm BDD}}\nolimits}
+\def\eps{\varepsilon}
+
+\def\rmd{\text{\rm d}}
+\def\wtc{\widetilde{c}\,}
+\def\whc{\widehat{c}}
+\def\bfb{{\bf b}}
+\def\bff{{\bf f}}
+\def\bft{{\bf t}}
+\def\bfx{{\bf x}}
+\def\bfz{{\bf z}}
+\def\cB{{\mathcal B}}
+\def\cD{{\mathcal D}}
+\def\cG{{\mathcal G}}
+\def\cM{{\mathcal M}}
+\def\cN{{\mathcal N}}
+\def\cR{{\mathcal R}}
+\def\cS{{\mathcal S}}
+\def\cW{{\mathcal W}}
+\def\PP{{\mathbb P}}
+\def\EE{{\mathbb E}}
+\def\FF{{\mathbb F}}
+\def\NN{{\mathbb N}}
+\def\RR{{\mathbb R}}
+\def\ZZ{{\mathbb Z}}
+\def\e{{\rm e}}
+\def\card{\mathop{\text{\rm card}}\nolimits}
+\def\rank{\mathop{\text{\rm rank}}\nolimits}
+\def\trace{\mathop{\text{\rm trace}}\nolimits}
+\def\Ave{\mathop{\text{\rm Ave}}\nolimits}
+\def\Bi{\mathop{\text{\rm Bi}}\nolimits}
+\def\im{\mathop{\text{\rm im}}\nolimits}
+\def\ind{\mathop{\text{\rm ind}}\nolimits}
+\def\dist{\mathop{\text{\rm dist}}\nolimits}
+\def\nDist{\mathop{\text{\rm \#Dist}}\nolimits}
+\let\Dist\nDist
+\def\De{D_{\rm e}}
+\def\sumL{\sum\nolimits_1}
+\def\sumS{\sum\nolimits_2}
+\def\GF{\mathop{\text{\rm GF}}\nolimits}
+\let\FF\GF
+\def\Bip{\mathop{\text{\rm Bip}}\nolimits}
+\def\adj{\mathop{\text{\rm adj}}\nolimits}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\nx}{{\hfill\vspace*{-2cm}\tiny +}}
+
+%\newcommand{\red}[1]{\textcolor{red}{#1}}
+%\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+%\newcommand{\yellow}[1]{\textcolor{yellow}{#1}}
+%\newcommand{\green}[1]{\textcolor{green}{#1}}
+%\newcommand{\darkgreen}[1]{\textcolor{darkgreen}{#1}}
+\def\red{\color[rgb]{0.7,0,0}}
+\def\green{\color[rgb]{0,.8,0}}
+\def\darkgreen{\color[rgb]{0.1,0.4,0.0}}
+\let\dgreen\darkgreen
+\def\blue{\color[rgb]{0,0,.8}}
+\def\yellow{\color[rgb]{1,1,0}}
+\def\black{\color[rgb]{0,0,0}}
+
+\def\pink{\color[rgb]{1,0,1}}
+\def\brown{\color[rgb]{.5,.1,.3}}
+\def\lilaz{\color[rgb]{.5,0,.5}}
+\def\hmmm{\color[rgb]{.3,.1,.5}}
+\def\magenta{\color[rgb]{.6,.05,.05}}
+
+\newcommand{\uc}[1]{\centerline{\underline{#1}}}
+\newcommand{\pic}[1]{\fbox{picture:{#1}}}
+%\renewcommand{\bf}{\mbox{}}
+\newcommand{\cP}{{\cal P}} \newcommand{\cT}{{\cal T}}
+\newcommand{\add}{\mbox{\rm add}} \newcommand{\pr}{\mbox{\rm Pr}}
+
+\def\stitle#1{\slidetitle{\red #1}\vspace{-0pt}}
+
+\def\itemtrig{$\vartriangleright$}
+\def\itemcirc{$\circ$}
+\def\itemT{\item[\itemtrig]}
+\def\itemC{\item[$\circ$]}
+
+\everymath={\blue}
+\everydisplay={\blue}
+
+\renewcommand{\For}{\textbf{\blue para} }
+\renewcommand{\To}{\textbf{\blue até} }
+\renewcommand{\Do}{\>\>\textbf{\blue faça}\hspace*{-0.7em}\'\addtocounter{indent}{1}}
+\renewcommand{\While}{\textbf{\blue enquanto} }
+\renewcommand{\If}{\textbf{\blue se} }
+\renewcommand{\Then}{\>\textbf{\blue então}\>\hspace*{0.5em}\addtocounter{indent}{1}}
+\renewcommand{\Else}{\kill\addtocounter{indent}{-1}\liprint\>\textbf{\blue senão}\>\hspace*{0.5em}\addtocounter{indent}{1}}
+\renewcommand{\ElseIf}{\kill\addtocounter{indent}{-1}\liprint\textbf{\blue senão se} }
+\renewcommand{\ElseNoIf}{\kill\addtocounter{indent}{-1}\liprint\textbf{\blue senão} \addtocounter{indent}{1}}
+\renewcommand{\Return}{\textbf{\blue retorne} }
+
+
+\newcommand{\TITLE}[1]{\item[#1]}
+
+% ugly hack for for/while
+\newbox\fixbox
+
+% end of hack
+\newcommand{\algcost}[2]{\strut\hfill\makebox[3.5cm][l]{#1}\makebox[4cm][l]{#2}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%%Anuschs Extras
+%
+%\def\enddiscard{}
+%\long\def\discard#1\enddiscard{}
+%
+%%%\vpagecolor{bgblue}
+%\hypersetup{pdfpagetransition=Dissolve}
+%\hypersetup{pdfpagetransition=R}
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Farben kann man hier definieren
+
+\definecolor{bgblue}{rgb}{0.04,0.39,0.53}
+
+\definecolor{darkyellow}{rgb}{0.94,0.820,0.058}
+\definecolor{orange}{rgb}{0.95,0.47,0.14}
+\definecolor{darkgreen}{rgb}{0.0,0.5,0.0}
+
+\definecolor{blue2}{rgb}{0.1,0.39,0.53}
+\definecolor{yellow1}{rgb}{1,1,0} \definecolor{pink}{rgb}{1,0,1}
+
+\definecolor{lightred}{rgb}{1,0.5,0.5}
+\definecolor{lightred2}{rgb}{1,0.7,0.7}
+\definecolor{lightred3}{rgb}{1,0.3,0.3}
+\definecolor{black}{rgb}{0,0,0} \definecolor{gray1}{rgb}{0.9,0.9,0.9}
+\definecolor{red1}{rgb}{1,1,0.9}
+
+\title{Análise e projeto de algoritmos} 
+\author{{\blue L.~Takuno} (SENAC)}
+\date{{\dgreen 1o. Semestre 2019}} 
+
+%%% Hier beginnt die Praesentation
+
+\begin{document}\def\proofname{{\bf\green Prova.}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Deckblatt
+%%%%%%%%%%%%%%%%%%%\usepackage{clrscode3e}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\maketitle
+
+%\slidesubhead{}  %% Teilvortrags-Titel (hier noch nicht)
+                 %% Dieser erscheint spaeter oben links unter
+                 %% dem ASZ Gesamt-Titel
+
+%%%%%%%%%%%%%%%%%%%%%%% TOC %%%%%%%%%%%%%%%%%%
+
+%\slidesubhead{Outline!!!}
+
+\begin{slide}
+  \stitle{Fontes principais}
+  \begin{enumerate}\makeatletter\itemsep\z@\makeatother
+  \item Cormem T. H.; Leiserson C. E.; Rivest R.: Stein C.. \textit{Introduction to Algorithms}, $3^a$ edição, MIT Press, 2009
+  \item Análise de algoritmo - IME/USP (prof. Paulo Feofiloff)
+    \verb|http://www.ime.usp.br/~pf/analise_de_algoritmos| 
+	
+  \end{enumerate}
+  \end{slide}
+ 
+
+
+ 
+
+\begin{slide}
+  \stitle{Divisão e conquista}
+\end{slide}
+
+\begin{slide}
+  \stitle{Divisão e conquista}
+  
+\begin{enumerate}
+\item \textbf{Dividir} o problema (instância) em uma ou mais subproblemas.
+\item \textbf{Conquistar} cada subproblema recursivamente
+\item \textbf{Combinar} soluções
+\end{enumerate}  
+
+  
+\end{slide}
+
+\begin{slide}
+  \stitle{Busca binária}
+\end{slide}
+
+\begin{slide}
+  \stitle{Busca binária}
+Encontrar x em um vetor ordenado   
+  
+\begin{enumerate}
+\item \textbf{Dividir:} comparar x com o elemento do meio
+\item \textbf{Conquistar:} recursão sobre um subvetor
+\item \textbf{Combinar:} simples
+\end{enumerate}  
+\end{slide}
+
+\begin{slide}
+  \stitle{Busca binária}
+  $T(n) = 1T(n/2) + \Theta(1)$
+  
+  
+  $n^{\log_b a} = n^{\log_2 1} = 1$ 
+  
+  $f(n) = 1$ está "por cima" ou "por baixo" de $n^{\log_b a} = 1$?
+  
+  $f(n) = 1 = \Theta(1)$ (Caso 2)
+  
+  $\therefore T(n) = \Theta(1 \cdot \log n)$
+  \end{slide}
+
+\begin{slide}
+  \stitle{Potência de um número}
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Potência de um número}
+  Dado um número $x$, um inteiro $n \geq 0$, computar $x^n$
+  
+Algoritmo ingênuo: 
+
+$$  \underbrace{x \cdot x \cdot x \cdots x}_{n} = x^n$$ 
+
+Tempo: $\Theta(n)$
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Potência de um número}  
+  
+$x^n= \left\{  \begin{array}{ll} 
+                x^{\frac{n}{2}} \cdot x^{\frac{n}{2}} & \textrm{, se } n \textrm{ é par } \\\\
+x^{\frac{n-1}{2}} \cdot x^{\frac{n-1}{2}} \cdot x & \textrm{, se } n \textrm{ é ímpar } 
+                \end{array} \right. $  
+                
+                
+                
+$\begin{array}{ll}
+T(n) & = T(n/2) + \Theta(1) \\
+     & = \Theta(\log n)
+\end{array}$                
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Número de Fibonacci}                  
+\end{slide}
+
+\begin{slide}
+  \stitle{Número de Fibonacci}                  
+  
+$F_n= \left\{  \begin{array}{ll} 
+                0 & \textrm{, se } n = 0 \\
+                1 & \textrm{, se } n = 1 \\
+F_{n-1} + F_{n-2} & \textrm{, se } n \geq 2
+                \end{array} \right. $  
+  
+  
+Algoritmo recursivo ingênuo  
+
+Tempo: $\Omega(\Phi^n)$ onde $\Phi = \frac{1+ \sqrt{5}}{2}$
+
+\itemtrig\ algoritmo exponencial: ruim
+
+\vspace{-1cm}\itemtrig\ algoritmo polinomial: bom
+
+Obs.: $\Phi$ é a razão áurea
+\end{slide}
+
+\begin{slide}
+  \stitle{Número de Fibonacci} 
+  
+Algoritmo bottom-up:
+
+computar: $F_0, F_1, F_2, \cdots, F_n  $    
+
+Tempo: $\Theta(n)$
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Número de Fibonacci} 
+  
+Algoritmos recursivo ingênuo (versão 1)
+
+$F_n = \frac{\Phi^n}{\sqrt{5}}$ arredondado para o inteiro mais próximo.
+
+
+Tempo: $\Theta(\lg n)$
+
+Obs.: Este método não é confiável, por causa da aritmética de ponto flutuante que é propensa a erros de arredondamento.
+\end{slide}
+
+\begin{slide}
+  \stitle{Número de Fibonacci} 
+
+Teorema: 
+
+
+$\begin{bmatrix}
+F_{n+1} & F_{n} \\
+F_{n} & F_{n-1} 
+\end{bmatrix} = 
+\begin{bmatrix}
+1 & 1 \\
+1 & 0 
+\end{bmatrix}^n$
+
+$\Rightarrow$ tempo: $\Theta(\lg n)$
+\end{slide}
+
+\begin{slide}
+  \stitle{Número de Fibonacci} 
+
+Teorema: 
+
+$\begin{bmatrix}
+F_{n+1} & F_{n} \\
+F_{n} & F_{n-1} 
+\end{bmatrix} = 
+\begin{bmatrix}
+1 & 1 \\
+1 & 0 
+\end{bmatrix}^n$
+
+Prova: Por indução sobre $n$
+
+\textbf{Passo base:} 
+
+$ 
+\begin{bmatrix}
+1 & 1 \\
+1 & 0 
+\end{bmatrix}^1 =
+\begin{bmatrix}
+F_{2} & F_{1} \\
+F_{1} & F_{0} 
+\end{bmatrix}$
+\end{slide}
+
+\begin{slide}
+  \stitle{Número de Fibonacci} 
+
+\textbf{Passo indutivo:} 
+
+$\begin{bmatrix}
+F_{n+1} & F_{n} \\
+F_{n} & F_{n-1} 
+\end{bmatrix} = 
+\begin{bmatrix}
+F_{n} & F_{n-1} \\
+F_{n-1} & F_{n-2} 
+\end{bmatrix}^{n-1}
+\cdot
+\begin{bmatrix}
+1 & 1 \\
+1 & 0 
+\end{bmatrix}$
+  
+\end{slide}
+
+\begin{slide}
+  \stitle{Número de Fibonacci} 
+
+\textbf{Passo indutivo:} 
+
+$\begin{bmatrix}
+F_{n+1} & F_{n} \\
+F_{n} & F_{n-1} 
+\end{bmatrix} = 
+\begin{bmatrix}
+F_{n} & F_{n-1} \\
+F_{n-1} & F_{n-2} 
+\end{bmatrix}^{n-1}
+\cdot
+\begin{bmatrix}
+1 & 1 \\
+1 & 0 
+\end{bmatrix}$
+  
+
+$\begin{bmatrix}
+F_{n+1} & F_{n} \\
+F_{n} & F_{n-1} 
+\end{bmatrix} = 
+\begin{bmatrix}
+1 & 1 \\
+1 & 0 
+\end{bmatrix}^{n-1}
+\cdot
+\begin{bmatrix}
+1 & 1 \\
+1 & 0 
+\end{bmatrix}$
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Número de Fibonacci} 
+
+\textbf{Passo indutivo:} 
+
+$\begin{bmatrix}
+F_{n+1} & F_{n} \\
+F_{n} & F_{n-1} 
+\end{bmatrix} = 
+\begin{bmatrix}
+F_{n} & F_{n-1} \\
+F_{n-1} & F_{n-2} 
+\end{bmatrix}^{n-1}
+\cdot
+\begin{bmatrix}
+1 & 1 \\
+1 & 0 
+\end{bmatrix}$
+  
+
+$\begin{bmatrix}
+F_{n+1} & F_{n} \\
+F_{n} & F_{n-1} 
+\end{bmatrix} = 
+\begin{bmatrix}
+1 & 1 \\
+1 & 0 
+\end{bmatrix}^{n-1}
+\cdot
+\begin{bmatrix}
+1 & 1 \\
+1 & 0 
+\end{bmatrix}$
+
+$\begin{bmatrix}
+F_{n+1} & F_{n} \\
+F_{n} & F_{n-1} 
+\end{bmatrix} = 
+\begin{bmatrix}
+1 & 1 \\
+1 & 0 
+\end{bmatrix}^{n}
+$
+
+ $\square$
+ 
+ \end{slide}
+
+\begin{slide}
+  \stitle{Contagem de inversões} 
+\end{slide}
+
+\begin{slide}
+  \stitle{Contagem de inversões} 
+  
+ {\red Problema}: Dada uma permutação $p[1 .. n]$, determinar o número de inversões em $p$. 
+  
+  Uma {\green inversão} é um par $(i, j)$ de índices de $p$ tal que $i < j$ e $p[i] > p[j]$.
+  
+\end{slide}
+
+\begin{slide}
+  \stitle{Contagem de inversões (Exemplo)} 
+
+{\blue Entrada:}
+$$
+\begin{tabular}{cccccccccc}
+                       & 1                      & 2                      & 3                      & 4                      & 5                      & 6                      & 7                      & 8                      & 9                      \\ \cline{2-10} 
+\multicolumn{1}{c|}{p} & \multicolumn{1}{c|}{2} & \multicolumn{1}{c|}{4} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{9} & \multicolumn{1}{c|}{5} & \multicolumn{1}{c|}{3} & \multicolumn{1}{c|}{8} & \multicolumn{1}{c|}{6} & \multicolumn{1}{c|}{7} \\ \cline{2-10} 
+\end{tabular}
+$$
+{\blue Saída:}11
+
+Inversões: $(1, 3), (2, 3), (4, 5),(2, 6),(4, 6),(5, 6),$ 
+
+\vspace{-1cm} \hspace{3.5cm} $(4, 7),(4, 8),(7, 8),(4, 9)$ e $(7, 9)$.
+\end{slide}
+
+\begin{slide}
+  \stitle{Contagem de inversões - solução ingênua} 
+  
+\begin{codebox}
+\Procname{$\proc{conta-inversões}(p, n)$}
+\li $c = 0$
+\li \For $i = 0$ \To $n-1$ {\blue \textbf{faça}}
+\li \> \For $j = i+1$ \To $n$ {\blue \textbf{faça}}
+\li \> \> \If $\id{p[i]} > \id{p[j]}$ {\blue \textbf{então}}
+\li \> \> \> $c = c + 1$
+\li \Return $c$
+\end{codebox}   
+
+Tempo: $O(n^2)$  
+\end{slide}
+
+\begin{slide}
+  \stitle{Contagem de inversões} 
+  
+ \textbf{Solução melhor:} divisão e conquista
+ 
+ \textbf{Idéia:} vamos ordenar e contar ao mesmo tempo!
+\end{slide}
+
+\begin{slide}
+  \stitle{Contagem de inversões - adaptação do merge-sort} 
+  Conta o número de inversões de $A[p .. r]$, com $p \leq r$, e rearranja $A[p .. r]$ em ordem crescente.
+   
+\begin{codebox}
+\Procname{$\proc{conta-e-ordena}(A, p, r)$}
+\li \If $\id{p} \geq \id{r}$
+\li \Then \Return $0$
+\li \Else $q = \lfloor (p+r)/2 \rfloor$
+\li      $c1 = \proc{conta-e-ordena}(A, p, q)$ 
+\li      $c2 = \proc{conta-e-ordena}(A, q+1, r)$ 
+\li      $c3 = \proc{conta-e-intercala}(A, p, q, r)$ 
+\End   
+\li       \Return $c1+c2+c3$
+\end{codebox}   
+\end{slide}
+
+\begin{slide}
+\begin{codebox}
+\Procname{$\proc{conta-e-intercala}(A, p, q, r)$}
+\li \For $i = p$ \To $q$ {\blue \textbf{faça}}
+\li \>  $B[i] = A[i]$
+\li \For $j = q + 1$ \To $r$ {\blue \textbf{faça}}
+\li \>  $B[r + q + 1 - j] = A[j]$
+\li $i = p$
+\li $j = r$
+\li $c = 0$
+\li \For $k = p$ \To $r$ {\blue \textbf{faça}}
+\li \> \If $\id{B[i]} \leq \id{B[j]}$ \textbf{\blue então}
+\li \>\> $A[k] = B[i]$
+\li \>\>      $i = i + 1$ 
+\li \>\Else $A[k] = B[j]$
+\li \>\>      $j = j - 1$ 
+\li \>\>      $c = c + (q - i + 1)$
+\End   
+\li \Return $c$
+\end{codebox}   
+  
+\end{slide}
+
+\begin{slide}
+  \stitle{Simulação}    
+   
+$$
+\begin{tabular}{cccccccccc}
+& p & & & & q & & & & r\\ \cline{2-10} 
+\multicolumn{1}{c|}{A} & \multicolumn{1}{c|}{\red 22} & \multicolumn{1}{c|}{\red 33} & \multicolumn{1}{c|}{\red 55} & \multicolumn{1}{c|}{\red 77} & \multicolumn{1}{c|}{\red 99} & \multicolumn{1}{c|}{11} & \multicolumn{1}{c|}{44} & \multicolumn{1}{c|}{66} & \multicolumn{1}{c|}{88} \\ \cline{2-10} 
+\end{tabular}
+$$
+  
+$$
+\begin{tabular}{cccccccccc}
+&   & & & &   & & & &  \\ \cline{2-10} 
+\multicolumn{1}{c|}{B} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \,\;} & \multicolumn{1}{c|}{\; \,\;} & \multicolumn{1}{c|}{\; \,\;} \\ \cline{2-10} 
+\end{tabular}
+$$ 
+   
+$c = 0$
+\end{slide}
+
+\begin{slide}
+  \stitle{Simulação}    
+   
+$$
+\begin{tabular}{cccccccccc}
+&  k &  & & &   & & & &  \\ \cline{2-10} 
+\multicolumn{1}{c|}{A} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \,\;} & \multicolumn{1}{c|}{\; \,\;} & \multicolumn{1}{c|}{\; \,\;} \\ \cline{2-10} 
+\end{tabular}
+$$ 
+
+
+$$
+\begin{tabular}{cccccccccc}
+& {\red i} & & & &  & & & & j\\ \cline{2-10} 
+\multicolumn{1}{c|}{B} & \multicolumn{1}{c|}{\red 22} & \multicolumn{1}{c|}{\red 33} & \multicolumn{1}{c|}{\red 55} & \multicolumn{1}{c|}{\red 77} & \multicolumn{1}{c|}{\red 99} & \multicolumn{1}{c|}{88} & \multicolumn{1}{c|}{66} & \multicolumn{1}{c|}{44} & \multicolumn{1}{c|}{11} \\ \cline{2-10} 
+\end{tabular}
+$$
+  
+   
+$c = 0$
+\end{slide}
+
+\begin{slide}
+  \stitle{Simulação}    
+   
+$$
+\begin{tabular}{cccccccccc}
+&  & k & & &   & & & &  \\ \cline{2-10} 
+\multicolumn{1}{c|}{A} & \multicolumn{1}{c|}{11} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \,\;} & \multicolumn{1}{c|}{\; \,\;} & \multicolumn{1}{c|}{\; \,\;} \\ \cline{2-10} 
+\end{tabular}
+$$ 
+
+
+$$
+\begin{tabular}{cccccccccc}
+& {\red i} & & & &  & & & j & \\ \cline{2-10} 
+\multicolumn{1}{c|}{B} & \multicolumn{1}{c|}{\red 22} & \multicolumn{1}{c|}{\red 33} & \multicolumn{1}{c|}{\red 55} & \multicolumn{1}{c|}{\red 77} & \multicolumn{1}{c|}{\red 99} & \multicolumn{1}{c|}{88} & \multicolumn{1}{c|}{66} & \multicolumn{1}{c|}{44} & \multicolumn{1}{c|}{11} \\ \cline{2-10} 
+\end{tabular}
+$$
+  
+   
+$c = 0 + 5 = 5$
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Simulação}    
+   
+$$
+\begin{tabular}{cccccccccc}
+&  &  & k & &   & & & &  \\ \cline{2-10} 
+\multicolumn{1}{c|}{A} & \multicolumn{1}{c|}{11} & \multicolumn{1}{c|}{{\red 22}} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \,\;} & \multicolumn{1}{c|}{\; \,\;} & \multicolumn{1}{c|}{\; \,\;} \\ \cline{2-10} 
+\end{tabular}
+$$ 
+
+
+$$
+\begin{tabular}{cccccccccc}
+&  & {\red i}& & &  & & & j & \\ \cline{2-10} 
+\multicolumn{1}{c|}{B} & \multicolumn{1}{c|}{\red 22} & \multicolumn{1}{c|}{\red 33} & \multicolumn{1}{c|}{\red 55} & \multicolumn{1}{c|}{\red 77} & \multicolumn{1}{c|}{\red 99} & \multicolumn{1}{c|}{88} & \multicolumn{1}{c|}{66} & \multicolumn{1}{c|}{44} & \multicolumn{1}{c|}{11} \\ \cline{2-10} 
+\end{tabular}
+$$
+  
+   
+$c = 5$
+\end{slide}
+
+\begin{slide}
+  \stitle{Simulação}    
+   
+$$
+\begin{tabular}{cccccccccc}
+&  &  &  & k &   & & & &  \\ \cline{2-10} 
+\multicolumn{1}{c|}{A} & \multicolumn{1}{c|}{11} & \multicolumn{1}{c|}{{\red 22}} & \multicolumn{1}{c|}{{\red 33}} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \,\;} & \multicolumn{1}{c|}{\; \,\;} & \multicolumn{1}{c|}{\; \,\;} \\ \cline{2-10} 
+\end{tabular}
+$$ 
+
+
+$$
+\begin{tabular}{cccccccccc}
+&  & & {\red i} & &  & & & j & \\ \cline{2-10} 
+\multicolumn{1}{c|}{B} & \multicolumn{1}{c|}{\red 22} & \multicolumn{1}{c|}{\red 33} & \multicolumn{1}{c|}{\red 55} & \multicolumn{1}{c|}{\red 77} & \multicolumn{1}{c|}{\red 99} & \multicolumn{1}{c|}{88} & \multicolumn{1}{c|}{66} & \multicolumn{1}{c|}{44} & \multicolumn{1}{c|}{11} \\ \cline{2-10} 
+\end{tabular}
+$$
+  
+   
+$c = 5$
+\end{slide}
+
+\begin{slide}
+  \stitle{Simulação}    
+   
+$$
+\begin{tabular}{cccccccccc}
+&  &  &  &  & k & & & &  \\ \cline{2-10} 
+\multicolumn{1}{c|}{A} & \multicolumn{1}{c|}{11} & \multicolumn{1}{c|}{{\red 22}} & \multicolumn{1}{c|}{{\red 33}} & \multicolumn{1}{c|}{44} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \,\;} & \multicolumn{1}{c|}{\; \,\;} & \multicolumn{1}{c|}{\; \,\;} \\ \cline{2-10} 
+\end{tabular}
+$$ 
+
+
+$$
+\begin{tabular}{cccccccccc}
+&  & & {\red i} & &  & & j & & \\ \cline{2-10} 
+\multicolumn{1}{c|}{B} & \multicolumn{1}{c|}{\red 22} & \multicolumn{1}{c|}{\red 33} & \multicolumn{1}{c|}{\red 55} & \multicolumn{1}{c|}{\red 77} & \multicolumn{1}{c|}{\red 99} & \multicolumn{1}{c|}{88} & \multicolumn{1}{c|}{66} & \multicolumn{1}{c|}{44} & \multicolumn{1}{c|}{11} \\ \cline{2-10} 
+\end{tabular}
+$$
+  
+   
+$c = 5 + 3 = 8$
+\end{slide}
+
+\begin{slide}
+  \stitle{Simulação}    
+   
+$$
+\begin{tabular}{cccccccccc}
+&  &  &  &  &  & k & & &  \\ \cline{2-10} 
+\multicolumn{1}{c|}{A} & \multicolumn{1}{c|}{11} & \multicolumn{1}{c|}{{\red 22}} & \multicolumn{1}{c|}{{\red 33}} & \multicolumn{1}{c|}{44} & \multicolumn{1}{c|}{{\red 55}} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \,\;} & \multicolumn{1}{c|}{\; \,\;} & \multicolumn{1}{c|}{\; \,\;} \\ \cline{2-10} 
+\end{tabular}
+$$ 
+
+
+$$
+\begin{tabular}{cccccccccc}
+&  & & & {\red i} &  & & j & & \\ \cline{2-10} 
+\multicolumn{1}{c|}{B} & \multicolumn{1}{c|}{\red 22} & \multicolumn{1}{c|}{\red 33} & \multicolumn{1}{c|}{\red 55} & \multicolumn{1}{c|}{\red 77} & \multicolumn{1}{c|}{\red 99} & \multicolumn{1}{c|}{88} & \multicolumn{1}{c|}{66} & \multicolumn{1}{c|}{44} & \multicolumn{1}{c|}{11} \\ \cline{2-10} 
+\end{tabular}
+$$
+  
+   
+$c = 8$
+\end{slide}
+
+\begin{slide}
+  \stitle{Simulação}    
+   
+$$
+\begin{tabular}{cccccccccc}
+&  &  &  &  &  & & k & &  \\ \cline{2-10} 
+\multicolumn{1}{c|}{A} & \multicolumn{1}{c|}{11} & \multicolumn{1}{c|}{{\red 22}} & \multicolumn{1}{c|}{{\red 33}} & \multicolumn{1}{c|}{44} & \multicolumn{1}{c|}{{\red 55}} & \multicolumn{1}{c|}{66} & \multicolumn{1}{c|}{\; \,\;} & \multicolumn{1}{c|}{\; \,\;} & \multicolumn{1}{c|}{\; \,\;} \\ \cline{2-10} 
+\end{tabular}
+$$ 
+
+
+$$
+\begin{tabular}{cccccccccc}
+&  & & & {\red i} &  & j & & & \\ \cline{2-10} 
+\multicolumn{1}{c|}{B} & \multicolumn{1}{c|}{\red 22} & \multicolumn{1}{c|}{\red 33} & \multicolumn{1}{c|}{\red 55} & \multicolumn{1}{c|}{\red 77} & \multicolumn{1}{c|}{\red 99} & \multicolumn{1}{c|}{88} & \multicolumn{1}{c|}{66} & \multicolumn{1}{c|}{44} & \multicolumn{1}{c|}{11} \\ \cline{2-10} 
+\end{tabular}
+$$
+  
+   
+$c = 8 + 2 = 10$
+\end{slide}
+
+\begin{slide}
+  \stitle{Simulação}    
+   
+$$
+\begin{tabular}{cccccccccc}
+&  &  &  &  &  & &  & k &  \\ \cline{2-10} 
+\multicolumn{1}{c|}{A} & \multicolumn{1}{c|}{11} & \multicolumn{1}{c|}{{\red 22}} & \multicolumn{1}{c|}{{\red 33}} & \multicolumn{1}{c|}{44} & \multicolumn{1}{c|}{{\red 55}} & \multicolumn{1}{c|}{66} & \multicolumn{1}{c|}{{\red 77}} & \multicolumn{1}{c|}{\; \,\;} & \multicolumn{1}{c|}{\; \,\;} \\ \cline{2-10} 
+\end{tabular}
+$$ 
+
+
+$$
+\begin{tabular}{cccccccccc}
+&  & & & & {\red i} & j & & & \\ \cline{2-10} 
+\multicolumn{1}{c|}{B} & \multicolumn{1}{c|}{\red 22} & \multicolumn{1}{c|}{\red 33} & \multicolumn{1}{c|}{\red 55} & \multicolumn{1}{c|}{\red 77} & \multicolumn{1}{c|}{\red 99} & \multicolumn{1}{c|}{88} & \multicolumn{1}{c|}{66} & \multicolumn{1}{c|}{44} & \multicolumn{1}{c|}{11} \\ \cline{2-10} 
+\end{tabular}
+$$
+  
+   
+$c = 10$
+\end{slide}
+
+\begin{slide}
+  \stitle{Simulação}    
+   
+$$
+\begin{tabular}{cccccccccc}
+&  &  &  &  &  & &  &  & k \\ \cline{2-10} 
+\multicolumn{1}{c|}{A} & \multicolumn{1}{c|}{11} & \multicolumn{1}{c|}{{\red 22}} & \multicolumn{1}{c|}{{\red 33}} & \multicolumn{1}{c|}{44} & \multicolumn{1}{c|}{{\red 55}} & \multicolumn{1}{c|}{66} & \multicolumn{1}{c|}{{\red 77}} & \multicolumn{1}{c|}{88} & \multicolumn{1}{c|}{\; \,\;} \\ \cline{2-10} 
+\end{tabular}
+$$ 
+
+
+$$
+\begin{tabular}{cccccccccc}
+&  & & & & {\red i} {\black =} j &  & & & \\ \cline{2-10} 
+\multicolumn{1}{c|}{B} & \multicolumn{1}{c|}{\red 22} & \multicolumn{1}{c|}{\red 33} & \multicolumn{1}{c|}{\red 55} & \multicolumn{1}{c|}{\red 77} & \multicolumn{1}{c|}{\red 99} & \multicolumn{1}{c|}{88} & \multicolumn{1}{c|}{66} & \multicolumn{1}{c|}{44} & \multicolumn{1}{c|}{11} \\ \cline{2-10} 
+\end{tabular}
+$$
+  
+   
+$c = 10 + 1 = 11$
+\end{slide}
+
+\begin{slide}
+  \stitle{Simulação}    
+   
+$$
+\begin{tabular}{cccccccccc}
+&  &  &  &  &  & &  &  &  \\ \cline{2-10} 
+\multicolumn{1}{c|}{A} & \multicolumn{1}{c|}{11} & \multicolumn{1}{c|}{{\red 22}} & \multicolumn{1}{c|}{{\red 33}} & \multicolumn{1}{c|}{44} & \multicolumn{1}{c|}{{\red 55}} & \multicolumn{1}{c|}{66} & \multicolumn{1}{c|}{{\red 77}} & \multicolumn{1}{c|}{88} & \multicolumn{1}{c|}{\red 99} \\ \cline{2-10} 
+\end{tabular}
+$$ 
+
+
+$$
+\begin{tabular}{cccccccccc}
+&  & & & & j & {\red i} & & & \\ \cline{2-10} 
+\multicolumn{1}{c|}{B} & \multicolumn{1}{c|}{\red 22} & \multicolumn{1}{c|}{\red 33} & \multicolumn{1}{c|}{\red 55} & \multicolumn{1}{c|}{\red 77} & \multicolumn{1}{c|}{\red 99} & \multicolumn{1}{c|}{88} & \multicolumn{1}{c|}{66} & \multicolumn{1}{c|}{44} & \multicolumn{1}{c|}{11} \\ \cline{2-10} 
+\end{tabular}
+$$
+  
+   
+$c = 11$
+\end{slide}
+
+\begin{slide}
+\begin{codebox}
+\Procname{$\proc{conta-e-intercala}(A, p, q, r)$}
+\li \For $i = p$ \To $q$ {\blue \textbf{faça}}
+\li \>  $B[i] = A[i]$
+\li \For $j = q + 1$ \To $r$ {\blue \textbf{faça}}
+\li \>  $B[r + q + 1 - j] = A[j]$
+\li $i = p$
+\li $j = r$
+\li $c = 0$
+\li \For $k = p$ \To $r$ {\blue \textbf{faça}}
+\li \> \If $\id{B[i]} \leq \id{B[j]}$ \textbf{\blue então}
+\li \>\> $A[k] = B[i]$
+\li \>\>      $i = i + 1$ 
+\li \>\Else $A[k] = B[j]$
+\li \>\>      $j = j - 1$ 
+\li \>\>      $c = c + (q - i + 1)$
+\End   
+\li \Return $c$
+\end{codebox}   
+  
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Contagem de inversões} 
+  Análise do algoritmo $\proc{conta-e-intercala}$:
+  
+\itemtrig\ linhas 1-4 : $O(n)$   
+
+\vspace{-1cm}\itemtrig\ linhas 5-7 : $O(1)$   
+  
+\vspace{-1cm}\itemtrig\ linhas 8-14 : $O(n)$   
+
+\vspace{-1cm}\itemtrig\ linha 15 : $O(1)$   
+
+total: $T(n) = 11n + 4 = O(n)$
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Contagem de inversões} 
+  
+  Análise do algoritmo $\proc{conta-e-ordena}$:
+  
+  $T(n) = 2 T(n/2) + n$
+
+definida para $n$ potência de 2.
+
+Prova utilizando a técnica da \textbf{árvore de recorrência}.
+
+$T(n) = \left\{ 
+\begin{array}{ll}
+1 & \textrm{se } n=1 \\\\
+2T(n/2) + n & \textrm{se } n\geq 2, n\textrm{ potência de }2 \\
+\end{array}
+\right.$
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Contagem de inversões} 
+
+$T(n) = \left\{ 
+\begin{array}{ll}
+1 & \textrm{se } n=1 \\\\
+2T(n/2) + n & \textrm{se } n\geq 2, n\textrm{ potência de }2 \\
+\end{array}
+\right.$
+
+Desenrolando a recorrência:
+
+$\begin{array}{ll}
+T(n) & = 2T(n/2) + n\\
+\end{array}$
+  
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Contagem de inversões} 
+
+$T(n) = \left\{ 
+\begin{array}{ll}
+1 & \textrm{se } n=1 \\\\
+2T(n/2) + n & \textrm{se } n\geq 2, n\textrm{ potência de }2 \\
+\end{array}
+\right.$
+
+Desenrolando a recorrência:
+
+$\begin{array}{ll}
+T(n) & = 2T(n/2) + n\\
+T(n) & = 2T(2T(n/2^2) + n/2) + n = 2^2T(n/2^2) + 2n\\
+\end{array}$
+  
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Contagem de inversões} 
+
+$T(n) = \left\{ 
+\begin{array}{ll}
+1 & \textrm{se } n=1 \\\\
+2T(n/2) + n & \textrm{se } n\geq 2, n\textrm{ potência de }2 \\
+\end{array}
+\right.$
+
+Desenrolando a recorrência:
+
+$\begin{array}{ll}
+T(n) & = 2T(n/2) + n\\
+T(n) & = 2T(2T(n/2^2) + n/2) + n = 2^2T(n/2^2) + 2n\\
+T(n) & = 2^2T(2T(n/2^3) + n/2^2) + 2n = 2^3T(n/2^3) + 3n\\
+\end{array}$
+  
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Contagem de inversões} 
+
+$T(n) = \left\{ 
+\begin{array}{ll}
+1 & \textrm{se } n=1 \\\\
+2T(n/2) + n & \textrm{se } n\geq 2, n\textrm{ potência de }2 \\
+\end{array}
+\right.$
+
+Desenrolando a recorrência:
+
+$\begin{array}{ll}
+T(n) & = 2T(n/2) + n\\
+     & = 2T(2T(n/2^2) + n/2) + n = 2^2T(n/2^2) + 2n\\
+     & = 2^2T(2T(n/2^3) + n/2^2) + 2n = 2^3T(n/2^3) + 3n\\
+     & = 2^3T(2T(n/2^4) + n/2^3) + 3n = 2^4T(n/2^4) + 4n\\
+\end{array}$
+  
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Contagem de inversões} 
+
+$T(n) = \left\{ 
+\begin{array}{ll}
+1 & \textrm{se } n=1 \\\\
+2T(n/2) + n & \textrm{se } n\geq 2, n\textrm{ potência de }2 \\
+\end{array}
+\right.$
+
+Desenrolando a recorrência:
+
+$\begin{array}{ll}
+T(n) & = 2T(n/2) + n\\
+     & = 2T(2T(n/2^2) + n/2) + n = 2^2T(n/2^2) + 2n\\
+     & = 2^2T(2T(n/2^3) + n/2^2) + 2n = 2^3T(n/2^3) + 3n\\
+     & = 2^3T(2T(n/2^4) + n/2^3) + 3n = 2^4T(n/2^4) + 4n\\
+     & = \cdots\\
+     & = 2^kT(n/2^k) + kn
+\end{array}$
+  
+onde $k = \lg n$. Disso concluimos que $T(n) = n + n\lg n$  
+  
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Contagem de inversões} 
+  
+  Análise do algoritmo $\proc{conta-e-ordena}$:
+  
+  $T(n) = 2 T(n/2) + n$
+
+definida para $n$ potência de 2.
+
+Prova utilizando o \textbf{método da substituição}
+
+Palpite:  $T(n) = O(n \lg n)$
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Contagem de inversões} 
+Afirmação: A recorrência
+
+$T(n) = \left\{ 
+\begin{array}{ll}
+1 & \textrm{se } n=1 \\\\
+2T(n/2) + n & \textrm{se } n\geq 2, n\textrm{ potência de }2 \\
+\end{array}
+\right.$
+  
+tem como solução $T(n) = n + n \lg n$  
+
+\textbf{Prova:} Por indução em $n$
+
+\textbf{Base:} $n=1$
+
+$$T(1) = 1 + 1 \cdot \lg 1 = 1 + 1\cdot 0 = 1$$
+ 
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Contagem de inversões} 
+  
+\textbf{Hipótese de indução:} $T(n) = n + n \lg n$  para $m < n$       
+
+
+\textbf{Passo de indução: } $n \geq 2$
+
+$\begin{array}{ll}
+T(n) & = 2T(n/2) + n\\
+\end{array}$
+
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Contagem de inversões} 
+  
+\textbf{Hipótese de indução:} $T(n) = n + n \lg n$  para $m < n$       
+
+
+\textbf{Passo de indução: } $n \geq 2$
+
+$\begin{array}{ll}
+T(n) & = 2T(n/2) + n\\
+     & = 2 (n/2 + (n/2) \lg (n/2)) + n\\
+\end{array}$
+
+
+\end{slide}
+\begin{slide}
+  \stitle{Contagem de inversões} 
+  
+\textbf{Hipótese de indução:} $T(n) = n + n \lg n$  para $m < n$       
+
+
+\textbf{Passo de indução: } $n \geq 2$
+
+$\begin{array}{ll}
+T(n) & = 2T(n/2) + n\\
+     & = 2 (n/2 + (n/2) \lg (n/2)) + n\\
+     & = 2n + n\lg(n/2)\\
+\end{array}$
+
+
+\end{slide}
+\begin{slide}
+  \stitle{Contagem de inversões} 
+  
+\textbf{Hipótese de indução:} $T(n) = n + n \lg n$  para $m < n$       
+
+
+\textbf{Passo de indução: } $n \geq 2$
+
+$\begin{array}{ll}
+T(n) & = 2T(n/2) + n\\
+     & = 2 (n/2 + (n/2) \lg (n/2)) + n\\
+     & = 2n + n\lg(n/2)\\
+     & = 2n + n(\lg n - 1) \\
+\end{array}$
+
+
+\end{slide}
+\begin{slide}
+  \stitle{Contagem de inversões} 
+  
+\textbf{Hipótese de indução:} $T(n) = n + n \lg n$  para $m < n$       
+
+
+\textbf{Passo de indução: } $n \geq 2$
+
+$\begin{array}{ll}
+T(n) & = 2T(n/2) + n\\
+     & = 2 (n/2 + (n/2) \lg (n/2)) + n\\
+     & = 2n + n\lg(n/2)\\
+     & = 2n + n(\lg n - 1) \\
+     & = n + n \lg n
+\end{array}$ 
+
+$\square$
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Máximo e o mínimo de um vetor} 
+\end{slide}
+
+\begin{slide}
+  \stitle{Máximo e o mínimo de um vetor} 
+  
+  Entrada: um vetor $A[]$, um par $(l,r)$ representando $A[l \cdots r]$
+  Saída: um par $(A_i,A_j)$ contendo o maior e o menor valor de $A[l \cdots r]$
+\end{slide}
+
+\begin{slide}
+  \stitle{Máximo e o mínimo de um vetor} 
+\begin{codebox}
+\Procname{$\proc{maxMin}(A, l, r)$}
+\li \If $\id{l} = \id{r}$
+\li \Then \Return $(A[l], A[r])$
+\li \Else \If $\id{l} = \id{r}$
+\li  \Then \If $A_l \geq A_r$
+\li  \Then \Return $(A[l], A[r])$
+\li  \Else \Return $(A[r], A[l])$         
+\End
+\li \Else $k = \lfloor (l + r)/ \rfloor2$
+\li       $(MaxL, MinL) = \proc{maxMin}(A, l,k)$
+\li       $(MaxR, MinR) = \proc{maxMin}(A, l+1,k)$
+\li       $max = maximo(MaxL, MaxR)$ 
+\li       $min = maximo(MinL, MinR)$ 
+\End   
+\li       \Return $(max, min)$
+\end{codebox}   
+\end{slide}
+
+\begin{slide}
+  \stitle{Tempo gasto pelo $\proc{maxMin}$} 
+ 
+Seja $T(n)$ o número de comparações feitas pelo $\proc{maxMin}$ para um vetor com $n$ elementos. Então:
+
+$T(1) = 0$, $T(2) = 1$
+
+\vspace{-1cm}$T(n) = T(\lceil n/2 \rceil) + T(\lfloor n/2 \rfloor) + 2$
+
+
+Vamos mostrar que 
+
+$$T(n) \leq  \displaystyle\frac{5n}{3}  - 2$$
+\end{slide}
+
+\begin{slide}
+  \stitle{Tempo gasto pelo $\proc{maxMin}$} 
+  
+  $T(n) = T(\lceil n/2 \rceil) + T(\lfloor n/2 \rfloor) + 2$
+  
+  $\leq \displaystyle\frac{5 \lceil n/2 \rceil}{3} - 2 +   \displaystyle\frac{5 \lceil n/2 \rceil}{3} - 2 + 2$
+
+  $\leq \displaystyle \frac{5}{3}(\lceil n/2 \rceil   +   \displaystyle\lfloor n/2 \rfloor) - 2$
+
+  $\leq \displaystyle \frac{5n}{3} - 2$
+  
+\end{slide}
+
+\begin{slide}
+  \stitle{seleção do k-ésimo mínimo} 
+\end{slide}
+
+\begin{slide}
+  \stitle{seleção do k-ésimo mínimo} 
+  Dado um vetor $L[1 \cdots n]$ com $n$ elementos, escreva um algoritmo para determinar o $k$-ésimo menor elemento, para $1 \leq k \leq n$.
+\end{slide}
+
+\begin{slide}
+  \stitle{seleção do k-ésimo mínimo} 
+  Dado um vetor $L[1 \cdots n]$ com $n$ elementos, escreva um algoritmo para determinar o $k$-ésimo menor elemento, para $1 \leq k \leq n$.
+  
+  \textbf{Solução:} ordenar o vetor.
+\end{slide}
+
+\begin{slide}
+  \stitle{seleção do k-ésimo mínimo} 
+  Dado um vetor $L[1 \cdots n]$ com $n$ elementos, escreva um algoritmo para determinar o $k$-ésimo menor elemento, para $1 \leq k \leq n$.
+  
+  \textbf{Solução:} ordenar o vetor.
+  
+\textbf{Tempo: } $O(n \log n)$
+\end{slide}
+
+\begin{slide}
+  \stitle{seleção do k-ésimo mínimo} 
+  Dado um vetor $L[1 \cdots n]$ com $n$ elementos, escreva um algoritmo para determinar o $k$-ésimo menor elemento, para $1 \leq k \leq n$.
+  
+  \textbf{Solução:} ordenar o vetor.
+  
+\textbf{Tempo: } $O(n \log n)$
+
+Utilizando divisão e conquista, vamos projetar um algoritmo linear.
+\end{slide}
+
+\begin{slide}
+  \stitle{seleção do k-ésimo mínimo} 
+\textbf{Idéia:} dividir $L$ em três sublistas $L_1, L_2$ e $L_3$ de acordo com um elemento $m$ de $L$ tais que:
+
+\itemtrig\ $L_1$ contenha todos os elementos \textbf{menores} do que $m$.
+
+\vspace{-1cm}\itemtrig\ $L_2$ contém todos os elementos \textbf{iguais} a $m$.
+
+\vspace{-1cm}\itemtrig\ $L_3$ contenha todos os elementos \textbf{maiores} do que $m$.
+\end{slide}
+
+\begin{slide}
+  \stitle{Escolha de $m$}
+ \itemtrig\ Divida $L$ em $|L|/5$ listas de 5 elementos cada;
+ 
+ \vspace{-1cm}\itemtrig\ Ordene separadamente cada uma dessas listas;
+ 
+ \vspace{-1cm}\itemtrig\ Seja $M$ a lista das medianas das listas de 5 elementos;
+ 
+ \vspace{-1cm}\itemtrig\ $m$ será a mediana de $M$;
+ \end{slide}
+
+\begin{slide}
+  \stitle{Escolha de $m$}
+ex.: 10, 8, 15, 9, 7, 20, 6, 1, 4, 19, 12, 11, 2, 5, 3, 18, 13, 14, 16, 17
+
+\begin{tabular}{cccc}
+15 & 20 & 12 & 18 \\
+10 & 19 & 11 & 17 \\
+9  & 6  & 5  & 16 \\
+8  & 4  & 3  & 14 \\
+7  & 1  & 2  & 13 \\
+\end{tabular}
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Escolha de $m$}
+ex.: 10, 8, 15, 9, 7, 20, 6, 1, 4, 19, 12, 11, 2, 5, 3, 18, 13, 14, 16, 17
+
+\begin{tabular}{cccc}
+15                       & 20                      & 12                      & 18                      \\
+10                       & 19                      & 11                      & 17                     \\ \hline
+\multicolumn{1}{|c}{9} & \multicolumn{1}{c}{6} & \multicolumn{1}{c}{5} & \multicolumn{1}{c|}{16} \\ \hline
+8                      & 4                     & 3                    & 14                      \\
+7                      & 1                    & 2                     & 13                     
+\end{tabular}
+
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Escolha de $m$}
+ex.: 10, 8, 15, 9, 7, 20, 6, 1, 4, 19, 12, 11, 2, 5, 3, 18, 13, 14, 16, 17
+
+\vspace{1cm}
+\begin{multicols}{2}
+\begin{tabular}{cccc}
+15                       & 20                      & 12                      & 18                      \\
+10                       & 19                      & 11                      & 17                     \\ \hline
+\multicolumn{1}{|c}{9} & \multicolumn{1}{c}{6} & \multicolumn{1}{c}{5} & \multicolumn{1}{c|}{16} \\ \hline
+8                      & 4                     & 3                    & 14                      \\
+7                      & 1                    & 2                     & 13                     
+\end{tabular}
+
+
+\begin{tabular}{cccc}
+12                       & 20                      & 15                      & 18                      \\
+11                       & 19                      & 10                      & 17                      \\ \hline
+\multicolumn{1}{|c}{5} & \multicolumn{1}{c}{6} & \multicolumn{1}{c}{9} & \multicolumn{1}{c|}{16} \\ \hline
+3                     & 4                     & 8                     & 14                      \\
+2                      & 1                     & 7                     & 13                     
+\end{tabular}
+
+
+\end{multicols}
+\end{slide}
+
+\begin{slide}
+  \stitle{seleção do k-ésimo mínimo}   
+    
+\textbf{\red Algoritmo:} $\proc{seleção}(k, L)$    
+
+\textbf{\red Entrada:} Um inteiro $k$ e um vetor $L[1 .. n]$.
+
+\textbf{\red Saída:} O $k$-ésimo menor elemento de $L$.
+\end{slide}
+
+
+\begin{slide}
+  \stitle{seleção do k-ésimo mínimo}   
+\textbf{\red Algoritmo:} $\proc{seleção}(k, L)$    
+\vspace{-1cm}
+  \begin{enumerate}
+  \item Se $n < 15$ então "ordene $L$ e devolva $L_k$;
+  \vspace{-1.2cm}\item Divida $L$ em listas de 5 elementos cada;
+   \vspace{-1.2cm}\item Ordene separadamente cada uma dessas listas;
+   \vspace{-1.2cm}\item Seja $M$ a lista das medianas das listas de 5 elementos;
+    \vspace{-1.2cm}\item $m = \proc{seleção}(\lceil |M|/2 \rceil, M)$;
+    \vspace{-1.2cm}\item Sejam $L_1$, $L_2$ e $L_3$ as sublistas dos elementos de L que são menores, iguais e maiores do que $m$, respectivamente;
+   
+    \vspace{-1.2cm}\item Se $|L_1| \geq k$ então devolva  $\proc{seleção}(k, L_1)$
+    \vspace{-1.2cm}\item senão Se $(|L_1| + |L_2|) \geq k$
+     \begin{itemize}
+    \vspace{-0.5cm}\item então devolva $m$ 
+    \vspace{-0.5cm}\item senão devolva $\proc{seleção}(k - |L_1| - |L2|, L_3)$
+    \end{itemize}
+                      
+  \end{enumerate}
+ \end{slide}
+
+
+\begin{slide}
+  \stitle{seleção do k-ésimo mínimo}   
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{fig01.eps}
+\end{center}
+
+\itemcirc\ Elementos de $A$ são menores ou iguais a $m$.
+
+\vspace{-1cm}\itemcirc\ Elementos de $B$ são maiores ou iguais a $m$.
+
+\end{slide}
+
+
+\begin{slide}
+  \stitle{seleção do k-ésimo mínimo} 
+\itemtrig\  A lista $M$ das medianas contém no máximo $n/5$ elementos então 
+
+\vspace{-1cm} \hspace{2cm}\itemtrig\ linha 5: $T(n/5)$ no máximo.
+
+\itemtrig\  As chamada recursivas de $\proc{seleção}(k, L_1)$ e $\proc{seleção}(k - |L_1| - |L2|, L_3)$ requerem tempo máximo $T(3n/4)$. 
+
+\itemtrig\  As demais linhas requerem tempo $O(n)$.
+
+
+
+\end{slide}
+
+
+\begin{slide}
+  \stitle{seleção do k-ésimo mínimo}   
+\textbf{Tempo de execução:}
+
+\itemtrig\ linhas 1 a 4: $O(n)$
+  
+\vspace{-1cm}\itemtrig\ linha 5: $T(n/5)$
+
+\vspace{-1cm}\itemtrig\ linha 6: $O(n)$
+
+\vspace{-1cm}\itemtrig\ linhas 7 e 8: $T(3n/4)$
+\end{slide}
+
+
+\begin{slide}
+  \stitle{seleção do k-ésimo mínimo}   
+Podemos expressar o tempo $T(n)$ pela seguinte recorrência:
+
+$T(n) \leq \left\{ \begin{array}{ll}
+cn & \textrm{para }n < 15,  \\\\
+T(n/5) + T(3n/4) + cn & \textrm{para }n \geq 15  
+\end{array} \right.$
+\end{slide}
+
+
+\begin{slide}
+  \stitle{seleção do k-ésimo mínimo}   
+Vamos mostrar, por indução em $n$ que
+
+$$T(n) \leq 20cn$$ 
+\end{slide}
+
+
+\begin{slide}
+  \stitle{seleção do k-ésimo mínimo}  
+Vamos mostrar, por indução em $n$ que
+
+$$T(n) \leq 20cn$$ 
+
+\textbf{Prova:}
+
+\textbf{Base:} A afirmação é verdadeira para $n < 15$  
+
+\textbf{Hipótese:} Vamos supor, por hipótese de indução, que ela é válida para valores menores do que $n$, e vamos provar a sua validade para $n$.
+\end{slide}
+
+
+\begin{slide}
+  
+\textbf{Passo de indução:}
+
+$$\begin{array}{ll}
+T(n) &\leq T(n/5) + T(3n/4) + cn
+\end{array} $$
+\end{slide}
+
+\begin{slide}
+  
+\textbf{Passo de indução:}
+
+$$\begin{array}{ll}
+T(n) &\leq T(n/5) + T(3n/4) + cn\\\\
+     &\leq 20c(n/5) + 20c(3n/4) + cn
+\end{array} $$
+\end{slide}
+
+\begin{slide}
+  
+\textbf{Passo de indução:}
+
+$$\begin{array}{ll}
+T(n) &\leq T(n/5) + T(3n/4) + cn\\\\
+     &\leq 20c(n/5) + 20c(3n/4) + cn \\\\
+     &= 20c(n/5 + 3n/4) + cn
+\end{array} $$
+\end{slide}
+
+\begin{slide}
+  
+\textbf{Passo de indução:}
+
+$$\begin{array}{ll}
+T(n) &\leq T(n/5) + T(3n/4) + cn\\\\
+     &\leq 20c(n/5) + 20c(3n/4) + cn \\\\
+     &= 20c(n/5 + 3n/4) + cn \\\\
+     &= 20c(19n/20) + cn
+\end{array} $$
+\end{slide}
+\begin{slide}
+  
+\textbf{Passo de indução:}
+
+$$\begin{array}{ll}
+T(n) &\leq T(n/5) + T(3n/4) + cn\\\\
+     &\leq 20c(n/5) + 20c(3n/4) + cn \\\\
+     &= 20c(n/5 + 3n/4) + cn \\\\
+     &= 20c(19n/20) + cn \\\\
+     &= 20cn
+\end{array} $$
+\end{slide}
+
+\begin{slide}
+  \stitle{Multiplicação de matriz} 
+\end{slide}
+
+\begin{slide}
+  \stitle{Multiplicação de matriz} 
+  
+  Entrada: $A = [a_{ij}]$, $B = [b_{ij}]$
+  
+  
+  $C = [c_{ij}] = A \cdot B$
+  
+  $$C_{ij} = \displaystyle \sum_{k=1}^{n} a_{ik}b_{kj}$$
+\end{slide}
+
+\begin{slide}
+  \stitle{Multiplicação de matriz} 
+  
+  Algoritmo padrão : $\Theta(n^3)$
+  
+\begin{tabbing}
+~~~~ \= ~~~~\= ~~~~\= ~~~~\= ~~~~\= ~~~~~~~\= \hspace*{12cm} \= \\
+1  \> \For $i = 1$ \To $n$ \textbf{\blue faça}\> \>  \>  \\
+2  \> \> \For $j = 1$ \To $n$ \textbf{\blue faça}\> \>  \>  \\
+3  \> \> \>$c_{ij} = 0$                                           \>  \\
+4  \> \> \>\For $k = 1$ \To $n$ \textbf{\blue faça}\> \>  \>  \\
+5  \> \> \> \> $c_{ij} = c_{ij} + a_{ik} \cdot b_{kj}$ \\
+\end{tabbing}  
+\end{slide}
+
+\begin{slide}
+  \stitle{Multiplicação de matriz} 
+  
+  Algoritmo divisão e conquista
+  
+  Idéia: matriz $n \times n$  
+  
+  \itemtrig\ Dividir a matriz em 4 submatrizes de dimensões $n/2 \times n/2$ 
+
+$$ \underset{C}{\left[
+\begin{tabular}{c|c}
+r & s \\ \hline 
+t & u \\
+\end{tabular}  
+\right]} = 
+\underset{A}{
+\left[
+\begin{tabular}{c|c}
+a & b \\ \hline 
+c & d \\
+\end{tabular}  
+\right] }
+\underset{B}{
+\left[
+\begin{tabular}{c|c}
+e & f \\ \hline 
+g & h \\
+\end{tabular}  
+\right]}  $$
+\end{slide}
+
+\begin{slide}
+  \stitle{Multiplicação de matriz} 
+$$ \underset{C}{\left[
+\begin{tabular}{c|c}
+r & s \\ \hline 
+t & u \\
+\end{tabular}  
+\right]} = 
+\underset{A}{
+\left[
+\begin{tabular}{c|c}
+a & b \\ \hline 
+c & d \\
+\end{tabular}  
+\right] }
+\underset{B}{
+\left[
+\begin{tabular}{c|c}
+e & f \\ \hline 
+g & h \\
+\end{tabular}  
+\right]}  $$
+
+$\begin{matrix}
+r = ae + bg \\
+s = af + bh \\
+t = ce + dg \\
+u = cf + dh 
+\end{matrix}$  
+
+Obtemos 8 multiplicações recursivas de matrizes $n/2 \times n/2$ e 4 adições de matrizes ($\Theta(n^2)$)
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Multiplicação de matriz} 
+$$ \underset{C}{\left[
+\begin{tabular}{c|c}
+r & s \\ \hline 
+t & u \\
+\end{tabular}  
+\right]} = 
+\underset{A}{
+\left[
+\begin{tabular}{c|c}
+a & b \\ \hline 
+c & d \\
+\end{tabular}  
+\right] }
+\underset{B}{
+\left[
+\begin{tabular}{c|c}
+e & f \\ \hline 
+g & h \\
+\end{tabular}  
+\right]}  $$
+
+$\begin{matrix}
+r = ae + bg \\
+s = af + bh \\
+t = ce + dg \\
+u = cf + dh 
+\end{matrix}$  
+  
+$T(n) = 8 T(n/2) + \Theta(n^2)$  
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Multiplicação de matriz} 
+$$ \underset{C}{\left[
+\begin{tabular}{c|c}
+r & s \\ \hline 
+t & u \\
+\end{tabular}  
+\right]} = 
+\underset{A}{
+\left[
+\begin{tabular}{c|c}
+a & b \\ \hline 
+c & d \\
+\end{tabular}  
+\right] }
+\underset{B}{
+\left[
+\begin{tabular}{c|c}
+e & f \\ \hline 
+g & h \\
+\end{tabular}  
+\right]}  $$
+
+$\begin{matrix}
+r = ae + bg \\
+s = af + bh \\
+t = ce + dg \\
+u = cf + dh 
+\end{matrix}$  
+  
+$T(n) = 8 T(n/2) + \Theta(n^2)$  
+
+$= \Theta(n^3)$ (caso 1)
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Multiplicação de matriz} 
+  
+  Algoritmo de Strassen
+  
+  Idéia: reduzir o número de multiplicações
+  
+  \begin{tabular}{l}
+   $P_1 = a \cdot (f - h)$ \\
+   $P_2 = (a + b) \cdot h$ \\
+   $P_3 = (c + d) \cdot e$ \\
+   $P_4 = d \cdot (g - e)$ \\
+   $P_5 = (a + d) \cdot (e + h)$ \\
+   $P_6 = (b - d) \cdot (g + h)$ \\
+   $P_7 = (a - c) \cdot (e + f)$ \\\\
+   $r = P_5 + P_4 - P_2 + P_6$ \\
+   $s = P_1 + P_2$ \\
+   $t = P_3 + P_4$ \\
+   $u = P_5 + P_1 - P_3 + P_7$ \\
+  \end{tabular}
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Multiplicação de matriz} 
+  
+  Algoritmo de Strassen  
+  
+  \begin{enumerate}
+\item \textbf{Dividir:} Computar os termos por produto
+\item \textbf{Conquistar:} Recursivamente computar $P_1, P_2, \cdots, P_7$
+\item \textbf{Combinar:} Computar $r, s, t, u$ ($\Theta(n^2)$)
+\end{enumerate} 
+
+Tempo: $T(n) = 7T(n/2) + \Theta(n^2)$
+
+$ = \Theta(n^{\lg_2 7}) = O(n^{2.81})$
+
+O melhor algoritmo encontrado até o momento: $O(n^{2.376})$
+\end{slide}
+
+
+
+\begin{slide}
+  \stitle{Obrigado}
+\end{slide}
+
+\end{document}
+
+% Local Variables: 
+% mode: latex
+% eval: (Portug-mode)
+% TeX-master: t
+% End: 

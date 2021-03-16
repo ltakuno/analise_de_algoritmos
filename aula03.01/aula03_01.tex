@@ -1,32 +1,10 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% talk: prototype
-%%% 2002/10/16
-%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%
-%%% Erstellen eines Vortrags in PDF-Format wie folgt:
-%%%
-%%% 1) Uebersetzen der Datei mit 
-%%%    pdflatex asz
-%%% 2) Wenn Features von ppower4 gewuenscht werden, dann die eben
-%%%    entstandene Datei asz.pdf weiterverarbeiten mit
-%%%    ./ppower4 asz.pdf vortrag.pdf
-%%% 3) Die Datei vortrag.pdf kann nun mit dem Acrobat Reader angesehen
-%%%    werden
-%%%
-%%% Fuer Testzwecke ist auch ein "normales" Uebersetzen mit LaTeX
-%%% moeglich:
-%%% 1) latex asz
-%%% 2) dvips asz.dvi -o asz.ps -t a4 -t landscape
-%%% 3) Anschauen mit ghostview
-%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 \ifx\pdfoutput\undefined \documentclass[clock,landscape]{slides} \else
 \documentclass[clock,landscape]{slides} \fi
 %\documentclass[clock,pdftex,landscape]{slides} \fi
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Escrevendo em português:
+
+
 \usepackage[brazil]{babel}
 \usepackage[latin1]{inputenc} % isso é quase redundante
 \usepackage{textcomp}
@@ -36,6 +14,7 @@
 \usepackage{float}
 \usepackage{epstopdf}
 \usepackage{psfrag}
+\usepackage{tikz}
 
 
 \usepackage{multicol}
@@ -43,7 +22,7 @@
 \usepackage{clrscode}
 %----------------------------
 \usepackage{tabularx}
-%%% Die Datei mit dem ASZ-Layout
+
 
 \usepackage{shi}
 
@@ -319,1383 +298,616 @@
   \stitle{Divisão e conquista}
 \end{slide}
 
+%---------------------------------------------------
 \begin{slide}
-  \stitle{Divisão e conquista}
-  
-\begin{enumerate}
-\item \textbf{Dividir} o problema (instância) em uma ou mais subproblemas.
-\item \textbf{Conquistar} cada subproblema recursivamente
-\item \textbf{Combinar} soluções
-\end{enumerate}  
-
-  
+  \stitle{Método Iterativo}
 \end{slide}
 
 \begin{slide}
-  \stitle{Busca binária}
-\end{slide}
-
-\begin{slide}
-  \stitle{Busca binária}
-Encontrar x em um vetor ordenado   
+  \stitle{Método Iterativo}
   
-\begin{enumerate}
-\item \textbf{Dividir:} comparar x com o elemento do meio
-\item \textbf{Conquistar:} recursão sobre um subvetor
-\item \textbf{Combinar:} simples
-\end{enumerate}  
-\end{slide}
+Mostre que  $T(n) = 2T(n/2) + n$ é $\Theta(n \lg n)$.
 
-\begin{slide}
-  \stitle{Busca binária}
-  $T(n) = 1T(n/2) + \Theta(1)$
-  
-  
-  $n^{\log_b a} = n^{\log_2 1} = 1$ 
-  
-  $f(n) = 1$ está "por cima" ou "por baixo" de $n^{\log_b a} = 1$?
-  
-  $f(n) = 1 = \Theta(1)$ (Caso 2)
-  
-  $\therefore T(n) = \Theta(1 \cdot \log n)$
-  \end{slide}
+Para $n$ potência de 2 e $k = \lg n$, temos
 
-\begin{slide}
-  \stitle{Potência de um número}
-\end{slide}
-
-
-\begin{slide}
-  \stitle{Potência de um número}
-  Dado um número $x$, um inteiro $n \geq 0$, computar $x^n$
-  
-Algoritmo ingênuo: 
-
-$$  \underbrace{x \cdot x \cdot x \cdots x}_{n} = x^n$$ 
-
-Tempo: $\Theta(n)$
-\end{slide}
-
-
-\begin{slide}
-  \stitle{Potência de um número}  
-  
-$x^n= \left\{  \begin{array}{ll} 
-                x^{\frac{n}{2}} \cdot x^{\frac{n}{2}} & \textrm{, se } n \textrm{ é par } \\\\
-x^{\frac{n-1}{2}} \cdot x^{\frac{n-1}{2}} \cdot x & \textrm{, se } n \textrm{ é ímpar } 
-                \end{array} \right. $  
-                
-                
-                
-$\begin{array}{ll}
-T(n) & = T(n/2) + \Theta(1) \\
-     & = \Theta(\log n)
-\end{array}$                
-\end{slide}
-
-
-\begin{slide}
-  \stitle{Número de Fibonacci}                  
-\end{slide}
-
-\begin{slide}
-  \stitle{Número de Fibonacci}                  
-  
-$F_n= \left\{  \begin{array}{ll} 
-                0 & \textrm{, se } n = 0 \\
-                1 & \textrm{, se } n = 1 \\
-F_{n-1} + F_{n-2} & \textrm{, se } n \geq 2
-                \end{array} \right. $  
-  
-  
-Algoritmo recursivo ingênuo  
-
-Tempo: $\Omega(\Phi^n)$ onde $\Phi = \frac{1+ \sqrt{5}}{2}$
-
-\itemtrig\ algoritmo exponencial: ruim
-
-\vspace{-1cm}\itemtrig\ algoritmo polinomial: bom
-
-Obs.: $\Phi$ é a razão áurea
-\end{slide}
-
-\begin{slide}
-  \stitle{Número de Fibonacci} 
-  
-Algoritmo bottom-up:
-
-computar: $F_0, F_1, F_2, \cdots, F_n  $    
-
-Tempo: $\Theta(n)$
-
-\end{slide}
-
-\begin{slide}
-  \stitle{Número de Fibonacci} 
-  
-Algoritmos recursivo ingênuo (versão 1)
-
-$F_n = \frac{\Phi^n}{\sqrt{5}}$ arredondado para o inteiro mais próximo.
-
-
-Tempo: $\Theta(\lg n)$
-
-Obs.: Este método não é confiável, por causa da aritmética de ponto flutuante que é propensa a erros de arredondamento.
-\end{slide}
-
-\begin{slide}
-  \stitle{Número de Fibonacci} 
-
-Teorema: 
-
-
-$\begin{bmatrix}
-F_{n+1} & F_{n} \\
-F_{n} & F_{n-1} 
-\end{bmatrix} = 
-\begin{bmatrix}
-1 & 1 \\
-1 & 0 
-\end{bmatrix}^n$
-
-$\Rightarrow$ tempo: $\Theta(\lg n)$
-\end{slide}
-
-\begin{slide}
-  \stitle{Número de Fibonacci} 
-
-Teorema: 
-
-$\begin{bmatrix}
-F_{n+1} & F_{n} \\
-F_{n} & F_{n-1} 
-\end{bmatrix} = 
-\begin{bmatrix}
-1 & 1 \\
-1 & 0 
-\end{bmatrix}^n$
-
-Prova: Por indução sobre $n$
-
-\textbf{Passo base:} 
-
-$ 
-\begin{bmatrix}
-1 & 1 \\
-1 & 0 
-\end{bmatrix}^1 =
-\begin{bmatrix}
-F_{2} & F_{1} \\
-F_{1} & F_{0} 
-\end{bmatrix}$
-\end{slide}
-
-\begin{slide}
-  \stitle{Número de Fibonacci} 
-
-\textbf{Passo indutivo:} 
-
-$\begin{bmatrix}
-F_{n+1} & F_{n} \\
-F_{n} & F_{n-1} 
-\end{bmatrix} = 
-\begin{bmatrix}
-F_{n} & F_{n-1} \\
-F_{n-1} & F_{n-2} 
-\end{bmatrix}^{n-1}
-\cdot
-\begin{bmatrix}
-1 & 1 \\
-1 & 0 
-\end{bmatrix}$
-  
-\end{slide}
-
-\begin{slide}
-  \stitle{Número de Fibonacci} 
-
-\textbf{Passo indutivo:} 
-
-$\begin{bmatrix}
-F_{n+1} & F_{n} \\
-F_{n} & F_{n-1} 
-\end{bmatrix} = 
-\begin{bmatrix}
-F_{n} & F_{n-1} \\
-F_{n-1} & F_{n-2} 
-\end{bmatrix}^{n-1}
-\cdot
-\begin{bmatrix}
-1 & 1 \\
-1 & 0 
-\end{bmatrix}$
-  
-
-$\begin{bmatrix}
-F_{n+1} & F_{n} \\
-F_{n} & F_{n-1} 
-\end{bmatrix} = 
-\begin{bmatrix}
-1 & 1 \\
-1 & 0 
-\end{bmatrix}^{n-1}
-\cdot
-\begin{bmatrix}
-1 & 1 \\
-1 & 0 
-\end{bmatrix}$
-
-\end{slide}
-
-\begin{slide}
-  \stitle{Número de Fibonacci} 
-
-\textbf{Passo indutivo:} 
-
-$\begin{bmatrix}
-F_{n+1} & F_{n} \\
-F_{n} & F_{n-1} 
-\end{bmatrix} = 
-\begin{bmatrix}
-F_{n} & F_{n-1} \\
-F_{n-1} & F_{n-2} 
-\end{bmatrix}^{n-1}
-\cdot
-\begin{bmatrix}
-1 & 1 \\
-1 & 0 
-\end{bmatrix}$
-  
-
-$\begin{bmatrix}
-F_{n+1} & F_{n} \\
-F_{n} & F_{n-1} 
-\end{bmatrix} = 
-\begin{bmatrix}
-1 & 1 \\
-1 & 0 
-\end{bmatrix}^{n-1}
-\cdot
-\begin{bmatrix}
-1 & 1 \\
-1 & 0 
-\end{bmatrix}$
-
-$\begin{bmatrix}
-F_{n+1} & F_{n} \\
-F_{n} & F_{n-1} 
-\end{bmatrix} = 
-\begin{bmatrix}
-1 & 1 \\
-1 & 0 
-\end{bmatrix}^{n}
-$
-
- $\square$
- 
- \end{slide}
-
-\begin{slide}
-  \stitle{Contagem de inversões} 
-\end{slide}
-
-\begin{slide}
-  \stitle{Contagem de inversões} 
-  
- {\red Problema}: Dada uma permutação $p[1 .. n]$, determinar o número de inversões em $p$. 
-  
-  Uma {\green inversão} é um par $(i, j)$ de índices de $p$ tal que $i < j$ e $p[i] > p[j]$.
-  
-\end{slide}
-
-\begin{slide}
-  \stitle{Contagem de inversões (Exemplo)} 
-
-{\blue Entrada:}
-$$
-\begin{tabular}{cccccccccc}
-                       & 1                      & 2                      & 3                      & 4                      & 5                      & 6                      & 7                      & 8                      & 9                      \\ \cline{2-10} 
-\multicolumn{1}{c|}{p} & \multicolumn{1}{c|}{2} & \multicolumn{1}{c|}{4} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{9} & \multicolumn{1}{c|}{5} & \multicolumn{1}{c|}{3} & \multicolumn{1}{c|}{8} & \multicolumn{1}{c|}{6} & \multicolumn{1}{c|}{7} \\ \cline{2-10} 
-\end{tabular}
-$$
-{\blue Saída:}11
-
-Inversões: $(1, 3), (2, 3), (4, 5),(2, 6),(4, 6),(5, 6),$ 
-
-\vspace{-1cm} \hspace{3.5cm} $(4, 7),(4, 8),(7, 8),(4, 9)$ e $(7, 9)$.
-\end{slide}
-
-\begin{slide}
-  \stitle{Contagem de inversões - solução ingênua} 
-  
-\begin{codebox}
-\Procname{$\proc{conta-inversões}(p, n)$}
-\li $c = 0$
-\li \For $i = 0$ \To $n-1$ {\blue \textbf{faça}}
-\li \> \For $j = i+1$ \To $n$ {\blue \textbf{faça}}
-\li \> \> \If $\id{p[i]} > \id{p[j]}$ {\blue \textbf{então}}
-\li \> \> \> $c = c + 1$
-\li \Return $c$
-\end{codebox}   
-
-Tempo: $O(n^2)$  
-\end{slide}
-
-\begin{slide}
-  \stitle{Contagem de inversões} 
-  
- \textbf{Solução melhor:} divisão e conquista
- 
- \textbf{Idéia:} vamos ordenar e contar ao mesmo tempo!
-\end{slide}
-
-\begin{slide}
-  \stitle{Contagem de inversões - adaptação do merge-sort} 
-  Conta o número de inversões de $A[p .. r]$, com $p \leq r$, e rearranja $A[p .. r]$ em ordem crescente.
-   
-\begin{codebox}
-\Procname{$\proc{conta-e-ordena}(A, p, r)$}
-\li \If $\id{p} \geq \id{r}$
-\li \Then \Return $0$
-\li \Else $q = \lfloor (p+r)/2 \rfloor$
-\li      $c1 = \proc{conta-e-ordena}(A, p, q)$ 
-\li      $c2 = \proc{conta-e-ordena}(A, q+1, r)$ 
-\li      $c3 = \proc{conta-e-intercala}(A, p, q, r)$ 
-\End   
-\li       \Return $c1+c2+c3$
-\end{codebox}   
-\end{slide}
-
-\begin{slide}
-\begin{codebox}
-\Procname{$\proc{conta-e-intercala}(A, p, q, r)$}
-\li \For $i = p$ \To $q$ {\blue \textbf{faça}}
-\li \>  $B[i] = A[i]$
-\li \For $j = q + 1$ \To $r$ {\blue \textbf{faça}}
-\li \>  $B[r + q + 1 - j] = A[j]$
-\li $i = p$
-\li $j = r$
-\li $c = 0$
-\li \For $k = p$ \To $r$ {\blue \textbf{faça}}
-\li \> \If $\id{B[i]} \leq \id{B[j]}$ \textbf{\blue então}
-\li \>\> $A[k] = B[i]$
-\li \>\>      $i = i + 1$ 
-\li \>\Else $A[k] = B[j]$
-\li \>\>      $j = j - 1$ 
-\li \>\>      $c = c + (q - i + 1)$
-\End   
-\li \Return $c$
-\end{codebox}   
-  
-\end{slide}
-
-\begin{slide}
-  \stitle{Simulação}    
-   
-$$
-\begin{tabular}{cccccccccc}
-& p & & & & q & & & & r\\ \cline{2-10} 
-\multicolumn{1}{c|}{A} & \multicolumn{1}{c|}{\red 22} & \multicolumn{1}{c|}{\red 33} & \multicolumn{1}{c|}{\red 55} & \multicolumn{1}{c|}{\red 77} & \multicolumn{1}{c|}{\red 99} & \multicolumn{1}{c|}{11} & \multicolumn{1}{c|}{44} & \multicolumn{1}{c|}{66} & \multicolumn{1}{c|}{88} \\ \cline{2-10} 
-\end{tabular}
-$$
-  
-$$
-\begin{tabular}{cccccccccc}
-&   & & & &   & & & &  \\ \cline{2-10} 
-\multicolumn{1}{c|}{B} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \,\;} & \multicolumn{1}{c|}{\; \,\;} & \multicolumn{1}{c|}{\; \,\;} \\ \cline{2-10} 
-\end{tabular}
-$$ 
-   
-$c = 0$
-\end{slide}
-
-\begin{slide}
-  \stitle{Simulação}    
-   
-$$
-\begin{tabular}{cccccccccc}
-&  k &  & & &   & & & &  \\ \cline{2-10} 
-\multicolumn{1}{c|}{A} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \,\;} & \multicolumn{1}{c|}{\; \,\;} & \multicolumn{1}{c|}{\; \,\;} \\ \cline{2-10} 
-\end{tabular}
-$$ 
-
-
-$$
-\begin{tabular}{cccccccccc}
-& {\red i} & & & &  & & & & j\\ \cline{2-10} 
-\multicolumn{1}{c|}{B} & \multicolumn{1}{c|}{\red 22} & \multicolumn{1}{c|}{\red 33} & \multicolumn{1}{c|}{\red 55} & \multicolumn{1}{c|}{\red 77} & \multicolumn{1}{c|}{\red 99} & \multicolumn{1}{c|}{88} & \multicolumn{1}{c|}{66} & \multicolumn{1}{c|}{44} & \multicolumn{1}{c|}{11} \\ \cline{2-10} 
-\end{tabular}
-$$
-  
-   
-$c = 0$
-\end{slide}
-
-\begin{slide}
-  \stitle{Simulação}    
-   
-$$
-\begin{tabular}{cccccccccc}
-&  & k & & &   & & & &  \\ \cline{2-10} 
-\multicolumn{1}{c|}{A} & \multicolumn{1}{c|}{11} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \,\;} & \multicolumn{1}{c|}{\; \,\;} & \multicolumn{1}{c|}{\; \,\;} \\ \cline{2-10} 
-\end{tabular}
-$$ 
-
-
-$$
-\begin{tabular}{cccccccccc}
-& {\red i} & & & &  & & & j & \\ \cline{2-10} 
-\multicolumn{1}{c|}{B} & \multicolumn{1}{c|}{\red 22} & \multicolumn{1}{c|}{\red 33} & \multicolumn{1}{c|}{\red 55} & \multicolumn{1}{c|}{\red 77} & \multicolumn{1}{c|}{\red 99} & \multicolumn{1}{c|}{88} & \multicolumn{1}{c|}{66} & \multicolumn{1}{c|}{44} & \multicolumn{1}{c|}{11} \\ \cline{2-10} 
-\end{tabular}
-$$
-  
-   
-$c = 0 + 5 = 5$
-\end{slide}
-
-
-\begin{slide}
-  \stitle{Simulação}    
-   
-$$
-\begin{tabular}{cccccccccc}
-&  &  & k & &   & & & &  \\ \cline{2-10} 
-\multicolumn{1}{c|}{A} & \multicolumn{1}{c|}{11} & \multicolumn{1}{c|}{{\red 22}} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \,\;} & \multicolumn{1}{c|}{\; \,\;} & \multicolumn{1}{c|}{\; \,\;} \\ \cline{2-10} 
-\end{tabular}
-$$ 
-
-
-$$
-\begin{tabular}{cccccccccc}
-&  & {\red i}& & &  & & & j & \\ \cline{2-10} 
-\multicolumn{1}{c|}{B} & \multicolumn{1}{c|}{\red 22} & \multicolumn{1}{c|}{\red 33} & \multicolumn{1}{c|}{\red 55} & \multicolumn{1}{c|}{\red 77} & \multicolumn{1}{c|}{\red 99} & \multicolumn{1}{c|}{88} & \multicolumn{1}{c|}{66} & \multicolumn{1}{c|}{44} & \multicolumn{1}{c|}{11} \\ \cline{2-10} 
-\end{tabular}
-$$
-  
-   
-$c = 5$
-\end{slide}
-
-\begin{slide}
-  \stitle{Simulação}    
-   
-$$
-\begin{tabular}{cccccccccc}
-&  &  &  & k &   & & & &  \\ \cline{2-10} 
-\multicolumn{1}{c|}{A} & \multicolumn{1}{c|}{11} & \multicolumn{1}{c|}{{\red 22}} & \multicolumn{1}{c|}{{\red 33}} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \,\;} & \multicolumn{1}{c|}{\; \,\;} & \multicolumn{1}{c|}{\; \,\;} \\ \cline{2-10} 
-\end{tabular}
-$$ 
-
-
-$$
-\begin{tabular}{cccccccccc}
-&  & & {\red i} & &  & & & j & \\ \cline{2-10} 
-\multicolumn{1}{c|}{B} & \multicolumn{1}{c|}{\red 22} & \multicolumn{1}{c|}{\red 33} & \multicolumn{1}{c|}{\red 55} & \multicolumn{1}{c|}{\red 77} & \multicolumn{1}{c|}{\red 99} & \multicolumn{1}{c|}{88} & \multicolumn{1}{c|}{66} & \multicolumn{1}{c|}{44} & \multicolumn{1}{c|}{11} \\ \cline{2-10} 
-\end{tabular}
-$$
-  
-   
-$c = 5$
-\end{slide}
-
-\begin{slide}
-  \stitle{Simulação}    
-   
-$$
-\begin{tabular}{cccccccccc}
-&  &  &  &  & k & & & &  \\ \cline{2-10} 
-\multicolumn{1}{c|}{A} & \multicolumn{1}{c|}{11} & \multicolumn{1}{c|}{{\red 22}} & \multicolumn{1}{c|}{{\red 33}} & \multicolumn{1}{c|}{44} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \,\;} & \multicolumn{1}{c|}{\; \,\;} & \multicolumn{1}{c|}{\; \,\;} \\ \cline{2-10} 
-\end{tabular}
-$$ 
-
-
-$$
-\begin{tabular}{cccccccccc}
-&  & & {\red i} & &  & & j & & \\ \cline{2-10} 
-\multicolumn{1}{c|}{B} & \multicolumn{1}{c|}{\red 22} & \multicolumn{1}{c|}{\red 33} & \multicolumn{1}{c|}{\red 55} & \multicolumn{1}{c|}{\red 77} & \multicolumn{1}{c|}{\red 99} & \multicolumn{1}{c|}{88} & \multicolumn{1}{c|}{66} & \multicolumn{1}{c|}{44} & \multicolumn{1}{c|}{11} \\ \cline{2-10} 
-\end{tabular}
-$$
-  
-   
-$c = 5 + 3 = 8$
-\end{slide}
-
-\begin{slide}
-  \stitle{Simulação}    
-   
-$$
-\begin{tabular}{cccccccccc}
-&  &  &  &  &  & k & & &  \\ \cline{2-10} 
-\multicolumn{1}{c|}{A} & \multicolumn{1}{c|}{11} & \multicolumn{1}{c|}{{\red 22}} & \multicolumn{1}{c|}{{\red 33}} & \multicolumn{1}{c|}{44} & \multicolumn{1}{c|}{{\red 55}} & \multicolumn{1}{c|}{\; \;\,} & \multicolumn{1}{c|}{\; \,\;} & \multicolumn{1}{c|}{\; \,\;} & \multicolumn{1}{c|}{\; \,\;} \\ \cline{2-10} 
-\end{tabular}
-$$ 
-
-
-$$
-\begin{tabular}{cccccccccc}
-&  & & & {\red i} &  & & j & & \\ \cline{2-10} 
-\multicolumn{1}{c|}{B} & \multicolumn{1}{c|}{\red 22} & \multicolumn{1}{c|}{\red 33} & \multicolumn{1}{c|}{\red 55} & \multicolumn{1}{c|}{\red 77} & \multicolumn{1}{c|}{\red 99} & \multicolumn{1}{c|}{88} & \multicolumn{1}{c|}{66} & \multicolumn{1}{c|}{44} & \multicolumn{1}{c|}{11} \\ \cline{2-10} 
-\end{tabular}
-$$
-  
-   
-$c = 8$
-\end{slide}
-
-\begin{slide}
-  \stitle{Simulação}    
-   
-$$
-\begin{tabular}{cccccccccc}
-&  &  &  &  &  & & k & &  \\ \cline{2-10} 
-\multicolumn{1}{c|}{A} & \multicolumn{1}{c|}{11} & \multicolumn{1}{c|}{{\red 22}} & \multicolumn{1}{c|}{{\red 33}} & \multicolumn{1}{c|}{44} & \multicolumn{1}{c|}{{\red 55}} & \multicolumn{1}{c|}{66} & \multicolumn{1}{c|}{\; \,\;} & \multicolumn{1}{c|}{\; \,\;} & \multicolumn{1}{c|}{\; \,\;} \\ \cline{2-10} 
-\end{tabular}
-$$ 
-
-
-$$
-\begin{tabular}{cccccccccc}
-&  & & & {\red i} &  & j & & & \\ \cline{2-10} 
-\multicolumn{1}{c|}{B} & \multicolumn{1}{c|}{\red 22} & \multicolumn{1}{c|}{\red 33} & \multicolumn{1}{c|}{\red 55} & \multicolumn{1}{c|}{\red 77} & \multicolumn{1}{c|}{\red 99} & \multicolumn{1}{c|}{88} & \multicolumn{1}{c|}{66} & \multicolumn{1}{c|}{44} & \multicolumn{1}{c|}{11} \\ \cline{2-10} 
-\end{tabular}
-$$
-  
-   
-$c = 8 + 2 = 10$
-\end{slide}
-
-\begin{slide}
-  \stitle{Simulação}    
-   
-$$
-\begin{tabular}{cccccccccc}
-&  &  &  &  &  & &  & k &  \\ \cline{2-10} 
-\multicolumn{1}{c|}{A} & \multicolumn{1}{c|}{11} & \multicolumn{1}{c|}{{\red 22}} & \multicolumn{1}{c|}{{\red 33}} & \multicolumn{1}{c|}{44} & \multicolumn{1}{c|}{{\red 55}} & \multicolumn{1}{c|}{66} & \multicolumn{1}{c|}{{\red 77}} & \multicolumn{1}{c|}{\; \,\;} & \multicolumn{1}{c|}{\; \,\;} \\ \cline{2-10} 
-\end{tabular}
-$$ 
-
-
-$$
-\begin{tabular}{cccccccccc}
-&  & & & & {\red i} & j & & & \\ \cline{2-10} 
-\multicolumn{1}{c|}{B} & \multicolumn{1}{c|}{\red 22} & \multicolumn{1}{c|}{\red 33} & \multicolumn{1}{c|}{\red 55} & \multicolumn{1}{c|}{\red 77} & \multicolumn{1}{c|}{\red 99} & \multicolumn{1}{c|}{88} & \multicolumn{1}{c|}{66} & \multicolumn{1}{c|}{44} & \multicolumn{1}{c|}{11} \\ \cline{2-10} 
-\end{tabular}
-$$
-  
-   
-$c = 10$
-\end{slide}
-
-\begin{slide}
-  \stitle{Simulação}    
-   
-$$
-\begin{tabular}{cccccccccc}
-&  &  &  &  &  & &  &  & k \\ \cline{2-10} 
-\multicolumn{1}{c|}{A} & \multicolumn{1}{c|}{11} & \multicolumn{1}{c|}{{\red 22}} & \multicolumn{1}{c|}{{\red 33}} & \multicolumn{1}{c|}{44} & \multicolumn{1}{c|}{{\red 55}} & \multicolumn{1}{c|}{66} & \multicolumn{1}{c|}{{\red 77}} & \multicolumn{1}{c|}{88} & \multicolumn{1}{c|}{\; \,\;} \\ \cline{2-10} 
-\end{tabular}
-$$ 
-
-
-$$
-\begin{tabular}{cccccccccc}
-&  & & & & {\red i} {\black =} j &  & & & \\ \cline{2-10} 
-\multicolumn{1}{c|}{B} & \multicolumn{1}{c|}{\red 22} & \multicolumn{1}{c|}{\red 33} & \multicolumn{1}{c|}{\red 55} & \multicolumn{1}{c|}{\red 77} & \multicolumn{1}{c|}{\red 99} & \multicolumn{1}{c|}{88} & \multicolumn{1}{c|}{66} & \multicolumn{1}{c|}{44} & \multicolumn{1}{c|}{11} \\ \cline{2-10} 
-\end{tabular}
-$$
-  
-   
-$c = 10 + 1 = 11$
-\end{slide}
-
-\begin{slide}
-  \stitle{Simulação}    
-   
-$$
-\begin{tabular}{cccccccccc}
-&  &  &  &  &  & &  &  &  \\ \cline{2-10} 
-\multicolumn{1}{c|}{A} & \multicolumn{1}{c|}{11} & \multicolumn{1}{c|}{{\red 22}} & \multicolumn{1}{c|}{{\red 33}} & \multicolumn{1}{c|}{44} & \multicolumn{1}{c|}{{\red 55}} & \multicolumn{1}{c|}{66} & \multicolumn{1}{c|}{{\red 77}} & \multicolumn{1}{c|}{88} & \multicolumn{1}{c|}{\red 99} \\ \cline{2-10} 
-\end{tabular}
-$$ 
-
-
-$$
-\begin{tabular}{cccccccccc}
-&  & & & & j & {\red i} & & & \\ \cline{2-10} 
-\multicolumn{1}{c|}{B} & \multicolumn{1}{c|}{\red 22} & \multicolumn{1}{c|}{\red 33} & \multicolumn{1}{c|}{\red 55} & \multicolumn{1}{c|}{\red 77} & \multicolumn{1}{c|}{\red 99} & \multicolumn{1}{c|}{88} & \multicolumn{1}{c|}{66} & \multicolumn{1}{c|}{44} & \multicolumn{1}{c|}{11} \\ \cline{2-10} 
-\end{tabular}
-$$
-  
-   
-$c = 11$
-\end{slide}
-
-\begin{slide}
-\begin{codebox}
-\Procname{$\proc{conta-e-intercala}(A, p, q, r)$}
-\li \For $i = p$ \To $q$ {\blue \textbf{faça}}
-\li \>  $B[i] = A[i]$
-\li \For $j = q + 1$ \To $r$ {\blue \textbf{faça}}
-\li \>  $B[r + q + 1 - j] = A[j]$
-\li $i = p$
-\li $j = r$
-\li $c = 0$
-\li \For $k = p$ \To $r$ {\blue \textbf{faça}}
-\li \> \If $\id{B[i]} \leq \id{B[j]}$ \textbf{\blue então}
-\li \>\> $A[k] = B[i]$
-\li \>\>      $i = i + 1$ 
-\li \>\Else $A[k] = B[j]$
-\li \>\>      $j = j - 1$ 
-\li \>\>      $c = c + (q - i + 1)$
-\End   
-\li \Return $c$
-\end{codebox}   
-  
-\end{slide}
-
-
-\begin{slide}
-  \stitle{Contagem de inversões} 
-  Análise do algoritmo $\proc{conta-e-intercala}$:
-  
-\itemtrig\ linhas 1-4 : $O(n)$   
-
-\vspace{-1cm}\itemtrig\ linhas 5-7 : $O(1)$   
-  
-\vspace{-1cm}\itemtrig\ linhas 8-14 : $O(n)$   
-
-\vspace{-1cm}\itemtrig\ linha 15 : $O(1)$   
-
-total: $T(n) = 11n + 4 = O(n)$
-\end{slide}
-
-
-\begin{slide}
-  \stitle{Contagem de inversões} 
-  
-  Análise do algoritmo $\proc{conta-e-ordena}$:
-  
-  $T(n) = 2 T(n/2) + n$
-
-definida para $n$ potência de 2.
-
-Prova utilizando a técnica da \textbf{árvore de recorrência}.
-
-$T(n) = \left\{ 
-\begin{array}{ll}
-1 & \textrm{se } n=1 \\\\
-2T(n/2) + n & \textrm{se } n\geq 2, n\textrm{ potência de }2 \\
-\end{array}
-\right.$
-\end{slide}
-
-
-\begin{slide}
-  \stitle{Contagem de inversões} 
-
-$T(n) = \left\{ 
-\begin{array}{ll}
-1 & \textrm{se } n=1 \\\\
-2T(n/2) + n & \textrm{se } n\geq 2, n\textrm{ potência de }2 \\
-\end{array}
-\right.$
-
-Desenrolando a recorrência:
-
-$\begin{array}{ll}
-T(n) & = 2T(n/2) + n\\
+$\begin{array}{rl}
+T(n) &= 2T(n/2) + n\\
 \end{array}$
-  
 \end{slide}
 
-
 \begin{slide}
-  \stitle{Contagem de inversões} 
+  \stitle{Método Iterativo}
+  
+Mostre que  $T(n) = 2T(n/2) + n$ é $\Theta(n \lg n)$.
 
-$T(n) = \left\{ 
-\begin{array}{ll}
-1 & \textrm{se } n=1 \\\\
-2T(n/2) + n & \textrm{se } n\geq 2, n\textrm{ potência de }2 \\
-\end{array}
-\right.$
+Para $n$ potência de 2 e $k = \lg n$, temos
 
-Desenrolando a recorrência:
-
-$\begin{array}{ll}
-T(n) & = 2T(n/2) + n\\
-T(n) & = 2T(2T(n/2^2) + n/2) + n = 2^2T(n/2^2) + 2n\\
+$\begin{array}{rl}
+T(n) &=\displaystyle 2 T\left(\frac{n}{2}\right) + n\\
+     &=\displaystyle 2 \left(2 T\left(\frac{n}{2^2}\right) + \frac{n}{2}  \right) + n = 2^2T\left( \frac{n}{2^2}\right) + 2n\\
+     
 \end{array}$
-  
 \end{slide}
 
-
 \begin{slide}
-  \stitle{Contagem de inversões} 
+  \stitle{Método Iterativo}
+  
+Mostre que  $T(n) = 2T(n/2) + n$ é $\Theta(n \lg n)$.
 
-$T(n) = \left\{ 
-\begin{array}{ll}
-1 & \textrm{se } n=1 \\\\
-2T(n/2) + n & \textrm{se } n\geq 2, n\textrm{ potência de }2 \\
-\end{array}
-\right.$
+Para $n$ potência de 2 e $k = \lg n$, temos
 
-Desenrolando a recorrência:
-
-$\begin{array}{ll}
-T(n) & = 2T(n/2) + n\\
-T(n) & = 2T(2T(n/2^2) + n/2) + n = 2^2T(n/2^2) + 2n\\
-T(n) & = 2^2T(2T(n/2^3) + n/2^2) + 2n = 2^3T(n/2^3) + 3n\\
+$\begin{array}{rl}
+T(n) &=\displaystyle 2 T\left(\frac{n}{2}\right) + n\\
+     &=\displaystyle 2 \left(2 T\left(\frac{n}{2^2}\right) + \frac{n}{2}  \right) + n = 2^2T\left( \frac{n}{2^2}\right) + 2n\\
+     &=\displaystyle 2^2 \left(2 T\left(\frac{n}{2^3}\right) + \frac{n}{2^2}  \right) + 2n = 2^3T\left( \frac{n}{2^3}\right) + 3n\\
+     
 \end{array}$
-  
 \end{slide}
 
-
 \begin{slide}
-  \stitle{Contagem de inversões} 
+  \stitle{Método Iterativo}
+  
+Mostre que  $T(n) = 2T(n/2) + n$ é $\Theta(n \lg n)$.
 
-$T(n) = \left\{ 
-\begin{array}{ll}
-1 & \textrm{se } n=1 \\\\
-2T(n/2) + n & \textrm{se } n\geq 2, n\textrm{ potência de }2 \\
-\end{array}
-\right.$
+Para $n$ potência de 2 e $k = \lg n$, temos
 
-Desenrolando a recorrência:
-
-$\begin{array}{ll}
-T(n) & = 2T(n/2) + n\\
-     & = 2T(2T(n/2^2) + n/2) + n = 2^2T(n/2^2) + 2n\\
-     & = 2^2T(2T(n/2^3) + n/2^2) + 2n = 2^3T(n/2^3) + 3n\\
-     & = 2^3T(2T(n/2^4) + n/2^3) + 3n = 2^4T(n/2^4) + 4n\\
+$\begin{array}{rl}
+T(n) &=\displaystyle 2 T\left(\frac{n}{2}\right) + n\\
+     &=\displaystyle 2 \left(2 T\left(\frac{n}{2^2}\right) + \frac{n}{2}  \right) + n = 2^2T\left( \frac{n}{2^2}\right) + 2n\\
+     &=\displaystyle 2^2 \left(2 T\left(\frac{n}{2^3}\right) + \frac{n}{2^2}  \right) + 2n = 2^3T\left( \frac{n}{2^3}\right) + 3n\\
+     &=\displaystyle 2^3 \left(2 T\left(\frac{n}{2^4}\right) + \frac{n}{2^3}  \right) + 3n = 2^4T\left( \frac{n}{2^4}\right) + 4n\\  
+     &= \cdots   
 \end{array}$
-  
 \end{slide}
 
-
 \begin{slide}
-  \stitle{Contagem de inversões} 
+  \stitle{Método Iterativo}
+  
+Mostre que  $T(n) = 2T(n/2) + n$ é $\Theta(n \lg n)$.
 
-$T(n) = \left\{ 
-\begin{array}{ll}
-1 & \textrm{se } n=1 \\\\
-2T(n/2) + n & \textrm{se } n\geq 2, n\textrm{ potência de }2 \\
-\end{array}
-\right.$
+Para $n$ potência de 2 e $k = \lg n$, temos
 
-Desenrolando a recorrência:
-
-$\begin{array}{ll}
-T(n) & = 2T(n/2) + n\\
-     & = 2T(2T(n/2^2) + n/2) + n = 2^2T(n/2^2) + 2n\\
-     & = 2^2T(2T(n/2^3) + n/2^2) + 2n = 2^3T(n/2^3) + 3n\\
-     & = 2^3T(2T(n/2^4) + n/2^3) + 3n = 2^4T(n/2^4) + 4n\\
-     & = \cdots\\
-     & = 2^kT(n/2^k) + kn
+$\begin{array}{rl}
+T(n) &=\displaystyle 2 T\left(\frac{n}{2}\right) + n\\
+     &=\displaystyle 2 \left(2 T\left(\frac{n}{2^2}\right) + \frac{n}{2}  \right) + n = 2^2T\left( \frac{n}{2^2}\right) + 2n\\
+     &=\displaystyle 2^2 \left(2 T\left(\frac{n}{2^3}\right) + \frac{n}{2^2}  \right) + 2n = 2^3T\left( \frac{n}{2^3}\right) + 3n\\
+     &=\displaystyle 2^3 \left(2 T\left(\frac{n}{2^4}\right) + \frac{n}{2^3}  \right) + 3n = 2^4T\left( \frac{n}{2^4}\right) + 4n\\  
+     &= \cdots   \\
+     &=\displaystyle 2T\left(\frac{n}{2^k} \right) + kn\\
 \end{array}$
-  
-onde $k = \lg n$. Disso concluimos que $T(n) = n + n\lg n$  
-  
 \end{slide}
 
-
 \begin{slide}
-  \stitle{Contagem de inversões} 
+  \stitle{Método Iterativo}
   
-  Análise do algoritmo $\proc{conta-e-ordena}$:
-  
-  $T(n) = 2 T(n/2) + n$
+Mostre que  $T(n) = 2T(n/2) + n$ é $\Theta(n \lg n)$.
 
-definida para $n$ potência de 2.
+Para $n$ potência de 2 e $k = \lg n$, temos
 
-Prova utilizando o \textbf{método da substituição}
-
-Palpite:  $T(n) = O(n \lg n)$
+$\begin{array}{rl}
+T(n) &=\displaystyle 2 T\left(\frac{n}{2}\right) + n\\
+     &=\displaystyle 2 \left(2 T\left(\frac{n}{2^2}\right) + \frac{n}{2}  \right) + n = 2^2T\left( \frac{n}{2^2}\right) + 2n\\
+     &=\displaystyle 2^2 \left(2 T\left(\frac{n}{2^3}\right) + \frac{n}{2^2}  \right) + 2n = 2^3T\left( \frac{n}{2^3}\right) + 3n\\
+     &=\displaystyle 2^3 \left(2 T\left(\frac{n}{2^4}\right) + \frac{n}{2^3}  \right) + 3n = 2^4T\left( \frac{n}{2^4}\right) + 4n\\  
+     &= \cdots   \\
+     &=\displaystyle 2T\left(\frac{n}{2^k} \right) + kn\\
+     &= n + n \lg n = \Theta(n \lg n)
+\end{array}$
 \end{slide}
 
-
 \begin{slide}
-  \stitle{Contagem de inversões} 
-Afirmação: A recorrência
-
-$T(n) = \left\{ 
-\begin{array}{ll}
-1 & \textrm{se } n=1 \\\\
-2T(n/2) + n & \textrm{se } n\geq 2, n\textrm{ potência de }2 \\
-\end{array}
-\right.$
-  
-tem como solução $T(n) = n + n \lg n$  
-
-\textbf{Prova:} Por indução em $n$
-
-\textbf{Base:} $n=1$
-
-$$T(1) = 1 + 1 \cdot \lg 1 = 1 + 1\cdot 0 = 1$$
+  \stitle{Método Iterativo}
+Mostre que  $T(n) = T(\lfloor n/2 \rfloor) + \Theta(1)$ é $\Theta(\lg n)$.
  
 \end{slide}
 
+\begin{slide}
+  \stitle{Método Iterativo}
+Mostre que  $T(n) = T(\lfloor n/2 \rfloor) + \Theta(1)$ é $\Theta(\lg n)$.
+
+Simplificando a recorrência acima:
+
+$T(1) = 1$ e  $T(n) = T(n/2) + 1$ para $n \geq 2$ potência de 2, temos:
+
+$\begin{array}{rl}
+T(n) &=\displaystyle T\left(\frac{n}{2}\right) + 1\\
+\end{array}$
+\end{slide}
 
 \begin{slide}
-  \stitle{Contagem de inversões} 
+  \stitle{Método Iterativo}
+Mostre que  $T(n) = T(\lfloor n/2 \rfloor) + \Theta(1)$ é $\Theta(\lg n)$.
+
+$\begin{array}{rl}
+T(n) &=\displaystyle  T\left(\frac{n}{2}\right) + 1\\
+\end{array}$
+\end{slide}
+
+\begin{slide}
+  \stitle{Método Iterativo}
+Mostre que  $T(n) = T(\lfloor n/2 \rfloor) + \Theta(1)$ é $\Theta(\lg n)$.
+
+$\begin{array}{rl}
+T(n) &=\displaystyle  T\left(\frac{n}{2}\right) + 1\\
+     &=\displaystyle  \left(T\left(\frac{n}{2^2}\right) + 1\right) + 1 = T\left(\frac{n}{2^2}\right) + 2\\
+     &=\displaystyle  \left(T\left(\frac{n}{2^3}\right) + 1\right) + 2 = T\left(\frac{n}{2^3}\right) + 3\\
+\end{array}$
+\end{slide}
+
+\begin{slide}
+  \stitle{Método Iterativo}
+Mostre que  $T(n) = T(\lfloor n/2 \rfloor) + \Theta(1)$ é $\Theta(\lg n)$.
+
+$\begin{array}{rl}
+T(n) &=\displaystyle  T\left(\frac{n}{2}\right) + 1\\
+     &=\displaystyle  \left(T\left(\frac{n}{2^2}\right) + 1\right) + 1 = T\left(\frac{n}{2^2}\right) + 2\\
+     &=\displaystyle  \left(T\left(\frac{n}{2^3}\right) + 1\right) + 2 = T\left(\frac{n}{2^3}\right) + 3\\
+     &=\displaystyle  \left(T\left(\frac{n}{2^4}\right) + 1\right) + 3 = T\left(\frac{n}{2^4}\right) + 4\\
+     &= \cdots\\
+\end{array}$
+\end{slide}
+
+\begin{slide}
+  \stitle{Método Iterativo}
+Mostre que  $T(n) = T(\lfloor n/2 \rfloor) + \Theta(1)$ é $\Theta(\lg n)$.
+
+$\begin{array}{rl}
+T(n) &=\displaystyle  T\left(\frac{n}{2}\right) + 1\\
+     &=\displaystyle  \left(T\left(\frac{n}{2^2}\right) + 1\right) + 1 = T\left(\frac{n}{2^2}\right) + 2\\
+     &=\displaystyle  \left(T\left(\frac{n}{2^3}\right) + 1\right) + 2 = T\left(\frac{n}{2^3}\right) + 3\\
+     &=\displaystyle  \left(T\left(\frac{n}{2^4}\right) + 1\right) + 3 = T\left(\frac{n}{2^4}\right) + 4\\
+     &= \cdots \\
+     &=\displaystyle  T\left(\frac{n}{2^k}\right) + k \hspace{2cm} \textrm{ para } k = \lg n\\
+\end{array}$
+\end{slide}
+
+\begin{slide}
+  \stitle{Método Iterativo}
+Mostre que  $T(n) = T(\lfloor n/2 \rfloor) + \Theta(1)$ é $\Theta(\lg n)$.
+
+$\begin{array}{rl}
+T(n) &=\displaystyle  T\left(\frac{n}{2}\right) + 1\\
+     &=\displaystyle  \left(T\left(\frac{n}{2^2}\right) + 1\right) + 1 = T\left(\frac{n}{2^2}\right) + 2\\
+     &=\displaystyle  \left(T\left(\frac{n}{2^3}\right) + 1\right) + 2 = T\left(\frac{n}{2^3}\right) + 3\\
+     &=\displaystyle  \left(T\left(\frac{n}{2^4}\right) + 1\right) + 3 = T\left(\frac{n}{2^4}\right) + 4\\
+     &= \cdots \\
+     &=\displaystyle  T\left(\frac{n}{2^k}\right) + k \hspace{2cm} \textrm{ para } k = \lg n\\\\
+     &=\displaystyle  T(1) + \lg n = \Theta(\lg n)\\
+\end{array}$
+\end{slide}
+
+\begin{slide}
+  \stitle{Método Iterativo}
+Mostre que  $T(n) = T(n-1) + \Theta(n)$ é $\Theta(n^2)$.
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Método Iterativo}
+Mostre que  $T(n) = T(n-1) + \Theta(n)$ é $\Theta(n^2)$.
+
+Simplificando a recorrência:
+
+$T(1) = 1$ e $T(n) = T(n-1) + n$ para $n \geq 2$
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Método Iterativo}
+Mostre que  $T(n) = T(n-1) + \Theta(n)$ é $\Theta(n^2)$.
+
+$\begin{array}{rl}
+T(n) &=\displaystyle  T(n-1) + n\\
+\end{array}$
+\end{slide}
+
+\begin{slide}
+  \stitle{Método Iterativo}
+Mostre que  $T(n) = T(n-1) + \Theta(n)$ é $\Theta(n^2)$.
+
+$\begin{array}{rl}
+T(n) &=\displaystyle  T(n-1) + n\\
+     &=\displaystyle  T(n-2) + (n-1) + n\\
+\end{array}$
+\end{slide}
+
+\begin{slide}
+  \stitle{Método Iterativo}
+Mostre que  $T(n) = T(n-1) + \Theta(n)$ é $\Theta(n^2)$.
+
+$\begin{array}{rl}
+T(n) &=\displaystyle  T(n-1) + n\\
+     &=\displaystyle  T(n-2) + (n-1) + n\\
+     &=\displaystyle  T(n-3) + (n-2) + (n-1) + n\\
+\end{array}$
+\end{slide}
+
+\begin{slide}
+  \stitle{Método Iterativo}
+Mostre que  $T(n) = T(n-1) + \Theta(n)$ é $\Theta(n^2)$.
+
+$\begin{array}{rl}
+T(n) &=\displaystyle  T(n-1) + n\\
+     &=\displaystyle  T(n-2) + (n-1) + n\\
+     &=\displaystyle  T(n-3) + (n-2) + (n-1) + n\\
+     &= \cdots\\
+\end{array}$
+\end{slide}
+
+\begin{slide}
+  \stitle{Método Iterativo}
+Mostre que  $T(n) = T(n-1) + \Theta(n)$ é $\Theta(n^2)$.
+
+$\begin{array}{rl}
+T(n) &=\displaystyle  T(n-1) + n\\
+     &=\displaystyle  T(n-2) + (n-1) + n\\
+     &=\displaystyle  T(n-3) + (n-2) + (n-1) + n\\
+     &= \cdots\\
+     &= T(1) + 2 + 3 + \cdots + (n-2) + (n-1) + n\\
+\end{array}$
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Método Iterativo}
+Mostre que  $T(n) = T(n-1) + \Theta(n)$ é $\Theta(n^2)$.
+
+$\begin{array}{rl}
+T(n) &=\displaystyle  T(n-1) + n\\
+     &=\displaystyle  T(n-2) + (n-1) + n\\
+     &=\displaystyle  T(n-3) + (n-2) + (n-1) + n\\
+     &= \cdots\\
+     &= T(1) + 2 + 3 + \cdots + (n-2) + (n-1) + n\\
+     &= 1 + 2 + 3 + \cdots + (n-2) + (n-1) + n = \displaystyle \frac{n(n+1)}{2}\\
+\end{array}$
+\end{slide}
+
+\begin{slide}
+  \stitle{Método Iterativo}
+Mostre que  $T(n) = T(n-1) + \Theta(n)$ é $\Theta(n^2)$.
+
+$\begin{array}{rl}
+T(n) &=\displaystyle  T(n-1) + n\\
+     &=\displaystyle  T(n-2) + (n-1) + n\\
+     &=\displaystyle  T(n-3) + (n-2) + (n-1) + n\\
+     &= \cdots\\
+     &= T(1) + 2 + 3 + \cdots + (n-2) + (n-1) + n\\
+     &= 1 + 2 + 3 + \cdots + (n-2) + (n-1) + n = \displaystyle \frac{n(n+1)}{2}\\
+     &= \Theta(n^2)
+\end{array}$
+\end{slide}
+\begin{slide}
+  \stitle{Método de substituição}
+\end{slide}
+
+\begin{slide}
+  \stitle{Método de substituição (Ex 1)}
   
-\textbf{Hipótese de indução:} $T(n) = n + n \lg n$  para $m < n$       
+Mostre que $T(n) = T(n-1) + n$  é $O(n^2)$.  
+\end{slide}
 
+\begin{slide}
+  \stitle{Método de substituição (Ex 1)}
+  
+Mostre que $T(n) = T(n-1) + n$  é $O(n^2)$.
 
-\textbf{Passo de indução: } $n \geq 2$
+\textbf{Palpite:} $T(n) = O(n^2) \Rightarrow T(n) \leq cn^2$
 
-$\begin{array}{ll}
-T(n) & = 2T(n/2) + n\\
+\end{slide}
+
+\begin{slide}
+  \stitle{Método de substituição (Ex 1)}
+  
+Mostre que $T(n) = T(n-1) + n$  é $O(n^2)$.
+
+\textbf{Palpite:} $T(n) = O(n^2) \Rightarrow T(n) \leq cn^2$
+
+\textbf{Base:} $T(2) = T(1) + 2 = 1 + 2 = 3 \leq c2^2$ é verdade para $c = 3/4$
+
+\textbf{Hipótese:} $T(n) \leq cn^2$, para todo $m<n$
+
+\textbf{Passo indutivo:} $T(n) = T(n-1) + n$
+\end{slide}
+
+\begin{slide}
+  \stitle{Método de substituição (Ex 1)}
+  
+Mostre que $T(n) = T(n-1) + n$  é $O(n^2)$.
+
+\textbf{Passo indutivo:} $T(n) = T(n-1) + n$
+
+$\begin{array}{l}
+\leq c(n-1)^2 + n \\
+\leq cn^2 - 2nc + c + n \\
+\leq cn^2 + n(1 - 2c) + c\\
+\leq cn^2\\
 \end{array}$
 
+O último passo é valido para $c > \frac{1}{2}$.
+\end{slide}
+
+%-------------------------------------------------
+
+\begin{slide}
+  \stitle{Método de substituição (Ex 2)}
+
+Mostre que $T(n) = 2T(\lceil n/2 \rceil) + n$ é $O(n \lg n)$.
+\end{slide}
+
+\begin{slide}
+  \stitle{Método de substituição (Ex 2)}
+
+Mostre que $T(n) = 2T(\lfloor n/2 \rfloor) + n$, $T(1) = 1$ é $O(n \lg n)$.
+
+\textbf{Palpite:} $T(n) = O(n \lg n) \Rightarrow T(n) \leq  cn \lg n $
+
+\end{slide}
+
+
+\begin{slide}
+  \stitle{Método de substituição (Ex 2)}
+
+Mostre que $T(n) = 2T(\lfloor n/2 \rfloor) + n$, $T(1) = 1$ é $O(n \lg n)$.
+
+\textbf{Palpite:} $T(n) = O(n \lg n) \Rightarrow T(n) \leq  cn \lg n $
+
+\textbf{Base:} $T(2) = 4$ e $T(3) = 5$. Queremos $T(n) \leq cn \lg n$, então para $c = 2$, $T(2)$ e $T(3)$ é válido.
+
+\textbf{Hipótese de Indução:} Assuma que $T(m) \leq cm \lg m$ para todo $m < n$.
+
+\textbf{Passo indutivo:} provar que $T(n) \leq cn \lg n$.
+
 
 \end{slide}
 
 \begin{slide}
-  \stitle{Contagem de inversões} 
-  
-\textbf{Hipótese de indução:} $T(n) = n + n \lg n$  para $m < n$       
+  \stitle{Método de substituição (Ex 2)}
 
+Mostre que $T(n) = 2T(\lfloor n/2 \rfloor) + n$, $T(1) = 1$ é $O(n \lg n)$.
 
-\textbf{Passo de indução: } $n \geq 2$
+\textbf{Passo indutivo:} provar que $T(n) \leq cn \lg n$.
 
-$\begin{array}{ll}
-T(n) & = 2T(n/2) + n\\
-     & = 2 (n/2 + (n/2) \lg (n/2)) + n\\
+$\begin{array}{rl}
+T(n) &= 2T(n/2) + n\\
+     &\leq 2cn/2 \lg n/2 + n\\
+     &= cn \lg n/2 + n\\
+     &= cn \lg n - cn \lg 2 + n\\
+     &= cn \lg n - cn + n\\
+     &\leq  cn \lg n \hspace{4cm} \textrm{quando } c \geq 1\\
 \end{array}$
-
-
 \end{slide}
+
+
+%%-----------------------------------
 \begin{slide}
-  \stitle{Contagem de inversões} 
+  \stitle{Método de substituição (Ex 3)}
   
-\textbf{Hipótese de indução:} $T(n) = n + n \lg n$  para $m < n$       
-
-
-\textbf{Passo de indução: } $n \geq 2$
-
-$\begin{array}{ll}
-T(n) & = 2T(n/2) + n\\
-     & = 2 (n/2 + (n/2) \lg (n/2)) + n\\
-     & = 2n + n\lg(n/2)\\
-\end{array}$
-
-
+Mostre que  $T(n)$ é $O(n^3)$.
+$$T(n) = 
+\left\{ 
+\begin{array}{ll}
+O(1) & \textrm{se }n = 1\\
+4T(n/2)+O(n) & \textrm{se }n \geq 2\\
+\end{array}
+\right.$$ 
 \end{slide}
+
 \begin{slide}
-  \stitle{Contagem de inversões} 
+  \stitle{Método de substituição (Ex 3)}
+Mostre que $T(n) = 4T(n/2)+O(n)$ é  $O(n^3)$.   
+
+Prova:
   
-\textbf{Hipótese de indução:} $T(n) = n + n \lg n$  para $m < n$       
+\textbf{Palpite:} $T(n) = O(n^3) \Rightarrow T(n) \leq cn^3$.
 
+- Existem constantes positivas $n_0$ e $c$ tal que para todo $n\geq n_0$, $T(n) \leq cn^3$.
 
-\textbf{Passo de indução: } $n \geq 2$
-
-$\begin{array}{ll}
-T(n) & = 2T(n/2) + n\\
-     & = 2 (n/2 + (n/2) \lg (n/2)) + n\\
-     & = 2n + n\lg(n/2)\\
-     & = 2n + n(\lg n - 1) \\
-\end{array}$
-
-
+- Use indução para encontrar as constantes $n_0$ e $c$
 \end{slide}
+
 \begin{slide}
-  \stitle{Contagem de inversões} 
+  \stitle{Método de substituição (Ex 3)} 
+Mostre que $T(n) = 4T(n/2)+O(n)$ é  $O(n^3)$.   
   
-\textbf{Hipótese de indução:} $T(n) = n + n \lg n$  para $m < n$       
-
-
-\textbf{Passo de indução: } $n \geq 2$
-
-$\begin{array}{ll}
-T(n) & = 2T(n/2) + n\\
-     & = 2 (n/2 + (n/2) \lg (n/2)) + n\\
-     & = 2n + n\lg(n/2)\\
-     & = 2n + n(\lg n - 1) \\
-     & = n + n \lg n
-\end{array}$ 
-
-$\square$
-\end{slide}
-\begin{slide}
-  \stitle{Contagem de inversões} 
+Prova:
   
-\textbf{Hipótese de indução:} $T(n) = n + n \lg n$  para $m < n$       
+\textbf{Palpite:} $T(n) = O(n^3) \Rightarrow T(n) \leq cn^3$.
 
+\textbf{Base:} $n=1$, trivial
 
-\textbf{Passo de indução: } $n \geq 2$
-
-$\begin{array}{ll}
-T(n) & = 2T(n/2) + n\\
-     & = 2 (n/2 + (n/2) \lg (n/2)) + n\\
-     & = 2n + n\lg(n/2)\\
-     & = 2n + n(\lg n - 1) \\
-     & = n + n \lg n
-\end{array}$
-
-
-\end{slide}
-
-
-\begin{slide}
-  \stitle{Máximo e o mínimo de um vetor} 
-\end{slide}
-
-\begin{slide}
-  \stitle{Máximo e o mínimo de um vetor} 
-  
-  Entrada: um vetor $A[]$, um par $(l,r)$ representando $A[l \cdots r]$
-  Saída: um par $(A_i,A_j)$ contendo o maior e o menor valor de $A[l \cdots r]$
-\end{slide}
-
-\begin{slide}
-  \stitle{Máximo e o mínimo de um vetor} 
-\begin{codebox}
-\Procname{$\proc{maxMin}(A, l, r)$}
-\li \If $\id{l} = \id{r}$
-\li \Then \Return $(A[l], A[r])$
-\li \Else \If $\id{l} = \id{r}$
-\li  \Then \If $A_l \geq A_r$
-\li  \Then \Return $(A[l], A[r])$
-\li  \Else \Return $(A[r], A[l])$         
-\End
-\li \Else $k = \lfloor (l + r)/ \rfloor2$
-\li       $(MaxL, MinL) = \proc{maxMin}(A, l,k)$
-\li       $(MaxR, MinR) = \proc{maxMin}(A, l+1,k)$
-\li       $max = maximo(MaxL, MaxR)$ 
-\li       $min = maximo(MinL, MinR)$ 
-\End   
-\li       \Return $(max, min)$
-\end{codebox}   
-\end{slide}
-
-\begin{slide}
-  \stitle{Tempo gasto pelo $\proc{maxMin}$} 
+\textbf{Hipótese de indução:} Assuma que $T(m) \leq cm^3$ para todo $m < n$
  
-Seja $T(n)$ o número de comparações feitas pelo $\proc{maxMin}$ para um vetor com $n$ elementos. Então:
+\textbf{Passo de indução:} Temos que provar que $T(n) \leq cn^3$.
 
-$T(1) = 0$, $T(2) = 1$
-
-\vspace{-1cm}$T(n) = T(\lceil n/2 \rceil) + T(\lfloor n/2 \rfloor) + 2$
-
-
-Vamos mostrar que 
-
-$$T(n) \leq  \displaystyle\frac{5n}{3}  - 2$$
 \end{slide}
 
 \begin{slide}
-  \stitle{Tempo gasto pelo $\proc{maxMin}$} 
-  
-  $T(n) = T(\lceil n/2 \rceil) + T(\lfloor n/2 \rfloor) + 2$
-  
-  $\leq \displaystyle\frac{5 \lceil n/2 \rceil}{3} - 2 +   \displaystyle\frac{5 \lceil n/2 \rceil}{3} - 2 + 2$
+  \stitle{Método de substituição (Ex 3)} 
+Mostre que $T(n) = 4T(n/2)+O(n)$ é  $O(n^3)$.   
 
-  $\leq \displaystyle \frac{5}{3}(\lceil n/2 \rceil   +   \displaystyle\lfloor n/2 \rfloor) - 2$
+Prova:
 
-  $\leq \displaystyle \frac{5n}{3} - 2$
-  
+\textbf{Passo de indução:} Temos que provar que $T(n) \leq cn^3$.
+
+$\begin{array}{rl}
+T(n) &= 4T(n/2) + O(n)\\
+     &\leq 4c(n/2)^3 + bn\\
+     &= cn^3/2 + bn\\
+     &= cn^3 - (cn^3/2 - bn)\\
+     &\leq cn^3
+\end{array}$
+
+A última inequação é valida quando $cn^3/2 - bn \geq 0$, por exemplo $c=2b$ e $n_0 = 1$ 
+\end{slide}
+
+%-----------------------------------------------------------------------
+
+\begin{slide}
+  \stitle{Método de árvore de recursão}
 \end{slide}
 
 \begin{slide}
-  \stitle{seleção do k-ésimo mínimo} 
-\end{slide}
-
-\begin{slide}
-  \stitle{seleção do k-ésimo mínimo} 
-  Dado um vetor $L[1 \cdots n]$ com $n$ elementos, escreva um algoritmo para determinar o $k$-ésimo menor elemento, para $1 \leq k \leq n$.
-\end{slide}
-
-\begin{slide}
-  \stitle{seleção do k-ésimo mínimo} 
-  Dado um vetor $L[1 \cdots n]$ com $n$ elementos, escreva um algoritmo para determinar o $k$-ésimo menor elemento, para $1 \leq k \leq n$.
-  
-  \textbf{Solução:} ordenar o vetor.
-\end{slide}
-
-\begin{slide}
-  \stitle{seleção do k-ésimo mínimo} 
-  Dado um vetor $L[1 \cdots n]$ com $n$ elementos, escreva um algoritmo para determinar o $k$-ésimo menor elemento, para $1 \leq k \leq n$.
-  
-  \textbf{Solução:} ordenar o vetor.
-  
-\textbf{Tempo: } $O(n \log n)$
-\end{slide}
-
-\begin{slide}
-  \stitle{seleção do k-ésimo mínimo} 
-  Dado um vetor $L[1 \cdots n]$ com $n$ elementos, escreva um algoritmo para determinar o $k$-ésimo menor elemento, para $1 \leq k \leq n$.
-  
-  \textbf{Solução:} ordenar o vetor.
-  
-\textbf{Tempo: } $O(n \log n)$
-
-Utilizando divisão e conquista, vamos projetar um algoritmo linear.
-\end{slide}
-
-\begin{slide}
-  \stitle{seleção do k-ésimo mínimo} 
-\textbf{Idéia:} dividir $L$ em três sublistas $L_1, L_2$ e $L_3$ de acordo com um elemento $m$ de $L$ tais que:
-
-\itemtrig\ $L_1$ contenha todos os elementos \textbf{menores} do que $m$.
-
-\vspace{-1cm}\itemtrig\ $L_2$ contém todos os elementos \textbf{iguais} a $m$.
-
-\vspace{-1cm}\itemtrig\ $L_3$ contenha todos os elementos \textbf{maiores} do que $m$.
-\end{slide}
-
-\begin{slide}
-  \stitle{Escolha de $m$}
- \itemtrig\ Divida $L$ em $|L|/5$ listas de 5 elementos cada;
- 
- \vspace{-1cm}\itemtrig\ Ordene separadamente cada uma dessas listas;
- 
- \vspace{-1cm}\itemtrig\ Seja $M$ a lista das medianas das listas de 5 elementos;
- 
- \vspace{-1cm}\itemtrig\ $m$ será a mediana de $M$;
-\end{slide}
-
-\begin{slide}
-  \stitle{seleção do k-ésimo mínimo}   
+  \stitle{Método de árvore de recursão}
     
-\textbf{\red Algoritmo:} $\proc{seleção}(k, L)$    
+Mostre que $T(n) = 2T(n/2) + O(n)$ é $O(n \lg n)$.
 
-\textbf{\red Entrada:} Um inteiro $k$ e um vetor $L[1 .. n]$.
-
-\textbf{\red Saída:} O $k$-ésimo menor elemento de $L$.
-\end{slide}
-
-
-\begin{slide}
-  \stitle{seleção do k-ésimo mínimo}   
-\textbf{\red Algoritmo:} $\proc{seleção}(k, L)$    
-\vspace{-1cm}
-  \begin{enumerate}
-  \item Se $n < 15$ então "ordene $L$ e devolva $L_k$;
-  \vspace{-1.2cm}\item Divida $L$ em listas de 5 elementos cada;
-   \vspace{-1.2cm}\item Ordene separadamente cada uma dessas listas;
-   \vspace{-1.2cm}\item Seja $M$ a lista das medianas das listas de 5 elementos;
-    \vspace{-1.2cm}\item $m = \proc{seleção}(\lceil |M|/2 \rceil, M)$;
-    \vspace{-1.2cm}\item Sejam $L_1$, $L_2$ e $L_3$ as sublistas dos elementos de L que são menores, iguais e maiores do que $m$, respectivamente;
-   
-    \vspace{-1.2cm}\item Se $|L_1| \geq k$ então devolva  $\proc{seleção}(k, L_1)$
-    \vspace{-1.2cm}\item senão Se $(|L_1| + |L_2|) \geq k$
-     \begin{itemize}
-    \vspace{-0.5cm}\item então devolva $m$ 
-    \vspace{-0.5cm}\item senão devolva $\proc{seleção}(k - |L_1| - |L2|, L_3)$
-    \end{itemize}
-                      
-  \end{enumerate}
- \end{slide}
-
-
-\begin{slide}
-  \stitle{seleção do k-ésimo mínimo}   
-\textbf{Tempo de execução:}
-
-\itemtrig\ linhas 1 a 4: $O(n)$
-  
-\vspace{-1cm}\itemtrig\ linha 5: $T(n/5)$
-
-\vspace{-1cm}\itemtrig\ linha 6: $O(n)$
-
-\vspace{-1cm}\itemtrig\ linhas 7 e 8: $T(3n/4)$
-\end{slide}
-
-
-\begin{slide}
-  \stitle{seleção do k-ésimo mínimo}   
-Podemos expressar o tempo $T(n)$ pela seguinte recorrência:
-
-$T(n) \leq \left\{ \begin{array}{ll}
-cn & \textrm{para }n < 15,  \\\\
-T(n/5) + T(3n/4) + cn & \textrm{para }n \geq 15  
-\end{array} \right.$
-\end{slide}
-
-
-\begin{slide}
-  \stitle{seleção do k-ésimo mínimo}   
-Vamos mostrar, por indução em $n$ que
-
-$$T(n) \leq 20cn$$ 
-\end{slide}
-
-
-\begin{slide}
-  \stitle{seleção do k-ésimo mínimo}  
-Vamos mostrar, por indução em $n$ que
-
-$$T(n) \leq 20cn$$ 
-
-\textbf{Prova:}
-
-\textbf{Base:} A afirmação é verdadeira para $n < 15$  
-
-\textbf{Hipótese:} Vamos supor, por hipótese de indução, que ela é válida para valores menores do que $n$, e vamos provar a sua validade para $n$.
-\end{slide}
-
-
-\begin{slide}
-  
-\textbf{Passo de indução:}
-
-$$\begin{array}{ll}
-T(n) &\leq T(n/5) + T(3n/4) + cn
-\end{array} $$
+\begin{center}
+\includegraphics[width=0.60\textwidth]{fig01.eps}
+\end{center}
 \end{slide}
 
 \begin{slide}
+Mostre que $T(n) = 2T(n/2) + O(n)$ é $O(n \lg n)$.
   
-\textbf{Passo de indução:}
+\begin{center}
+\includegraphics[width=0.60\textwidth]{fig02.eps}
+\end{center}
+\end{slide}
 
-$$\begin{array}{ll}
-T(n) &\leq T(n/5) + T(3n/4) + cn\\\\
-     &\leq 20c(n/5) + 20c(3n/4) + cn
-\end{array} $$
+
+%--------------------------------------------------
+
+\begin{slide}
+  \stitle{Método de substituição}
+  
+Mostre que $T(n) = T(\lceil n/2 \rceil) + 1$ é $O(\lg n)$.
+
+\textbf{Palpite:} $T(n) \leq  c \lg n $
 \end{slide}
 
 \begin{slide}
+  \stitle{Método de substituição}
   
-\textbf{Passo de indução:}
+Mostre que $T(n) = T(\lceil n/2 \rceil) + 1$ é $O(\lg n)$.
 
-$$\begin{array}{ll}
-T(n) &\leq T(n/5) + T(3n/4) + cn\\\\
-     &\leq 20c(n/5) + 20c(3n/4) + cn \\\\
-     &= 20c(n/5 + 3n/4) + cn
-\end{array} $$
+\textbf{Palpite:} $T(n) \leq  c \lg n $
+
+\textbf{Base:}  $T(2) = T(1) + 2 = 3 \leq c \lg 2$ para $c = 3$
 \end{slide}
 
 \begin{slide}
+  \stitle{Método de substituição}
   
-\textbf{Passo de indução:}
+Mostre que $T(n) = T(\lceil n/2 \rceil) + 1$ é $O(\lg n)$.
 
-$$\begin{array}{ll}
-T(n) &\leq T(n/5) + T(3n/4) + cn\\\\
-     &\leq 20c(n/5) + 20c(3n/4) + cn \\\\
-     &= 20c(n/5 + 3n/4) + cn \\\\
-     &= 20c(19n/20) + cn
-\end{array} $$
-\end{slide}
-\begin{slide}
-  
-\textbf{Passo de indução:}
+\textbf{Palpite:} $T(n) \leq  c \lg n $
 
-$$\begin{array}{ll}
-T(n) &\leq T(n/5) + T(3n/4) + cn\\\\
-     &\leq 20c(n/5) + 20c(3n/4) + cn \\\\
-     &= 20c(n/5 + 3n/4) + cn \\\\
-     &= 20c(19n/20) + cn \\\\
-     &= 20cn
-\end{array} $$
-\end{slide}
+\textbf{Base:}  $T(2) = T(1) + 2 = 3 \leq c \lg 2$ para $c = 3$
 
-\begin{slide}
-  \stitle{Multiplicação de matriz} 
-\end{slide}
-
-\begin{slide}
-  \stitle{Multiplicação de matriz} 
-  
-  Entrada: $A = [a_{ij}]$, $B = [b_{ij}]$
-  
-  
-  $C = [c_{ij}] = A \cdot B$
-  
-  $$C_{ij} = \displaystyle \sum_{k=1}^{n} a_{ik}b_{kj}$$
-\end{slide}
-
-\begin{slide}
-  \stitle{Multiplicação de matriz} 
-  
-  Algoritmo padrão : $\Theta(n^3)$
-  
-\begin{tabbing}
-~~~~ \= ~~~~\= ~~~~\= ~~~~\= ~~~~\= ~~~~~~~\= \hspace*{12cm} \= \\
-1  \> \For $i = 1$ \To $n$ \textbf{\blue faça}\> \>  \>  \\
-2  \> \> \For $j = 1$ \To $n$ \textbf{\blue faça}\> \>  \>  \\
-3  \> \> \>$c_{ij} = 0$                                           \>  \\
-4  \> \> \>\For $k = 1$ \To $n$ \textbf{\blue faça}\> \>  \>  \\
-5  \> \> \> \> $c_{ij} = c_{ij} + a_{ik} \cdot b_{kj}$ \\
-\end{tabbing}  
-\end{slide}
-
-\begin{slide}
-  \stitle{Multiplicação de matriz} 
-  
-  Algoritmo divisão e conquista
-  
-  Idéia: matriz $n \times n$  
-  
-  \itemtrig\ Dividir a matriz em 4 submatrizes de dimensões $n/2 \times n/2$ 
-
-$$ \underset{C}{\left[
-\begin{tabular}{c|c}
-r & s \\ \hline 
-t & u \\
-\end{tabular}  
-\right]} = 
-\underset{A}{
-\left[
-\begin{tabular}{c|c}
-a & b \\ \hline 
-c & d \\
-\end{tabular}  
-\right] }
-\underset{B}{
-\left[
-\begin{tabular}{c|c}
-e & f \\ \hline 
-g & h \\
-\end{tabular}  
-\right]}  $$
-\end{slide}
-
-\begin{slide}
-  \stitle{Multiplicação de matriz} 
-$$ \underset{C}{\left[
-\begin{tabular}{c|c}
-r & s \\ \hline 
-t & u \\
-\end{tabular}  
-\right]} = 
-\underset{A}{
-\left[
-\begin{tabular}{c|c}
-a & b \\ \hline 
-c & d \\
-\end{tabular}  
-\right] }
-\underset{B}{
-\left[
-\begin{tabular}{c|c}
-e & f \\ \hline 
-g & h \\
-\end{tabular}  
-\right]}  $$
-
-$\begin{matrix}
-r = ae + bg \\
-s = af + bh \\
-t = ce + dg \\
-u = cf + dh 
-\end{matrix}$  
-
-Obtemos 8 multiplicações recursivas de matrizes $n/2 \times n/2$ e 4 adições de matrizes ($\Theta(n^2)$)
+\textbf{Hipótese:}  $T(n) \leq  c \lg n $, para todo $m < n$
 
 \end{slide}
 
 \begin{slide}
-  \stitle{Multiplicação de matriz} 
-$$ \underset{C}{\left[
-\begin{tabular}{c|c}
-r & s \\ \hline 
-t & u \\
-\end{tabular}  
-\right]} = 
-\underset{A}{
-\left[
-\begin{tabular}{c|c}
-a & b \\ \hline 
-c & d \\
-\end{tabular}  
-\right] }
-\underset{B}{
-\left[
-\begin{tabular}{c|c}
-e & f \\ \hline 
-g & h \\
-\end{tabular}  
-\right]}  $$
-
-$\begin{matrix}
-r = ae + bg \\
-s = af + bh \\
-t = ce + dg \\
-u = cf + dh 
-\end{matrix}$  
+  \stitle{Método de substituição}
   
-$T(n) = 8 T(n/2) + \Theta(n^2)$  
+Mostre que $T(n) = T(\lceil n/2 \rceil) + 1$ é $O(\lg n)$.
+
+\textbf{Palpite:} $T(n) \leq  c \lg n $
+
+\textbf{Base:}  $T(2) = T(1) + 2 = 3 \leq c \lg 2$ para $c = 3$
+
+\textbf{Hipótese:}  $T(n) \leq  c \lg n $, para todo $m < n$
+
+\textbf{Passo indutivo:}   $T(n) = T(\lceil n/2 \rceil) + 1$
+\end{slide}
+
+\begin{slide}
+  \stitle{Método de substituição}
+  
+Mostre que $T(n) = T(\lceil n/2 \rceil) + 1$ é $O(\lg n)$.
+
+\textbf{Passo indutivo:}   $T(n) = T(\lceil n/2 \rceil) + 1$
+
+$\begin{array}{l}
+\leq \displaystyle c \lg \left\lceil \frac{n}{2} \right\rceil + 1 \\
+< \displaystyle c \lg \left( \frac{n}{2} + 1 \right) + 1 \\
+< \displaystyle c \lg \left( \frac{n+2}{2} \right) + 1 \\
+= \displaystyle c \lg (n+2) - c \lg 2 + 1 \\
+= \displaystyle c \lg (n+2) - c + 1 \\
+\end{array}$
+
+\end{slide}
+
+\begin{slide}
+  \stitle{Método Mestre}
 \end{slide}
 
 
 \begin{slide}
-  \stitle{Multiplicação de matriz} 
-$$ \underset{C}{\left[
-\begin{tabular}{c|c}
-r & s \\ \hline 
-t & u \\
-\end{tabular}  
-\right]} = 
-\underset{A}{
-\left[
-\begin{tabular}{c|c}
-a & b \\ \hline 
-c & d \\
-\end{tabular}  
-\right] }
-\underset{B}{
-\left[
-\begin{tabular}{c|c}
-e & f \\ \hline 
-g & h \\
-\end{tabular}  
-\right]}  $$
-
-$\begin{matrix}
-r = ae + bg \\
-s = af + bh \\
-t = ce + dg \\
-u = cf + dh 
-\end{matrix}$  
+  \stitle{Método Mestre}
   
-$T(n) = 8 T(n/2) + \Theta(n^2)$  
+ Dê o limitante assintótico superior e inferior para 
+ 
+ $$T(n) = 4T(n/4) + 5n$$
 
-$= \Theta(n^3)$ (caso 1)
+\begin{tabular}{l}
+$a = 4$, $b = 4$, $f(n) = 5n$ \\
+$n^{\log_b a} = n^{\log_4 4} = n$\\\\
+caso 2: $f(n) = \Theta(n^{\log_b a})$, ou seja $5n = \Theta(n)$\\\\
+Então \\
+$T(n) = \Theta(n^{\log_b a} \log n)$\\
+$T(n) = \Theta(n \log n)$
+\end{tabular}
+
 \end{slide}
-
 
 \begin{slide}
-  \stitle{Multiplicação de matriz} 
+  \stitle{Método Mestre}
   
-  Algoritmo de Strassen
-  
-  Idéia: reduzir o número de multiplicações
-  
-  \begin{tabular}{l}
-   $P_1 = a \cdot (f - h)$ \\
-   $P_2 = (a + b) \cdot h$ \\
-   $P_3 = (c + d) \cdot e$ \\
-   $P_4 = d \cdot (g - e)$ \\
-   $P_5 = (a + d) \cdot (e + h)$ \\
-   $P_6 = (b - d) \cdot (g + h)$ \\
-   $P_7 = (a - c) \cdot (e + f)$ \\\\
-   $r = P_5 + P_4 - P_2 + P6$ \\
-   $s = P_1 + P_2$ \\
-   $t = P_3 + P_4$ \\
-   $u = P_5 + P_1 - P_3 - P_7$ \\
-  \end{tabular}
-\end{slide}
+ Dê o limitante assintótico superior e inferior para 
+ 
+ $$T(n) = 4T(n/5) + 5n$$
 
+\begin{tabular}{l}
+$a = 4$, $b = 5$, $f(n) = 5n$ \\
+$n^{\log_b a} = n^{\log_5 4} = n^{0.86135}$\\\\
+caso 3: $f(n) = \Omega(n^{\log_b a + \varepsilon})$, ou seja, $5n = \Omega(n^{0.86135 + \varepsilon})$. 
+\\Para $\varepsilon = 0.249$\\\\
+\end{tabular}
+
+\end{slide}
 
 \begin{slide}
-  \stitle{Multiplicação de matriz} 
-  
-  Algoritmo de Strassen  
-  
-  \begin{enumerate}
-\item \textbf{Dividir:} Computar os termos por produto
-\item \textbf{Conquistar:} Recursivamente computar $P_1, P_2, \cdots, P_7$
-\item \textbf{Combinar:} Computar $r, s, t, u$ ($\Theta(n^2)$)
-\end{enumerate} 
+  \stitle{Método Mestre}
 
-Tempo: $T(n) = 7T(n/2) + \Theta(n^2)$
+Ainda temos verificar se $af(n/b) \leq cf(n)$ para alguma constante $c<1$.
 
-$ = \Theta(n^{\lg_2 7}) = O(n^{2.81})$
+\begin{tabular}{l}
+$a = 4$, $b = 5$, $f(n) = 5n$ \\\\
+$4f(n/5) =$ \\
+$4(5n/5) \leq$\\
+$4/5. 5n \leq cf(n)$, para $c = 4/5$\\
 
-O melhor algoritmo encontrado até o momento: $O(n^{2.376})$
+Então $T(n) = \Theta(f(n))$, ou seja $T(n) = \Theta(n)$.
+
+\end{tabular}
 \end{slide}
 
+\begin{slide}
+  \stitle{Método Mestre}
+  
+ Dê o limitante assintótico superior e inferior para 
+ 
+ $$T(n) = 5T(n/4) + 4n$$
+ 
+ 
+ \begin{tabular}{l}
+$a = 5$, $b = 4$, $f(n) = 4n$ \\
+$n^{\log_b a} = n^{\log_4 5} = n^{1.1609}$\\\\
+caso 1: $f(n) = O(n^{\log_b a - \varepsilon})$, ou seja $4n = O(n^{1.1609})$ para $\varepsilon = 0.1609$\\\\
+Então \\
+$T(n) = \Theta(n^{\log_b a})$\\
+$T(n) = \Theta(n^{\log_4 5})$\\
+$T(n) = \Theta(n^{\frac{\log_2 5}{\log_2 4}})$\\
+$T(n) = \Theta(n^{\frac{\log_2 5}{2}})$\\
+$T(n) = \Theta(n^{\frac{1}{2}\log_2 5})$\\
+$T(n) = \Theta(n^{\sqrt{\log_2 5}})$\\
+$T(n) = \Theta(n^{\sqrt{\lg 5}})$\\
+\end{tabular}
 
+  
+\end{slide}
 
 \begin{slide}
   \stitle{Obrigado}

@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2020.10.18)  4 MAR 2021 19:15
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2020.10.18)  16 MAR 2021 01:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**aula03.tex
-(./aula03.tex
+**aula03_02.tex
+(./aula03_02.tex
 LaTeX2e <2020-02-02> patch level 2
 L3 programming layer <2020-02-14>
 (/usr/share/texlive/texmf-dist/tex/latex/base/slides.cls
@@ -496,36 +496,36 @@ File: hpdftex.def 2020/01/14 v7.00d Hyperref driver for pdfTeX
 \c@bookmark@seq@number=\count282
 \Hy@SectionHShift=\skip65
 )
-Package hyperref Info: Option `colorlinks' set `false' on input line 64.
+Package hyperref Info: Option `colorlinks' set `false' on input line 65.
  (./pause.sty)
 \c@theorem=\count283
 \fixbox=\box102
-Package color Info: Redefining color black on input line 278.
+Package color Info: Redefining color black on input line 279.
 
 (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdfmode.def
 File: l3backend-pdfmode.def 2020-02-03 L3 backend support: PDF mode
 \l__kernel_color_stack_int=\count284
 \l__pdf_internal_box=\box103
 )
-(./aula03.aux)
-\openout1 = `aula03.aux'.
+(./aula03_02.aux)
+\openout1 = `aula03_02.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 287.
-LaTeX Font Info:    ... okay on input line 287.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 287.
-LaTeX Font Info:    ... okay on input line 287.
-LaTeX Font Info:    Checking defaults for OT1/lcmss/m/n on input line 287.
-LaTeX Font Info:    ... okay on input line 287.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 287.
-LaTeX Font Info:    ... okay on input line 287.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 287.
-LaTeX Font Info:    ... okay on input line 287.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 287.
-LaTeX Font Info:    ... okay on input line 287.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 287.
-LaTeX Font Info:    ... okay on input line 287.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 287.
-LaTeX Font Info:    ... okay on input line 287.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 288.
+LaTeX Font Info:    ... okay on input line 288.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 288.
+LaTeX Font Info:    ... okay on input line 288.
+LaTeX Font Info:    Checking defaults for OT1/lcmss/m/n on input line 288.
+LaTeX Font Info:    ... okay on input line 288.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 288.
+LaTeX Font Info:    ... okay on input line 288.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 288.
+LaTeX Font Info:    ... okay on input line 288.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 288.
+LaTeX Font Info:    ... okay on input line 288.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 288.
+LaTeX Font Info:    ... okay on input line 288.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 288.
+LaTeX Font Info:    ... okay on input line 288.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -542,7 +542,7 @@ LaTeX Font Info:    ... okay on input line 287.
 \everyMPtoPDFconversion=\toks33
 )
 \AtBeginShipoutBox=\box105
-Package hyperref Info: Link coloring OFF on input line 287.
+Package hyperref Info: Link coloring OFF on input line 288.
  (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
 
@@ -554,59 +554,59 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count291
 )
-LaTeX Info: Redefining \ref on input line 287.
-LaTeX Info: Redefining \pageref on input line 287.
-LaTeX Info: Redefining \nameref on input line 287.
+LaTeX Info: Redefining \ref on input line 288.
+LaTeX Info: Redefining \pageref on input line 288.
+LaTeX Info: Redefining \nameref on input line 288.
 
-(./aula03.out) (./aula03.out)
+(./aula03_02.out) (./aula03_02.out)
 \@outlinefile=\write4
-\openout4 = `aula03.out'.
+\openout4 = `aula03_02.out'.
 
 LaTeX Font Info:    Trying to load font information for OML+lcmm on input line 
-306.
+307.
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/omllcmm.fd
 File: omllcmm.fd 2019/07/09 v2.2f Standard LaTeX slide font definitions
 )
 LaTeX Font Info:    Trying to load font information for OMS+lcmsy on input line
- 306.
+ 307.
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/omslcmsy.fd
 File: omslcmsy.fd 2019/07/09 v2.2f Standard LaTeX slide font definitions
 )
 LaTeX Font Info:    Trying to load font information for OMX+lcmex on input line
- 306.
+ 307.
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/omxlcmex.fd
 File: omxlcmex.fd 2019/07/09 v2.2f Standard LaTeX slide font definitions
 )
 LaTeX Font Info:    External font `cmex10 at17.28pt' loaded for size
-(Font)              <19.907> on input line 306.
+(Font)              <19.907> on input line 307.
 LaTeX Font Info:    External font `cmex10 at17.28pt' loaded for size
-(Font)              <16.59> on input line 306.
+(Font)              <16.59> on input line 307.
 LaTeX Font Info:    External font `cmex10 at17.28pt' loaded for size
-(Font)              <13.82> on input line 306.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 306
+(Font)              <13.82> on input line 307.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 307
 .
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 306
+LaTeX Font Info:    Trying to load font information for U+msb on input line 307
 .
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Trying to load font information for T1+lcmtt on input line 
-308.
+309.
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/t1lcmtt.fd
 File: t1lcmtt.fd 2019/07/09 v2.2f Standard LaTeX slide font definitions
 )
 
 LaTeX Font Warning: Font shape `T1/lcmss/m/n' in size <17> not available
-(Font)              size <16.59> substituted on input line 311.
+(Font)              size <16.59> substituted on input line 312.
 
 
 Overfull \hbox (10.41669pt too wide) has occurred while \output is active
@@ -649,23 +649,6 @@ Overfull \hbox (10.41669pt too wide) has occurred while \output is active
  []
 
 [7]
-
-LaTeX Font Warning: Font shape `T1/lcmss/m/sc' undefined
-(Font)              using `T1/lcmss/m/n' instead on input line 364.
-
-
-LaTeX Font Warning: Font shape `OT1/cmr/m/it' in size <19.907> not available
-(Font)              size <20.74> substituted on input line 368.
-
-
-LaTeX Font Warning: Font shape `OT1/cmr/m/it' in size <16.59> not available
-(Font)              size <17.28> substituted on input line 368.
-
-
-LaTeX Font Warning: Font shape `OT1/cmr/m/it' in size <13.82> not available
-(Font)              size <14.4> substituted on input line 368.
-
-
 Overfull \hbox (10.41669pt too wide) has occurred while \output is active
 [][] 
  []
@@ -686,14 +669,6 @@ Overfull \hbox (16.6667pt too wide) has occurred while \output is active
  []
 
 [11]
-Overfull \hbox (20.14513pt too wide) in paragraph at lines 415--416
-[]\T1/lcmss/bx/n/19.907 Método mes-tre\T1/lcmss/m/sc/19.907 : Para re-cor-rên-c
-ias da forma $[]\OML/lcmm/m/it/19.907 T\OT1/lcmss/m/n/19.907 (\OML/lcmm/m/it/19
-.907 n\OT1/lcmss/m/n/19.907 ) = \OML/lcmm/m/it/19.907 aT\OT1/lcmss/m/n/19.907 (
-\OML/lcmm/m/it/19.907 n=b\OT1/lcmss/m/n/19.907 ) +
- []
-
-
 Overfull \hbox (16.6667pt too wide) has occurred while \output is active
 [][] 
  []
@@ -744,6 +719,23 @@ Overfull \hbox (16.6667pt too wide) has occurred while \output is active
  []
 
 [21]
+
+LaTeX Font Warning: Font shape `OT1/cmr/m/it' in size <19.907> not available
+(Font)              size <20.74> substituted on input line 636.
+
+
+LaTeX Font Warning: Font shape `OT1/cmr/m/it' in size <16.59> not available
+(Font)              size <17.28> substituted on input line 636.
+
+
+LaTeX Font Warning: Font shape `OT1/cmr/m/it' in size <13.82> not available
+(Font)              size <14.4> substituted on input line 636.
+
+
+LaTeX Font Warning: Font shape `T1/lcmss/m/sc' undefined
+(Font)              using `T1/lcmss/m/n' instead on input line 639.
+
+
 Overfull \hbox (16.6667pt too wide) has occurred while \output is active
 [][] 
  []
@@ -759,6 +751,11 @@ Overfull \hbox (16.6667pt too wide) has occurred while \output is active
  []
 
 [24]
+Warning: Indentation ends at level -1 in codebox on page 0.
+
+Overfull \vbox (38.9603pt too high) has occurred while \output is active []
+
+
 Overfull \hbox (16.6667pt too wide) has occurred while \output is active
 [][] 
  []
@@ -819,6 +816,11 @@ Overfull \hbox (16.6667pt too wide) has occurred while \output is active
  []
 
 [36]
+Warning: Indentation ends at level -1 in codebox on page 0.
+
+Overfull \vbox (38.9603pt too high) has occurred while \output is active []
+
+
 Overfull \hbox (16.6667pt too wide) has occurred while \output is active
 [][] 
  []
@@ -834,149 +836,41 @@ Overfull \hbox (16.6667pt too wide) has occurred while \output is active
  []
 
 [39]
-Package epstopdf Info: Source file: <fig01.eps>
-(epstopdf)                    date: 2020-03-26 17:58:58
-(epstopdf)                    size: 353439 bytes
-(epstopdf)             Output file: <fig01-eps-converted-to.pdf>
-(epstopdf)                    date: 2020-03-26 17:59:02
-(epstopdf)                    size: 93549 bytes
-(epstopdf)             Command: <repstopdf --outfile=fig01-eps-converted-to.pdf
- fig01.eps>
-(epstopdf)             \includegraphics on input line 763.
-Package epstopdf Info: Output file is already uptodate.
-
-
-pdfTeX warning: /usr/bin/pdflatex (file ./fig01-eps-converted-to.pdf): PDF incl
-usion: found PDF version <1.7>, but at most version <1.5> allowed
-<fig01-eps-converted-to.pdf, id=182, 1852.9225pt x 864.22874pt>
-File: fig01-eps-converted-to.pdf Graphic file (type pdf)
-<use fig01-eps-converted-to.pdf>
-Package pdftex.def Info: fig01-eps-converted-to.pdf  used on input line 763.
-(pdftex.def)             Requested size: 793.0008pt x 369.87042pt.
-
-Overfull \hbox (71.86891pt too wide) in paragraph at lines 763--764
-[] [] 
- []
-
-
 Overfull \hbox (16.6667pt too wide) has occurred while \output is active
 [][] 
  []
 
-[40 <./fig01-eps-converted-to.pdf>]
-Package epstopdf Info: Source file: <fig02.eps>
-(epstopdf)                    date: 2020-03-26 17:58:58
-(epstopdf)                    size: 652786 bytes
-(epstopdf)             Output file: <fig02-eps-converted-to.pdf>
-(epstopdf)                    date: 2020-03-26 17:58:58
-(epstopdf)                    size: 141111 bytes
-(epstopdf)             Command: <repstopdf --outfile=fig02-eps-converted-to.pdf
- fig02.eps>
-(epstopdf)             \includegraphics on input line 768.
-Package epstopdf Info: Output file is already uptodate.
-
-
-pdfTeX warning: /usr/bin/pdflatex (file ./fig02-eps-converted-to.pdf): PDF incl
-usion: found PDF version <1.7>, but at most version <1.5> allowed
-<fig02-eps-converted-to.pdf, id=190, 1652.1725pt x 894.34125pt>
-File: fig02-eps-converted-to.pdf Graphic file (type pdf)
-<use fig02-eps-converted-to.pdf>
-Package pdftex.def Info: fig02-eps-converted-to.pdf  used on input line 768.
-(pdftex.def)             Requested size: 650.0pt x 351.86215pt.
-
+[40]
 Overfull \hbox (16.6667pt too wide) has occurred while \output is active
 [][] 
  []
 
-[41 <./fig02-eps-converted-to.pdf>]
-Package epstopdf Info: Source file: <fig02.eps>
-(epstopdf)                    date: 2020-03-26 17:58:58
-(epstopdf)                    size: 652786 bytes
-(epstopdf)             Output file: <fig02-eps-converted-to.pdf>
-(epstopdf)                    date: 2020-03-26 17:58:58
-(epstopdf)                    size: 141111 bytes
-(epstopdf)             Command: <repstopdf --outfile=fig02-eps-converted-to.pdf
- fig02.eps>
-(epstopdf)             \includegraphics on input line 774.
-Package epstopdf Info: Output file is already uptodate.
-File: fig02-eps-converted-to.pdf Graphic file (type pdf)
-<use fig02-eps-converted-to.pdf>
-Package pdftex.def Info: fig02-eps-converted-to.pdf  used on input line 774.
-(pdftex.def)             Requested size: 650.0pt x 351.86215pt.
-
+[41]
 Overfull \hbox (16.6667pt too wide) has occurred while \output is active
 [][] 
  []
 
 [42]
-Package epstopdf Info: Source file: <fig02.eps>
-(epstopdf)                    date: 2020-03-26 17:58:58
-(epstopdf)                    size: 652786 bytes
-(epstopdf)             Output file: <fig02-eps-converted-to.pdf>
-(epstopdf)                    date: 2020-03-26 17:58:58
-(epstopdf)                    size: 141111 bytes
-(epstopdf)             Command: <repstopdf --outfile=fig02-eps-converted-to.pdf
- fig02.eps>
-(epstopdf)             \includegraphics on input line 780.
-Package epstopdf Info: Output file is already uptodate.
-File: fig02-eps-converted-to.pdf Graphic file (type pdf)
-<use fig02-eps-converted-to.pdf>
-Package pdftex.def Info: fig02-eps-converted-to.pdf  used on input line 780.
-(pdftex.def)             Requested size: 650.0pt x 351.86215pt.
-
-Overfull \vbox (3.8389pt too high) has occurred while \output is active []
-
-
 Overfull \hbox (16.6667pt too wide) has occurred while \output is active
 [][] 
  []
 
 [43]
-Package epstopdf Info: Source file: <fig02.eps>
-(epstopdf)                    date: 2020-03-26 17:58:58
-(epstopdf)                    size: 652786 bytes
-(epstopdf)             Output file: <fig02-eps-converted-to.pdf>
-(epstopdf)                    date: 2020-03-26 17:58:58
-(epstopdf)                    size: 141111 bytes
-(epstopdf)             Command: <repstopdf --outfile=fig02-eps-converted-to.pdf
- fig02.eps>
-(epstopdf)             \includegraphics on input line 786.
-Package epstopdf Info: Output file is already uptodate.
-File: fig02-eps-converted-to.pdf Graphic file (type pdf)
-<use fig02-eps-converted-to.pdf>
-Package pdftex.def Info: fig02-eps-converted-to.pdf  used on input line 786.
-(pdftex.def)             Requested size: 650.0pt x 351.86215pt.
-
 Overfull \hbox (16.6667pt too wide) has occurred while \output is active
 [][] 
  []
 
 [44]
-Overfull \hbox (55.71275pt too wide) in paragraph at lines 801--805
-[]$[][]$[] 
- []
-
-
 Overfull \hbox (16.6667pt too wide) has occurred while \output is active
 [][] 
  []
 
 [45]
-Overfull \hbox (55.71275pt too wide) in paragraph at lines 818--823
-[]$[][]$[] 
- []
-
-
 Overfull \hbox (16.6667pt too wide) has occurred while \output is active
 [][] 
  []
 
 [46]
-Overfull \hbox (55.71275pt too wide) in paragraph at lines 836--843
-[]$[][]$[] 
- []
-
-
 Overfull \hbox (16.6667pt too wide) has occurred while \output is active
 [][] 
  []
@@ -987,21 +881,11 @@ Overfull \hbox (16.6667pt too wide) has occurred while \output is active
  []
 
 [48]
-Overfull \hbox (55.71275pt too wide) in paragraph at lines 866--875
-[]$[][]$[] 
- []
-
-
 Overfull \hbox (16.6667pt too wide) has occurred while \output is active
 [][] 
  []
 
 [49]
-Overfull \hbox (55.71275pt too wide) in paragraph at lines 887--896
-[]$[][]$[] 
- []
-
-
 Overfull \hbox (16.6667pt too wide) has occurred while \output is active
 [][] 
  []
@@ -1022,11 +906,24 @@ Overfull \hbox (16.6667pt too wide) has occurred while \output is active
  []
 
 [53]
+Warning: Indentation ends at level 1 in codebox on page 0.
+
+Overfull \vbox (5.14441pt too high) has occurred while \output is active []
+
+
 Overfull \hbox (16.6667pt too wide) has occurred while \output is active
 [][] 
  []
 
 [54]
+LaTeX Font Info:    External font `cmex10 at17.28pt' loaded for size
+(Font)              <23.89> on input line 1254.
+
+
+LaTeX Font Warning: Font shape `OT1/cmr/m/it' in size <23.89> not available
+(Font)              size <24.88> substituted on input line 1254.
+
+
 Overfull \hbox (16.6667pt too wide) has occurred while \output is active
 [][] 
  []
@@ -1097,11 +994,27 @@ Overfull \hbox (16.6667pt too wide) has occurred while \output is active
  []
 
 [68]
+Package epstopdf Info: Source file: <fig01.eps>
+(epstopdf)                    date: 2021-03-16 01:00:15
+(epstopdf)                    size: 81893 bytes
+(epstopdf)             Output file: <fig01-eps-converted-to.pdf>
+(epstopdf)                    date: 2021-03-16 01:00:21
+(epstopdf)                    size: 19606 bytes
+(epstopdf)             Command: <repstopdf --outfile=fig01-eps-converted-to.pdf
+ fig01.eps>
+(epstopdf)             \includegraphics on input line 1433.
+Package epstopdf Info: Output file is already uptodate.
+<fig01-eps-converted-to.pdf, id=316, 253.94875pt x 95.35625pt>
+File: fig01-eps-converted-to.pdf Graphic file (type pdf)
+<use fig01-eps-converted-to.pdf>
+Package pdftex.def Info: fig01-eps-converted-to.pdf  used on input line 1433.
+(pdftex.def)             Requested size: 520.00198pt x 195.26474pt.
+
 Overfull \hbox (16.6667pt too wide) has occurred while \output is active
 [][] 
  []
 
-[69]
+[69 <./fig01-eps-converted-to.pdf>]
 Overfull \hbox (16.6667pt too wide) has occurred while \output is active
 [][] 
  []
@@ -1187,6 +1100,9 @@ Overfull \hbox (16.6667pt too wide) has occurred while \output is active
  []
 
 [86]
+Overfull \vbox (11.76486pt too high) has occurred while \output is active []
+
+
 Overfull \hbox (16.6667pt too wide) has occurred while \output is active
 [][] 
  []
@@ -1197,33 +1113,38 @@ Overfull \hbox (16.6667pt too wide) has occurred while \output is active
  []
 
 [88]
-0 minutes
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1366.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1366.
-(./aula03.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1366.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1366.
+Overfull \hbox (16.6667pt too wide) has occurred while \output is active
+[][] 
+ []
 
-Package rerunfilecheck Info: File `aula03.out' has not changed.
+[89]
+0 minutes
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1771.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1771.
+(./aula03_02.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1771.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1771.
+
+Package rerunfilecheck Info: File `aula03_02.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
 
 
 LaTeX Font Warning: Size substitutions with differences
-(Font)              up to 0.83301pt have occurred.
+(Font)              up to 0.99pt have occurred.
 
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1366.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1771.
  ) 
 Here is how much of TeX's memory you used:
- 8457 strings out of 481239
- 122095 string characters out of 5920376
- 395782 words of memory out of 5000000
- 23425 multiletter control sequences out of 15000+600000
- 544431 words of font info for 55 fonts, out of 8000000 for 9000
+ 8483 strings out of 481239
+ 122339 string characters out of 5920376
+ 399785 words of memory out of 5000000
+ 23437 multiletter control sequences out of 15000+600000
+ 545386 words of font info for 61 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 47i,10n,37p,259b,372s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 47i,10n,37p,346b,431s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/
@@ -1232,12 +1153,12 @@ ype1/public/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
 ublic/amsfonts/latxfont/lcmss8.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
 ublic/amsfonts/symbols/msam10.pfb></usr/share/texmf/fonts/type1/public/cm-super
 /sflb8.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfli8.pfb></usr/share/
-texmf/fonts/type1/public/cm-super/sflo8.pfb></usr/share/texmf/fonts/type1/publi
-c/cm-super/sflq8.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfltt8.pfb>
-Output written on aula03.pdf (88 pages, 461649 bytes).
+texmf/fonts/type1/public/cm-super/sflq8.pfb></usr/share/texmf/fonts/type1/publi
+c/cm-super/sfltt8.pfb>
+Output written on aula03_02.pdf (89 pages, 238551 bytes).
 PDF statistics:
- 458 PDF objects out of 1000 (max. 8388607)
- 349 compressed objects within 4 object streams
- 93 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 473 PDF objects out of 1000 (max. 8388607)
+ 366 compressed objects within 4 object streams
+ 109 named destinations out of 1000 (max. 500000)
+ 6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
