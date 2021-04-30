@@ -351,7 +351,7 @@ Definimos a função $m(i, Q)$ como o número mínimo de moedas necessárias para obt
 A solução para o troco pode utilizar 0 ou mais moedas do tipo $i$, e assim:
 
 $m(i, Q)= \left\{  \begin{array}{ll} 
-                m(i-1, Q) & \textrm{, se não usa moeda tipo} i \\
+                m(i-1, Q) & \textrm{, se não usa moeda tipo } i \\
                 m(i-1, Q-k \cdot c_i)  & \textrm{, se usa } k \textrm{ moedas do tipo } i
                 \end{array} \right. $
 \end{slide}
@@ -835,6 +835,26 @@ Para o valor $8$ utilizar $\{1,1,6\}$ ou $\{4,4\}$ ?
 \vspace{-1cm} Queremos o número mínimo de moedas.
 \end{slide}
 
+\begin{slide}
+  \stitle{Problema do troco}
+Exemplo: $P = 8$, $S = \{1,4,6\}$, $n= 3$
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+\hline
+          & \multicolumn{9}{c|}{Q}    \\ \hline
+Moedas    & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_1 = 1$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$c_2 = 4$ & 0 & 1 & 2 & 3 & 1 & 2 & 3 & 4 & 2 \\ \hline
+$c_3 = 6$ & 0 & 1 & 2 & 3 & 1 & 2 & 1 & 2 & 2 \\ \hline
+\end{tabular}  
+\end{center}  
+
+Para o valor $8$ utilizar $\{1,1,6\}$ ou $\{4,4\}$ ? 
+
+\vspace{-1cm} Queremos o número mínimo de moedas.
+\end{slide}
+
 
 \begin{slide}
   \stitle{Problema do troco}
@@ -1112,9 +1132,10 @@ Como é o algoritmo?
 
 \vspace{-1cm}\begin{codebox}
 \Procname{$\proc{mochila-pd}(w, v, n, W)$}
-\li \For $Y = 0$ \To $W$ \textbf{\blue faça}
-\li \> 	$t[0,Y] = 0$
-\li \> \For $i = 1$ \To $n$ \textbf{\blue faça}
+\li \For $i = 0$ \To $n$ \textbf{\blue faça} $t[i,0] = 0$
+\li \For $Y = 0$ \To $W$ \textbf{\blue faça} $t[0,Y] = 0$
+\li \For $i = 1$ \To $n$ \textbf{\blue faça}
+\li \>  \For $Y = 1$ \To $W$ \textbf{\blue faça}
 \li \> \> $a = t[i-1, Y]$
 \li \> \> \If $w[i]>Y$ \textbf{\blue então} $b = 0$
 \li \> \> \hspace{4.3cm}\textbf{\blue senão} $b = t[i-1, Y-w[i]] + v[i]$
@@ -1131,14 +1152,16 @@ Como é o algoritmo?
 
 \vspace{-1cm}\begin{codebox}
 \Procname{$\proc{mochila-pd}(w, v, n, W)$}
-\li \For $Y = 0$ \To $W$ \textbf{\blue faça}
-\li \> 	$t[0,Y] = 0$
-\li \> \For $i = 1$ \To $n$ \textbf{\blue faça}
+\li \For $i = 0$ \To $n$ \textbf{\blue faça} $t[i,0] = 0$
+\li \For $Y = 0$ \To $W$ \textbf{\blue faça} $t[0,Y] = 0$
+\li \For $i = 1$ \To $n$ \textbf{\blue faça}
+\li \>  \For $Y = 1$ \To $W$ \textbf{\blue faça}
 \li \> \> $a = t[i-1, Y]$
 \li \> \> \If $w[i]>Y$ \textbf{\blue então} $b = 0$
 \li \> \> \hspace{4.3cm}\textbf{\blue senão} $b = t[i-1, Y-w[i]] + v[i]$
 \li \> \> $t[i, Y] = \mathrm{max}\{a, b\}$
 \li \Return $t[n,W]$
+\End
 \end{codebox}   
 
 Complexidade: $O(n \cdot W)$    
